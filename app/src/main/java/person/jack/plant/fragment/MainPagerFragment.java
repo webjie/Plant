@@ -61,7 +61,7 @@ public class MainPagerFragment extends Fragment {
                return new ValueSetFragment();
             }
             if (position == 2) {
-                return new WaringFragment();
+                return new WarnFragment();
             }
             if(position==3){
                 return  new WaterFragment();
