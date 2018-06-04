@@ -9,9 +9,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.squareup.picasso.Picasso;
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
@@ -19,7 +17,7 @@ import person.jack.plant.http.HttpClient;
 import person.jack.plant.http.HttpResponseHandler;
 import person.jack.plant.http.RestApiResponse;
 import person.jack.plant.model.SearchParam;
-import person.jack.plant.model.SearchShop;
+import person.jack.plant.model.Plants;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.loadmore.LoadMoreListView;
 import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
@@ -51,7 +49,7 @@ public class DemoPtrFragment extends Fragment {
     PtrClassicFrameLayout mPtrFrame;
     @Bind(R.id.listView)
     LoadMoreListView listView;
-    QuickAdapter<SearchShop> adapter;
+    QuickAdapter<Plants> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,11 +68,10 @@ public class DemoPtrFragment extends Fragment {
     }
 
     void initView() {
-        adapter = new QuickAdapter<SearchShop>(context, R.layout.recommend_shop_list_item) {
+        adapter = new QuickAdapter<Plants>(context, R.layout.recommend_shop_list_item) {
             @Override
-            protected void convert(BaseAdapterHelper helper, SearchShop shop) {
+            protected void convert(BaseAdapterHelper helper, Plants shop) {
                 helper.setText(R.id.name, shop.getName())
-                        .setText(R.id.address, shop.getAddr())
                         .setImageUrl(R.id.logo, shop.getLogo()); // 自动异步加载图片
             }
         };
@@ -150,26 +147,49 @@ public class DemoPtrFragment extends Fragment {
             return;
         }
         param.setPno(pno);
-        HttpClient.getRecommendShops(param, new HttpResponseHandler() {
-            @Override
-            public void onSuccess(RestApiResponse response) {
-                mPtrFrame.refreshComplete();
-                List<SearchShop> list = JSONArray.parseArray(response.body, SearchShop.class);
-                listView.updateLoadMoreViewText(list);
-                isLoadAll = list.size() < HttpClient.PAGE_SIZE;
-                if(pno == 1) {
-                    adapter.clear();
-                }
-                adapter.addAll(list);
-                pno++;
-            }
 
-            @Override
-            public void onFailure(Request request, Exception e) {
-                mPtrFrame.refreshComplete();
-                listView.setLoadMoreViewTextError();
+        //使用模拟数据
+        String body="[" +
+                "{ \"name\":\"君子兰\" , \"logo\":\"25.jpg\" }," +
+                "{ \"name\":\"栀子花\" , \"logo\":\"a0.jpg\" }," +
+                "{ \"name\":\"矢车菊\" , \"logo\":\"0.jpg\" }" +
+                "]";
+        try{
+            List<Plants> list=JSONArray.parseArray(body,Plants.class);
+            listView.updateLoadMoreViewText(list);
+            isLoadAll=list.size()<HttpClient.PAGE_SIZE;
+            if(pno==1){
+                adapter.clear();
             }
-        });
+            adapter.addAll(list);
+            pno++;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+//        HttpClient.getRecommendShops(param, new HttpResponseHandler() {
+//            @Override
+//            public void onSuccess(RestApiResponse response) {
+//                mPtrFrame.refreshComplete();
+//                List<Plants> list = JSONArray.parseArray(response.body, Plants.class);
+//                listView.updateLoadMoreViewText(list);
+//                isLoadAll = list.size() < HttpClient.PAGE_SIZE;
+//                if(pno == 1) {
+//                    adapter.clear();
+//                }
+//                adapter.addAll(list);
+//                pno++;
+//            }
+//
+//            @Override
+//            public void onFailure(Request request, Exception e) {
+//                mPtrFrame.refreshComplete();
+//
+//
+//
+//
+//                //listView.setLoadMoreViewTextError();  //使用模拟数据时，此条目注释
+//            }
+//        });
     }
 
     @Override

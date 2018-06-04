@@ -34,10 +34,10 @@ import okhttp3.Response;
  */
 public class HttpClient {
 
-    private static final int CONNECT_TIME_OUT = 10;
-    private static final int WRITE_TIME_OUT = 60;
-    private static final int READ_TIME_OUT = 60;
-    private static final int MAX_REQUESTS_PER_HOST = 10;
+    private static final int CONNECT_TIME_OUT = 3;
+    private static final int WRITE_TIME_OUT = 3;
+    private static final int READ_TIME_OUT = 3;
+    private static final int MAX_REQUESTS_PER_HOST = 3;
     private static final String TAG = HttpClient.class.getSimpleName();
     private static final String UTF_8 = "UTF-8";
     private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain;");

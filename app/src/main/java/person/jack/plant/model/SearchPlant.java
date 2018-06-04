@@ -10,7 +10,7 @@ import java.util.List;
  * User: tiansj
  * DateTime: 14-1-3 下午4:49
  */
-public class SearchShop implements Serializable, NotObfuscateInterface {
+public class SearchPlant implements Serializable, NotObfuscateInterface {
 
     public static final int TYPE_OUTSIDE = 0;  // 外部商家
     public static final int TYPE_INSIDE = 1; // 内部商家

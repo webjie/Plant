@@ -14,12 +14,11 @@
         android:src="@drawable/default_image" />
 
     <TextView
+        android:layout_centerVertical="true"
         android:id="@+id/name"
-        android:layout_width="fill_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/logo"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="2dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:text="俏江南"
@@ -27,19 +26,20 @@
         android:layout_toRightOf="@+id/logo"
         android:textSize="@dimen/text_size_16" />
 
-    <TextView
-        android:id="@+id/address"
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_centerVertical="true"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_toRightOf="@id/name"/>
+    <Button
+        android:id="@+id/btnWatering"
+        android:layout_toRightOf="@id/checkBox"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="25dp"
+        android:text="浇水"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/logo"
-        android:layout_marginBottom="3dp"
-        android:layout_marginLeft="10dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:layout_toRightOf="@+id/logo"
-        android:text="地址：放假了大解放了看到就阿狸分开多久啊放了多久啊离开封疆大吏减肥大事了,放了多久啊离开封疆大吏减肥大事了"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/text_size_13" />
+        android:layout_height="wrap_content" />
 
 
 </RelativeLayout>

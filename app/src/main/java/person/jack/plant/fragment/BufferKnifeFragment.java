@@ -10,16 +10,14 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.squareup.picasso.Picasso;
 import person.jack.plant.R;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.http.HttpResponseHandler;
 import person.jack.plant.http.RestApiResponse;
 import person.jack.plant.model.SearchParam;
-import person.jack.plant.model.SearchShop;
+import person.jack.plant.model.SearchPlant;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.pulltorefresh.PullToRefreshBase;
 import person.jack.plant.ui.pulltorefresh.PullToRefreshListView;
@@ -45,7 +43,7 @@ public class BufferKnifeFragment extends Fragment {
 
     @Bind(R.id.listView)
     PullToRefreshListView listView;
-    QuickAdapter<SearchShop> adapter;
+    QuickAdapter<SearchPlant> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,12 +62,12 @@ public class BufferKnifeFragment extends Fragment {
     }
 
     void initView() {
-        adapter = new QuickAdapter<SearchShop>(context, R.layout.recommend_shop_list_item) {
+        adapter = new QuickAdapter<SearchPlant>(context, R.layout.recommend_shop_list_item) {
             @Override
-            protected void convert(BaseAdapterHelper helper, SearchShop shop) {
-                helper.setText(R.id.name, shop.getName())
-                        .setText(R.id.address, shop.getAddr())
-                        .setImageUrl(R.id.logo, shop.getLogo()); // 自动异步加载图片
+            protected void convert(BaseAdapterHelper helper, SearchPlant shop) {
+//                helper.setText(R.id.name, shop.getName())
+//                        .setText(R.id.address, shop.getAddr())
+//                        .setImageUrl(R.id.logo, shop.getLogo()); // 自动异步加载图片
             }
         };
 
@@ -131,7 +129,7 @@ public class BufferKnifeFragment extends Fragment {
             @Override
             public void onSuccess(RestApiResponse response) {
                 listView.onRefreshComplete();
-                List<SearchShop> list = JSONArray.parseArray(response.body, SearchShop.class);
+                List<SearchPlant> list = JSONArray.parseArray(response.body, SearchPlant.class);
                 listView.updateLoadMoreViewText(list);
                 isLoadAll = list.size() < HttpClient.PAGE_SIZE;
                 if(pno == 1) {
