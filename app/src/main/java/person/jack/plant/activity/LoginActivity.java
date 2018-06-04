@@ -8,7 +8,7 @@ import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
 
 
 /**
- * 5.登录界面-没有实现远程登录功能
+ * 5.登录界面-没有实现远程登录功能-chenle
  */
 public class LoginActivity extends SwipeBackActivity {
 
