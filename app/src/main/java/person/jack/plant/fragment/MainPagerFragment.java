@@ -63,6 +63,9 @@ public class MainPagerFragment extends Fragment {
             if (position == 2) {
                 return new BufferKnifeFragment();
             }
+            if(position==3){
+                return  new WaringFragment();
+            }
             return HomeFragment.newInstance(URLS[position % URLS.length]);
         }
 
