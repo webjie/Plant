@@ -1,0 +1,104 @@
+apply plugin: 'com.android.application'
+apply plugin: 'packer'
+
+
+packer {
+    /**渠道包**/
+    manifestMatcher = ['UMENG_CHANNEL','Promotion_Market']
+    archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
+    archiveNameFormat = '${appPkg}-c-${buildType}-${buildTime}'
+
+    /**版本号自增**/
+    // 指定是否使用build版本号自增
+    buildNumberAuto = true
+    // 指定使用版本号自增的buildType，默认是全部
+    buildNumberTypeMatcher = ['release', 'debug']
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '26.0.2'
+    defaultConfig {
+        // Warning:Renderscript support mode is not currently supported with renderscript target 21+
+        renderscriptTargetApi 20
+        renderscriptSupportModeEnabled true
+
+        applicationId "person.jack.plant"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+    }
+    signingConfigs {
+        release {
+            keyAlias 'AIPlant'
+            keyPassword '20180506'
+            storeFile file('keystore/release.jks')
+            storePassword '20180506'
+        }
+        debug {
+            keyAlias 'AIPlant'
+            keyPassword '20180506'
+            storeFile file('keystore/debug.jks')
+            storePassword '20180506'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
+    }
+    sourceSets {
+        main() {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    lintOptions {
+        abortOnError false
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    packagingOptions {
+        exclude 'lib/armeabi-v7a/librsjni.so'
+        exclude 'lib/armeabi-v7a/libRSSupport.so'
+        exclude 'lib/mips/librsjni.so'
+        exclude 'lib/mips/libRSSupport.so'
+        exclude 'lib/x86/librsjni.so'
+        exclude 'lib/x86/libRSSupport.so'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.jakewharton:butterknife:7.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.alibaba:fastjson:1.1.34.android'
+    implementation 'com.j256.ormlite:ormlite-android:4.48'
+    implementation 'com.j256.ormlite:ormlite-core:4.48'
+    implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
+    implementation 'in.srain.cube:ultra-ptr:1.0.10'
+    implementation 'com.android.support:support-v4:23.2.0'
+}
