@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 /**
- * 报警记录
+ * 报警记录类
  * Created by yanxu on 2018/6/4.
  */
 @DatabaseTable(tableName = "warn_record")
@@ -47,6 +47,14 @@ public class WarnRecord {
         this.type = type;
         this.value = value;
         this.warnDate = warnDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 /**
- * 灌溉记录
+ * 灌溉记录类
  * Created by yanxu on 2018/6/4.
  */
 @DatabaseTable(tableName = "water_record")
@@ -35,6 +35,14 @@ public class WaterRecord {
         this.id = id;
         this.name = name;
         this.waterDate = waterDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

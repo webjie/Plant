@@ -12,6 +12,7 @@ import person.jack.plant.db.DatabaseHelper;
 import person.jack.plant.db.entity.WaterRecord;
 
 /**
+ * 灌溉记录 持久化层
  * Created by yanxu on 2018/6/4.
  */
 
@@ -36,15 +37,15 @@ public class WaterRecordDao {
     public void add(WaterRecord waterRecord){
         try {
             waterDao.create(waterRecord);
-            Log.d("student3","waterRecord添加成功");
+            Log.d("student3","灌溉记录添加成功");
         } catch (SQLException e) {
             e.printStackTrace();
-            Log.d("student3","waterRecord添加失败");
+            Log.d("student3","灌溉记录添加失败");
         }
     }
     /**
      * 查询所有的灌溉记录
-     * @return
+     * @return 所有的灌溉记录
      */
     public List<WaterRecord> findAll(){
         List<WaterRecord>list=null;
@@ -53,7 +54,6 @@ public class WaterRecordDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return list;
 
     }

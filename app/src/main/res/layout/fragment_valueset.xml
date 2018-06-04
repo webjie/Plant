@@ -2,6 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+        >
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -45,7 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="温度阈值"
-            android:gravity="center"
+            android:paddingLeft="15dp"
+
             />
 
         <EditText
@@ -83,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="湿度阈值"
-            android:gravity="center"
+            android:paddingLeft="15dp"
             />
 
         <EditText
@@ -120,8 +127,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="光照指数阈值"
-            android:gravity="center"
+            android:text="光照阈值"
+            android:paddingLeft="15dp"
             />
 
         <EditText
@@ -152,13 +159,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="氮阈值"
+            android:text="氮    阈值"
             android:gravity="center"
             />
 
@@ -190,13 +198,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="磷阈值"
+            android:text="磷   阈值"
             android:gravity="center"
             />
 
@@ -228,13 +237,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         >
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="钾阈值"
+            android:text="钾    阈值"
             android:gravity="center"
             />
 
@@ -265,16 +275,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         >
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="110dp"
+            android:layout_height="30dp"
             android:id="@+id/btn_save"
             android:text="保存"
             android:textColor="#fff"
-            android:background="#35b2ec"
+            android:background="@drawable/btn_save_back"
+
             />
 
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>

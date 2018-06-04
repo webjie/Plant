@@ -40,6 +40,22 @@ public class ValueSetDao {
             e.printStackTrace();
         }
     }
+    /**
+     * 更新阈值记录
+     *
+     * @return
+     */
+    public void update(ValueSet valueSet) {
+
+        try {
+            valueSetDao.update(valueSet);
+            Log.d("student3","阈值更新成功");
+        } catch (SQLException e) {
+            Log.d("student3","阈值更新失败");
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      * 查询所有阈值记录
@@ -64,17 +80,22 @@ public class ValueSetDao {
      * @param name
      * @return
      */
-    public List<ValueSet> findValueName(String name) {
+    public ValueSet findValueName(String name) {
         List<ValueSet> list = null;
+        ValueSet valueSet=null;
 
         try {
-            list = valueSetDao.queryForAll();
+            list = valueSetDao.queryForEq("name",name);
+            if(list.size()!=0&&list!=null){
+                valueSet=list.get(0);
+                return  valueSet;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return list;
+        return null;
 
-    }
+}
 
 }

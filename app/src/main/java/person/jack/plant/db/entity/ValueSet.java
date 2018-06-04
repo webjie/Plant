@@ -1,15 +1,14 @@
 package person.jack.plant.db.entity;
 
 /**
+ * 阈值设置类
  * Created by yanxu on 2018/6/4.
  */
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-/**
- * 设置阈值
- */
+
 @DatabaseTable (tableName = "value_set")
 public class ValueSet {
     /**
@@ -42,6 +41,14 @@ public class ValueSet {
         this.name = name;
         this.min = min;
         this.max = max;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
