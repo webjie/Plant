@@ -58,13 +58,13 @@ public class MainPagerFragment extends Fragment {
                 return new DemoPtrFragment();
             }
             if (position == 1) {
-//                return new BufferKnifeFragment();
+               return new ValueSetFragment();
             }
             if (position == 2) {
-//                return new BufferKnifeFragment();
+                return new WaringFragment();
             }
             if(position==3){
-                return  new WaringFragment();
+                return  new WaterFragment();
             }
             return HomeFragment.newInstance(URLS[position % URLS.length]);
         }
