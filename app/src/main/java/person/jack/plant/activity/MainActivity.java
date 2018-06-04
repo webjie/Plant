@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * 2.主界面，包括底部导航按钮 l
+ * 2.主界面，包括底部导航按钮
  */
 public class MainActivity extends BaseFragmentActivity {
 
