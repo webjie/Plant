@@ -2,15 +2,18 @@ package person.jack.plant.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
 import com.squareup.picasso.Picasso;
+
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
 import person.jack.plant.http.HttpClient;
@@ -35,6 +38,8 @@ import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.StoreHouseHeader;
 import okhttp3.Request;
 
+import static person.jack.plant.ui.UIHelper.TAG;
+
 /**
  * 首页-获取远程服务器商品列表
  */
@@ -50,6 +55,8 @@ public class DemoPtrFragment extends Fragment {
     @Bind(R.id.listView)
     LoadMoreListView listView;
     QuickAdapter<Plants> adapter;
+    List<Plants> list;
+    public static Plants curPlant;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,9 +77,29 @@ public class DemoPtrFragment extends Fragment {
     void initView() {
         adapter = new QuickAdapter<Plants>(context, R.layout.recommend_shop_list_item) {
             @Override
-            protected void convert(BaseAdapterHelper helper, Plants shop) {
-                helper.setText(R.id.name, shop.getName())
-                        .setImageUrl(R.id.logo, shop.getLogo()); // 自动异步加载图片
+            protected void convert(final BaseAdapterHelper helper, Plants shop) {
+
+                helper.setText(R.id.tv_name, shop.getName())
+                        .setImageUrl(R.id.logo, shop.getLogo()
+                        ); // 自动异步加载图片
+                helper.setOnClickListener(R.id.btnWatering, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        //需要调用网络接口f
+                        Toast.makeText(context, "浇水成功", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                        .setOnClickListener(R.id.tv_name, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Log.d(TAG, "onClick: 点击");
+                                //跳转碎片
+                                curPlant = list.get(helper.getPosition());
+                                UIHelper.showPlantsDetailActivity(getActivity());
+
+                            }
+                        });
             }
         };
         listView.setDrawingCacheEnabled(true);
@@ -114,7 +141,16 @@ public class DemoPtrFragment extends Fragment {
         listView.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                UIHelper.showHouseDetailActivity(context);
+                Log.d(TAG, "onItemClick: itme");
+                if (i != adapter.getCount()) {
+                    UIHelper.showHouseDetailActivity(context);
+                    //跳转碎片
+
+                    curPlant = list.get(i);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.fragment_container, new PlantsDetailFragment(), "plantsDetail").commit();
+                }
+
             }
         });
 
@@ -149,21 +185,23 @@ public class DemoPtrFragment extends Fragment {
         param.setPno(pno);
 
         //使用模拟数据
-        String body="[" +
-                "{ \"name\":\"君子兰\" , \"logo\":\"25.jpg\" }," +
-                "{ \"name\":\"栀子花\" , \"logo\":\"a0.jpg\" }," +
-                "{ \"name\":\"矢车菊\" , \"logo\":\"0.jpg\" }" +
+        String body = "[" +
+                "{ \"name\":\"君子兰\" , \"logo\":\"http://img.plantphoto.cn/image2/b/669427.jpg\" }," +
+                "{ \"name\":\"栀子花\" , \"logo\":\"https://upload.wikimedia.org/wikipedia/commons/7/78/Gardenia_jasminoides_8zz.jpg\" }," +
+                "{ \"name\":\"矢车菊\" , \"logo\":\"https://upload.wikimedia.org/wikipedia/commons/d/d5/Detailaufnahme_Weizenfeld.jpg\" }," +
+                "{ \"name\":\"矢车菊\" , \"logo\":\"0.jpg\" }," +
                 "]";
-        try{
-            List<Plants> list=JSONArray.parseArray(body,Plants.class);
+        try {
+            list = JSONArray.parseArray(body, Plants.class);
             listView.updateLoadMoreViewText(list);
-            isLoadAll=list.size()<HttpClient.PAGE_SIZE;
-            if(pno==1){
+            isLoadAll = list.size() < HttpClient.PAGE_SIZE;
+            if (pno == 1) {
                 adapter.clear();
             }
             adapter.addAll(list);
+            adapter.notifyDataSetChanged();
             pno++;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 //        HttpClient.getRecommendShops(param, new HttpResponseHandler() {

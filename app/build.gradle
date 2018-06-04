@@ -4,7 +4,7 @@ apply plugin: 'packer'
 
 packer {
     /**渠道包**/
-    manifestMatcher = ['UMENG_CHANNEL','Promotion_Market']
+    manifestMatcher = ['UMENG_CHANNEL', 'Promotion_Market']
     archiveOutput = file(new File(project.rootProject.buildDir.path, "apks"))
     archiveNameFormat = '${appPkg}-c-${buildType}-${buildTime}'
 
@@ -94,7 +94,7 @@ android {
         abi {
             enable true
             reset()
-            include 'x86', 'armeabi-v7a','x86_64'
+            include 'x86', 'armeabi-v7a', 'x86_64'
             universalApk true
         }
     }
@@ -111,4 +111,5 @@ dependencies {
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     implementation 'in.srain.cube:ultra-ptr:1.0.10'
     implementation 'com.android.support:support-v4:23.2.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
 }

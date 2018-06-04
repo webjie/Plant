@@ -8,6 +8,7 @@ import android.widget.Toast;
 import person.jack.plant.activity.HouseDetailActivity;
 import person.jack.plant.activity.LoginActivity;
 import person.jack.plant.activity.MainActivity;
+import person.jack.plant.activity.PlantsDetailActivity;
 
 /**
  * 应用程序UI工具包：封装UI相关的一些操作
@@ -52,6 +53,11 @@ public class UIHelper {
 
     public static void showHouseDetailActivity(Activity context){
         Intent intent = new Intent(context, HouseDetailActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void showPlantsDetailActivity(Activity context){
+        Intent intent=new Intent(context, PlantsDetailActivity.class);
         context.startActivity(intent);
     }
 

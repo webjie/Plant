@@ -32,11 +32,11 @@ public class HouseDetailActivity extends SwipeBackActivity {
     Button btnBack;
     @Bind(R.id.textHeadTitle)
     TextView textHeadTitle;
-
     @Bind(R.id.pager)
     AutoLoopViewPager pager;
     @Bind(R.id.indicator)
     CirclePageIndicator indicator;
+
     private GalleryPagerAdapter galleryAdapter;
     private int[] imageViewIds;
     private List<String> imageList = new ArrayList<String>(Arrays.asList(

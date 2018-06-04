@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="person.jack.plant.activity.PlantsDetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:background="@color/text_color_blue"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="fitCenter"
+                android:background="@color/white"
+                android:src="@drawable/default_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <TextView
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="20sp"
+                android:id="@+id/tv_name"
+                android:textColor="@color/white"
+                android:text="车矢菊"
+                android:layout_width="match_parent"
+                android:layout_height="25sp" />
+            <TextView
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="18sp"
+                android:text="种植时间：2018-5-12"
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+            <TextView
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="5dp"
+                android:textSize="18sp"
+                android:text="当前状态：生长中"
+                android:layout_width="match_parent"
+                android:layout_height="20sp" />
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+
+</LinearLayout>
