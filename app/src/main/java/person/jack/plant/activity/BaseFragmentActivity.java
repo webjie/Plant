@@ -11,6 +11,9 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
 import person.jack.plant.R;
 import person.jack.plant.common.AppManager;
 
+/**
+ * kakee
+ */
 public class BaseFragmentActivity extends FragmentActivity {
 
     @Override
