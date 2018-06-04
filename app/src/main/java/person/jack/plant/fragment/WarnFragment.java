@@ -58,8 +58,8 @@ public class WarnFragment extends Fragment {
     }
 
     private void init() {
-        WarnRecord record1 = new WarnRecord(1, "温度过高", "1", 1, new Date());
-        WarnRecord record2 = new WarnRecord(1, "水分过低", "2", 2, new Date());
+        WarnRecord record1 = new WarnRecord(1, "菊花", "正常", 1, new Date());
+        WarnRecord record2 = new WarnRecord(1, "荷花", "正常", 2, new Date());
         warnRecordDao.add(record1);
         warnRecordDao.add(record2);
     }
