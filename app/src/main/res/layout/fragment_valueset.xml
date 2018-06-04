@@ -58,7 +58,7 @@
         <EditText
             android:id="@+id/et_temMin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="numberSigned"
@@ -70,7 +70,7 @@
         <EditText
             android:id="@+id/et_temMax"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="number"
@@ -97,7 +97,7 @@
         <EditText
             android:id="@+id/et_humMin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="number"
@@ -108,7 +108,7 @@
         <EditText
             android:id="@+id/et_humMax"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="number"
@@ -135,7 +135,7 @@
         <EditText
             android:id="@+id/et_lightMin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="number"
@@ -146,7 +146,7 @@
         <EditText
             android:id="@+id/et_lightMax"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:maxLines="1"
             android:inputType="number"

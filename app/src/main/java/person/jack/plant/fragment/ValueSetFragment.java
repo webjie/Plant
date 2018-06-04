@@ -52,9 +52,6 @@ public class ValueSetFragment extends Fragment implements View.OnClickListener {
         valueSetDao = new ValueSetDao(AppContext.getInstance());
         //初始化显示阈值
         startValue();
-        WarnRecord warn=new WarnRecord(1,"广玉兰","超出阈值",100,new Date());
-         WarnRecordDao warnRecordDao=new WarnRecordDao(AppContext.getInstance());
-         warnRecordDao.add(warn);
         return view;
     }
 
