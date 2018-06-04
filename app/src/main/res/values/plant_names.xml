@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string-array name="plant_names">
-
-
-      <item>发财树</item>
       <item>金钱树</item>
+      <item>发财树</item>
       <item>广玉兰</item>
       <item>常春藤</item>
-
       <item>富贵竹</item>
       <item>查询所有记录</item>
 
-
   </string-array>
-    
+    <string-array name="plant_live">
+        <item>发芽期</item>
+        <item>幼苗期</item>
+        <item>展业期</item>
+        <item>生长期</item>
+        <item>开花期</item>
+        <item>结果期</item>
+        <item>休眠期</item>
+    </string-array>
 
 </resources>
