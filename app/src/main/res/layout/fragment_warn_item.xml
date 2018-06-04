@@ -4,10 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <view
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000" />
 
     <TextView
         android:id="@+id/waring_id"
@@ -17,10 +13,6 @@
         android:gravity="center"
         android:text="序号" />
 
-    <view
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000" />
 
     <TextView
         android:id="@+id/waring_name"
@@ -30,10 +22,6 @@
         android:gravity="center"
         android:text="植物名称" />
 
-    <view
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000" />
 
     <TextView
         android:id="@+id/waring_type"
@@ -43,10 +31,6 @@
         android:gravity="center"
         android:text="类型" />
 
-    <view
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000" />
 
     <TextView
         android:id="@+id/waring_num"
@@ -56,10 +40,6 @@
         android:gravity="center"
         android:text="数值" />
 
-    <view
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000" />
 
     <TextView
         android:id="@+id/waring_time"
@@ -69,8 +49,5 @@
         android:gravity="center"
         android:text="时间" />
 
-    <view
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:background="#000" />
+
 </LinearLayout>

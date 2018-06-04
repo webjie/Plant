@@ -9,22 +9,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 import person.jack.plant.R;
 import person.jack.plant.db.entity.WarnRecord;
 
 /**
+ * 警告适配器
  * Created by Administrator on 2018/6/4.
  */
 
-public class WareAdapter extends ArrayAdapter<WarnRecord> {
+public class WarAdapter extends ArrayAdapter<WarnRecord> {
     int resourceId;
     List<WarnRecord> list=new ArrayList<>();
 
-    public WareAdapter(@NonNull Context context, int resource, @NonNull List<WarnRecord> objects) {
+    public WarAdapter(@NonNull Context context, int resource, @NonNull List<WarnRecord> objects) {
         super(context, resource, objects);
         this.resourceId = resource;
         this.list=objects;
@@ -48,11 +49,12 @@ public class WareAdapter extends ArrayAdapter<WarnRecord> {
             view = convertView;
             viewHolder = (ViewHolder) view.getTag();
         }
-        viewHolder.id.setText(position+1);
+        viewHolder.id.setText(position+1+"");
         viewHolder.name.setText(list.get(position).getName());
         viewHolder.type.setText(list.get(position).getType());
-        viewHolder.num.setText(list.get(position).getValue().toString());
-        viewHolder.date.setText(list.get(position).getWarnDate().toString());
+        viewHolder.num.setText(Integer.toString(list.get(position).getValue()));
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        viewHolder.date.setText(format.format(list.get(position).getWarnDate()));
         return view;
     }
 
