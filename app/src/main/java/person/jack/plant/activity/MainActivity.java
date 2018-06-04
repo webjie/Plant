@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 
 import person.jack.plant.R;
 import person.jack.plant.fragment.BufferKnifeFragment;
+import person.jack.plant.fragment.KnowLedgeFragment;
 import person.jack.plant.fragment.MainPagerFragment;
 import person.jack.plant.fragment.MemberFragment;
 import person.jack.plant.ui.UIHelper;
@@ -115,7 +116,7 @@ public class MainActivity extends BaseFragmentActivity {
             case 0: return new MainPagerFragment();
             case 1: return new BufferKnifeFragment();
             case 2: return new BufferKnifeFragment();
-            case 3: return new BufferKnifeFragment();
+            case 3: return new KnowLedgeFragment();
             case 4: return new MemberFragment();
             default: return null;
         }
