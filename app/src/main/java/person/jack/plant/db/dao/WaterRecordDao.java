@@ -6,9 +6,9 @@ import android.util.Log;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import person.jack.plant.db.DatabaseHelper;
-import person.jack.plant.db.entity.ValueSet;
 import person.jack.plant.db.entity.WaterRecord;
 
 /**
@@ -28,6 +28,11 @@ public class WaterRecordDao {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 添加灌溉记录
+     * @param waterRecord
+     */
     public void add(WaterRecord waterRecord){
         try {
             waterDao.create(waterRecord);
@@ -36,5 +41,20 @@ public class WaterRecordDao {
             e.printStackTrace();
             Log.d("student3","waterRecord添加失败");
         }
+    }
+    /**
+     * 查询所有的灌溉记录
+     * @return
+     */
+    public List<WaterRecord> findAll(){
+        List<WaterRecord>list=null;
+        try {
+            list=waterDao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+
     }
 }

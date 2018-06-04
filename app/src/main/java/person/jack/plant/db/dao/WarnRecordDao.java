@@ -5,9 +5,9 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import person.jack.plant.db.DatabaseHelper;
-import person.jack.plant.db.entity.ValueSet;
 import person.jack.plant.db.entity.WarnRecord;
 
 /**
@@ -27,11 +27,32 @@ public class WarnRecordDao {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 添加报警记录
+     * @param warnRecord
+     */
     public void add(WarnRecord warnRecord){
         try {
           warnDao.create(warnRecord);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 查询所有的报警记录
+     * @return
+     */
+    public List<WarnRecord> findAll(){
+        List<WarnRecord>list=null;
+        try {
+            list=warnDao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return list;
+
     }
 }
