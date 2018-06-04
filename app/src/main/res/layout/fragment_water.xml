@@ -8,6 +8,28 @@
         android:orientation="horizontal"
         >
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="根据植物名称查询:"
+            />
+        <Spinner
+            android:id="@+id/spn_water"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:entries="@array/plant_names"
+            ></Spinner>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#bac4c9"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -26,7 +48,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.6"
             android:text="灌溉时间"
             android:gravity="center"
             />

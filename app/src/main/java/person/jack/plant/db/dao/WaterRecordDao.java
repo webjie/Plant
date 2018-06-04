@@ -57,4 +57,18 @@ public class WaterRecordDao {
         return list;
 
     }
+    /**
+     * 根据植物名查询灌溉记录
+     * @return 植物名为name的所有记录
+     */
+    public List<WaterRecord> findForName(String name){
+        List<WaterRecord>list=null;
+        try {
+            list=waterDao.queryForEq("name",name);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+    }
 }

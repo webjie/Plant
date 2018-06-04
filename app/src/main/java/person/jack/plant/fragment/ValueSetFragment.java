@@ -3,7 +3,9 @@ package person.jack.plant.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import person.jack.plant.R;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.ValueSetDao;
+import person.jack.plant.db.dao.WarnRecordDao;
 import person.jack.plant.db.entity.ValueSet;
+import person.jack.plant.db.entity.WarnRecord;
 
 /**
  * 阈值设置界面
@@ -46,6 +52,9 @@ public class ValueSetFragment extends Fragment implements View.OnClickListener {
         valueSetDao = new ValueSetDao(AppContext.getInstance());
         //初始化显示阈值
         startValue();
+        WarnRecord warn=new WarnRecord(1,"广玉兰","超出阈值",100,new Date());
+         WarnRecordDao warnRecordDao=new WarnRecordDao(AppContext.getInstance());
+         warnRecordDao.add(warn);
         return view;
     }
 
@@ -70,6 +79,23 @@ public class ValueSetFragment extends Fragment implements View.OnClickListener {
         btn_save = (Button) view.findViewById(R.id.btn_save);
 
         btn_save.setOnClickListener(this);
+        et_temMin.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -132,7 +158,14 @@ public class ValueSetFragment extends Fragment implements View.OnClickListener {
         if (temMin.equals("")||temMax.equals("")|| humMin.equals("")
                 || humMax.equals("")|| lightMin.equals("")|| lightMax.equals("")) {
             Toast.makeText(getContext(), "输入的值不能为空", Toast.LENGTH_SHORT).show();
-        }else{
+        }else if(Integer.parseInt(temMin)>Integer.parseInt(temMax)){
+            Toast.makeText(getContext(), "温度的最小值不能大于最大值", Toast.LENGTH_SHORT).show();
+        }else if(Integer.parseInt(humMin)>Integer.parseInt(humMax)){
+            Toast.makeText(getContext(), "湿度的最小值不能大于最大值", Toast.LENGTH_SHORT).show();
+        }else if(Integer.parseInt(lightMin)>Integer.parseInt(lightMax)){
+            Toast.makeText(getContext(), "光照的最小值不能大于最大值", Toast.LENGTH_SHORT).show();
+        }
+        else{
             //判断数据表是否已经存在温度阈值，如果不存在直接添加，如果存在更新。
             ValueSet temValue=valueSetDao.findValueName("温度");
             if(temValue==null){

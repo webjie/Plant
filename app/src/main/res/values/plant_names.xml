@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="plant_names">
+
+
+      <item>发财树</item>
+      <item>金钱树</item>
+      <item>广玉兰</item>
+      <item>常春藤</item>
+
+      <item>富贵竹</item>
+      <item>查询所有记录</item>
+
+
+  </string-array>
+    
+
+</resources>
