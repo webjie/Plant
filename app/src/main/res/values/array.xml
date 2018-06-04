@@ -2,10 +2,10 @@
 <resources>
 
 	<string-array name="news_titles">
-		<item>首页</item>
-		<item>报警</item>
-		<item>日程</item>
-		<item>植物</item>
+		<item>植物列表</item>
+		<item>阈值设置</item>
+		<item>报警记录</item>
+		<item>灌溉记录</item>
 	</string-array>
 
 </resources>
