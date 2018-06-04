@@ -8,6 +8,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import person.jack.plant.db.entity.Article;
+import person.jack.plant.db.entity.Plants;
 import person.jack.plant.db.entity.Student;
 import person.jack.plant.db.entity.User;
 import person.jack.plant.db.entity.ValueSet;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final String DATABASE_NAME = "sqlite-test.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
 	private Map<String, Dao> daos = new HashMap();
 
@@ -66,6 +67,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource,ValueSet.class);
             TableUtils.createTable(connectionSource, WarnRecord.class);
             TableUtils.createTable(connectionSource, WaterRecord.class);
+            TableUtils.createTable(connectionSource,Plants.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,7 +81,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, Student.class, true);
             TableUtils.dropTable(connectionSource, ValueSet.class, true);
             TableUtils.dropTable(connectionSource, WarnRecord.class, true);
-            TableUtils.dropTable(connectionSource, WaterRecord.class, true);
+                     TableUtils.dropTable(connectionSource, WaterRecord.class, true);
+            TableUtils.dropTable(connectionSource, Plants.class, true);
+
 
             onCreate(database, connectionSource);
         } catch (SQLException e) {

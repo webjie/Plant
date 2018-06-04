@@ -3,17 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="120dp"
         android:src="@drawable/default_image"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
+        android:visibility="gone"
         >
 
         <TextView
@@ -91,14 +92,14 @@
             android:text="种植日期"
             android:layout_marginLeft="20dp"
             />
-        <Button
-            android:id="@+id/spn_plantDate"
+        <TextView
+            android:id="@+id/tv_plantDate"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_marginLeft="40dp"
-            android:textColor="#fff"
             android:text="选择日期"
-            android:background="@drawable/btn_save_back"
+            android:gravity="center"
+            android:background="@drawable/edit_back"
             />
     </LinearLayout>
     <LinearLayout
@@ -106,17 +107,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:gravity="center"
         >
-
-
         <Button
-            android:id="@+id/spn_plantSave"
+            android:id="@+id/btn_plantSave"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="40dp"
             android:textColor="#fff"
             android:text="保存"
+            android:layout_marginLeft="115dp"
             android:background="@drawable/btn_save_back"
             />
     </LinearLayout>
