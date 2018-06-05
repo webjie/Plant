@@ -53,6 +53,7 @@ public class PlantsDao {
         List<Plants> list=null;
         try {
            list= plantDao.queryForAll();
+            Log.d("student3","list长度:"+list.size());
         } catch (SQLException e) {
             e.printStackTrace();
         }

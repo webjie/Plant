@@ -135,7 +135,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             case R.id.btn_plantPhoto:
                 break;
             case R.id.btn_plantTake:
-                //创建File对象，用于储存拍照后的图片
+              /*  //创建File对象，用于储存拍照后的图片
                 File outputImage=new File(AppContext.getInstance().getExternalCacheDir(),"output_image.jpg");
                 try {
                     if(outputImage.exists()){
@@ -154,12 +154,12 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri
                 );
-                startActivityForResult(intent,TAKE_PHOTO);
+                startActivityForResult(intent,TAKE_PHOTO);*/
                 break;
         }
     }
 
-    @Override
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case TAKE_PHOTO:
@@ -180,7 +180,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                     break;
         }
     }
-
+*/
     public void photo() {
 
     }
@@ -202,11 +202,23 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 e.printStackTrace();
             }
 
-//添加
+            Plants plants=new Plants(1,R.drawable.default_image,plantName,growthState,date);
 
+            Log.d("student3--", R.drawable.default_image+"图片路径");
+
+            plantsDao.add(plants);
+            List<Plants> list=plantsDao.findAll();
+            for (Plants p:list
+                 ) {
+                Log.d("student3--",p.getImage()+"所有数据存进去路径");
+
+            }
+             //添加
             Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
             tv_plantDate.setText("选择日期");
             et_plantName.setText("");
+
+
 
 
         }

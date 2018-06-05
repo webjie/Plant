@@ -45,7 +45,7 @@ public class Plants {
 
     public Plants(Integer id, Integer image, String name, String growthStage, Date plantingDate) {
         this.id = id;
-        Image = image;
+        this.Image = image;
         this.name = name;
         this.plantingDate = plantingDate;
         this.growthStage = growthStage;
