@@ -16,11 +16,11 @@ import com.squareup.picasso.Picasso;
 
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
+import person.jack.plant.db.entity.Plants;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.http.HttpResponseHandler;
 import person.jack.plant.http.RestApiResponse;
 import person.jack.plant.model.SearchParam;
-import person.jack.plant.model.Plants;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.loadmore.LoadMoreListView;
 import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
@@ -80,8 +80,7 @@ public class DemoPtrFragment extends Fragment {
             protected void convert(final BaseAdapterHelper helper, Plants shop) {
 
                 helper.setText(R.id.tv_name, shop.getName())
-                        .setImageUrl(R.id.logo, shop.getLogo()
-                        ); // 自动异步加载图片
+                        ; // 自动异步加载图片
                 helper.setOnClickListener(R.id.btnWatering, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -99,7 +98,16 @@ public class DemoPtrFragment extends Fragment {
                                 UIHelper.showPlantsDetailActivity(getActivity());
 
                             }
-                        });
+                        })
+                .setOnClickListener(R.id.logo, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "onClick: 点击");
+                        //跳转碎片
+                        curPlant = list.get(helper.getPosition());
+                        UIHelper.showPlantsDetailActivity(getActivity());
+                    }
+                });
             }
         };
         listView.setDrawingCacheEnabled(true);
