@@ -39,6 +39,22 @@ public class Plants {
      */
     @DatabaseField (columnName = "growthStage")
     private String growthStage;
+    /**
+     * 湿度
+     */
+    @DatabaseField (columnName = "hum")
+    private Integer hum;
+    /**
+     * 光照
+     */
+    @DatabaseField (columnName = "light")
+    private Integer light;
+    /**
+     * 温度
+     */
+    @DatabaseField (columnName = "temp")
+    private Integer temp;
+
 
     public Plants() {
     }
@@ -49,6 +65,41 @@ public class Plants {
         this.name = name;
         this.plantingDate = plantingDate;
         this.growthStage = growthStage;
+    }
+
+    public Plants(Integer id, Integer image, String name, Date plantingDate, String growthStage, Integer hum, Integer light, Integer temp) {
+        this.id = id;
+        Image = image;
+        this.name = name;
+        this.plantingDate = plantingDate;
+        this.growthStage = growthStage;
+        this.hum = hum;
+        this.light = light;
+        this.temp = temp;
+    }
+
+    public Integer getHum() {
+        return hum;
+    }
+
+    public void setHum(Integer hum) {
+        this.hum = hum;
+    }
+
+    public Integer getLight() {
+        return light;
+    }
+
+    public void setLight(Integer light) {
+        this.light = light;
+    }
+
+    public Integer getTemp() {
+        return temp;
+    }
+
+    public void setTemp(Integer temp) {
+        this.temp = temp;
     }
 
     public Integer getId() {
