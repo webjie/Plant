@@ -1,21 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:cube_ptr="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
-	<!--
-	<include
-			layout="@layout/loading"
-			android:visibility="gone"/>
-	-->
-	<person.jack.plant.ui.pulltorefresh.PullToRefreshListView
-			xmlns:ptr="http://schemas.android.com/apk/res-auto"
-			android:id="@+id/listView"
-			ptr:ptrAnimationStyle="flip"
-			ptr:ptrHeaderTextColor="@color/gray"
-			ptr:ptrListViewExtrasEnabled="true"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"/>
+    <!--
+    <include
+            layout="@layout/loading"
+            android:visibility="gone"/>
+    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:text="植物图片"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:text="温度（℃）"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="湿度（%）"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="光照强度（xl）"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/rotate_header_list_view_frame"
+        cube_ptr:ptr_duration_to_close="300"
+        cube_ptr:ptr_duration_to_close_header="2000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/listView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            ptr:ptrAnimationStyle="flip"
+            ptr:ptrHeaderTextColor="@color/gray"
+            ptr:ptrListViewExtrasEnabled="true" />
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
 </LinearLayout>

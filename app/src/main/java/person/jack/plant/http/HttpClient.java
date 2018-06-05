@@ -43,6 +43,8 @@ public class HttpClient {
     private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain;");
     private static OkHttpClient client;
 
+    public static final MediaType JSONString = MediaType.parse("application/json; charset=utf-8");
+
     static {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(CONNECT_TIME_OUT, TimeUnit.SECONDS);
@@ -70,6 +72,18 @@ public class HttpClient {
             return response;
         }
     }
+    public static void getRequest(String url, okhttp3.Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().get().url(url).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void postRequest(String url, RequestBody requestBody, okhttp3.Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().post(requestBody).url(url).build();
+        client.newCall(request).enqueue(callback);
+    }
+
 
     public static boolean isNetworkAvailable() {
         try {
