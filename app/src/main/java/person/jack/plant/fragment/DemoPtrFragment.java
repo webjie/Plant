@@ -79,8 +79,27 @@ public class DemoPtrFragment extends Fragment {
             @Override
             protected void convert(final BaseAdapterHelper helper, Plants shop) {
 
-                helper.setText(R.id.tv_name, shop.getName())
-                        ; // 自动异步加载图片
+                helper.setText(R.id.tv_name, shop.getName()); // 自动异步加载图片
+
+                if ("花生".equals(shop.getName().toString())){
+                    helper.setImageResource(R.id.logo,R.drawable.img1);
+                }
+                if ("辣椒".equals(shop.getName().toString())){
+                    helper.setImageResource(R.id.logo,R.drawable.img2);
+                }
+                if ("白掌".equals(shop.getName().toString())){
+                    helper.setImageResource(R.id.logo,R.drawable.img3);
+                }
+                if ("碧玉".equals(shop.getName().toString())){
+                    helper.setImageResource(R.id.logo,R.drawable.img4);
+                }
+                if ("双线竹语".equals(shop.getName().toString())){
+                    helper.setImageResource(R.id.logo,R.drawable.img5);
+                }
+                if ("长寿花".equals(shop.getName().toString())){
+                    helper.setImageResource(R.id.logo,R.drawable.img6);
+                }
+
                 helper.setOnClickListener(R.id.btnWatering, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -194,10 +213,12 @@ public class DemoPtrFragment extends Fragment {
 
         //使用模拟数据
         String body = "[" +
-                "{ \"name\":\"君子兰\" , \"logo\":\"http://img.plantphoto.cn/image2/b/669427.jpg\" }," +
-                "{ \"name\":\"栀子花\" , \"logo\":\"https://upload.wikimedia.org/wikipedia/commons/7/78/Gardenia_jasminoides_8zz.jpg\" }," +
-                "{ \"name\":\"矢车菊\" , \"logo\":\"https://upload.wikimedia.org/wikipedia/commons/d/d5/Detailaufnahme_Weizenfeld.jpg\" }," +
-                "{ \"name\":\"矢车菊\" , \"logo\":\"0.jpg\" }," +
+                "{ \"name\":\"花生\" , \"logo\":\"img1.jpg\" }," +
+                "{ \"name\":\"辣椒\" , \"logo\":\"img1.jpg\" }," +
+                "{ \"name\":\"白掌\" , \"logo\":\"img1.jpg\" }," +
+                "{ \"name\":\"碧玉\" , \"logo\":\"img1.jpg\" }," +
+                "{ \"name\":\"双线竹语\" , \"logo\":\"img1.jpg\" }," +
+                "{ \"name\":\"长寿花\" , \"logo\":\"img1.jpg\" }," +
                 "]";
         try {
             list = JSONArray.parseArray(body, Plants.class);
