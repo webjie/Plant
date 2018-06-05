@@ -50,7 +50,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void initData(Bundle savedInstanceState) {
         fragmentTags = new ArrayList<>(Arrays.asList("HomeFragment", "ImFragment",
-                "InterestFragment", "InterestFragment", "MemberFragment"));
+                "PlantAddFragment", "InterestFragment", "MemberFragment"));
         currIndex = 0;
         if(savedInstanceState != null) {
             currIndex = savedInstanceState.getInt(CURR_INDEX);
