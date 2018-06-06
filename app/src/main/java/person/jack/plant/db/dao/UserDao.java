@@ -60,6 +60,20 @@ public class UserDao {
         return user;
 
     }
+
+    /**
+     * 更新
+     * @param user
+     */
+    public  void update(User user){
+        try {
+            userDao.update(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public List<User> findAll(){
         List<User>list=null;
         try {
@@ -69,6 +83,19 @@ public class UserDao {
         }
 
         return list;
+
+    }
+
+    /**
+     * 删除
+     * @param user
+     */
+    public  void delete(User user){
+        try {
+            userDao.delete(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
