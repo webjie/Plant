@@ -47,6 +47,7 @@ public class WaterFragment extends Fragment {
         waterList = waterRecordDao.findAll();
         if (waterList.size() == 0 || waterList == null) {
             init();
+            waterList = waterRecordDao.findAll();
         }
         List<String> stringList =new ArrayList<>();
         for(int i=0;i<waterList.size();i++){
@@ -62,15 +63,19 @@ public class WaterFragment extends Fragment {
     }
 
     public void init() {
-        WaterRecord water1 = new WaterRecord(1, "广玉兰", new Date());
-        WaterRecord water2 = new WaterRecord(1, "发财树", new Date());
+        WaterRecord water1 = new WaterRecord(1, "辣椒", new Date());
+        WaterRecord water2 = new WaterRecord(1, "白掌", new Date());
 
-        WaterRecord water3 = new WaterRecord(1, "金钱树", new Date());
-        WaterRecord water4 = new WaterRecord(1, "金钱树", new Date());
+        WaterRecord water3 = new WaterRecord(1, "碧玉", new Date());
+        WaterRecord water4 = new WaterRecord(1, "双线竹语", new Date());
+        WaterRecord water5 = new WaterRecord(1, "长寿花", new Date());
+        WaterRecord water6 = new WaterRecord(1, "花生", new Date());
         waterRecordDao.add(water1);
         waterRecordDao.add(water2);
         waterRecordDao.add(water3);
         waterRecordDao.add(water4);
+        waterRecordDao.add(water5);
+        waterRecordDao.add(water6);
 
     }
 
