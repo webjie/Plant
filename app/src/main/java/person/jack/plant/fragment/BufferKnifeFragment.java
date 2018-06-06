@@ -11,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.alibaba.fastjson.JSONArray;
 import com.squareup.picasso.Picasso;
@@ -270,7 +272,7 @@ public class BufferKnifeFragment extends Fragment {
             switch (message.what){
                 case 1:
                     int [] value=(int[])message.obj;
-                    List<Plants> list=new ArrayList<>();
+                    List<Plants> temList=new ArrayList<>();
                     for(int i=0;i<list.size();i++){
                         Plants plants=adapter.getItem(i);
 
@@ -278,10 +280,15 @@ public class BufferKnifeFragment extends Fragment {
                         plants.setHum(value[1]);
                         plants.setLight(value[2]);
 
-                        list.add(plants);
+                        temList.add(plants);
                     }
                     adapter.clear();
-                    adapter.addAll(list);
+                    adapter.addAll(temList);
+
+
+
+
+                    Log.d(TAG, "handleMessage: "+temList.size());
                     adapter.notifyDataSetChanged();
                    break;
             }

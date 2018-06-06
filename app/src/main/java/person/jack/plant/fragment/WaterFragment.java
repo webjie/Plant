@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -47,6 +48,15 @@ public class WaterFragment extends Fragment {
         if (waterList.size() == 0 || waterList == null) {
             init();
         }
+        List<String> stringList =new ArrayList<>();
+        for(int i=0;i<waterList.size();i++){
+            stringList.add(waterList.get(i).getName());
+        }
+
+        stringList.add("查询所有记录");
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,stringList);
+        spn_water.setAdapter(arrayAdapter);
+
 
         return view;
     }
