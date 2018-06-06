@@ -5,8 +5,8 @@
 
     <ImageView
         android:id="@+id/iv_user_head"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/app_name"
@@ -19,7 +19,7 @@
         android:layout_below="@id/iv_user_head"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:text="13521468432"
+        android:text="请登录"
         android:textColor="@color/text_color_white"
         android:textSize="16sp" />
 
