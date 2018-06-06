@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.text.format.DateFormat;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,9 +37,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -80,6 +85,14 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_plantadd, container, false);
         initView(view);
         plantsDao = new PlantsDao(AppContext.getInstance());
+        list=plantsDao.findAll();
+        if(list!=null){
+            for (Plants p:list
+                    ) {
+                Log.d("student3","图片路径"+p.getImage()+"  , 名称"+p.getName());
+            }
+
+        }
         return view;
     }
 
@@ -125,7 +138,12 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 dialog.show();
                 break;
             case R.id.btn_plantSave:
-                submit();
+                if(chooseImagePath==null){
+                    Toast.makeText(getContext(),"请点击图片设置植物头像",Toast.LENGTH_LONG).show();
+                }else{
+                    submit();
+                }
+
                 break;
             case R.id.img_PlantImg:
                 showDialog();;
@@ -171,14 +189,22 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            //Plants plants=new Plants(1,R.drawable.default_image,plantName,growthState,date);
-          //  plantsDao.add(plants);
+            Plants plants=new Plants(1,chooseImagePath,plantName,growthState,date);
+            plantsDao.add(plants);
+            list=plantsDao.findAll();
+            if(list!=null){
+                for (Plants p:list
+                     ) {
+                    Log.d("student3","图片路径"+p.getImage()+" ,   名称"+p.getName());
+                }
+
+            }
             Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
+
             tv_plantDate.setText("选择日期");
             et_plantName.setText("");
         }
     }
-
     /**
      * 打开相册
      */
@@ -187,7 +213,6 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         intent.setType("image/*");
         startActivityForResult(intent, CHOOSE_PHOTO);//打开相册
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
@@ -195,12 +220,10 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
-
                 } else {
                     Toast.makeText(getContext(), "你没有权限打开相机", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
             default:
                 break;
         }
@@ -227,8 +250,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 if(resultCode==RESULT_OK){
                     try {
                         Bitmap   bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(imageUri));
-                        img_PlantImg.setImageBitmap(bitmap
-                        );
+                        img_PlantImg.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -238,7 +260,6 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 break;
         }
     }
-
     /**
      * 生成图片
      * 系统版本4.4以上
@@ -272,7 +293,6 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         }
         displayImages(imagePath);
     }
-
     /**
      * 生成图片
      * 系统版本4.4以下
@@ -283,9 +303,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         Uri uri = data.getData();
         String imagePath = getImagePath(uri, null);
         displayImages(imagePath);
-
     }
-
     /**
      *
      * 根据uri、select 获得路径
@@ -320,15 +338,15 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-
-
     /**
      *
      * 拍照
      */
     public void takePhoto(){
+       SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
         //创建File对象，用于储存拍照后的图片
-        File outputImage=new File(getContext().getExternalCacheDir(),"output_image.jpg");
+        File outputImage = new File(Environment.getExternalStorageDirectory()
+                + "/"+format.format(new Date())+".jpg");
         try {
             if(outputImage.exists()){
                 outputImage.delete();
@@ -342,8 +360,13 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         }else{
             imageUri= Uri.fromFile(outputImage);
         }
-
-
+        //取得路径
+        chooseImagePath=imageUri.getPath();
+        if(chooseImagePath==null){
+            Log.d("path-------","null");
+        }else{
+            Log.d("path-------",chooseImagePath);
+        }
         //启动相机程序
         Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri

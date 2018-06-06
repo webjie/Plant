@@ -9,7 +9,7 @@
       <item>查询所有记录</item>
 
   </string-array>
-    <string-array name="plant_live">
+    <string-array name="plant_live" >
         <item>发芽期</item>
         <item>幼苗期</item>
         <item>展业期</item>
