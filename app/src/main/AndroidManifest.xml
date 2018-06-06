@@ -56,7 +56,10 @@
             android:label="@string/title_activity_plants_detail" />
         <activity
             android:name=".activity.PlantsStatusActivity"
-            android:label="@string/title_activity_plants_status"></activity>
+            android:label="@string/title_activity_plants_status" />
+        <activity android:name=".activity.VersionActivity" />
+        <activity android:name=".activity.ResActivity" />
+        <activity android:name=".activity.RePwdActivity"></activity>
     </application>
 
 </manifest>

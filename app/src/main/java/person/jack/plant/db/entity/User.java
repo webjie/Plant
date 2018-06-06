@@ -7,68 +7,75 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Collection;
 
 @DatabaseTable(tableName = "user_record")
-public class User 
-{
-	@DatabaseField(columnName = "id",generatedId = true)
-	private int id;
-	@DatabaseField(columnName = "image_path")
-	private String imgaePath;
-	@DatabaseField(columnName = "name")
-	private String name;
-	@DatabaseField(columnName = "password")
-	private String pwd;
+public class User {
+    @DatabaseField(columnName = "id", generatedId = true)
+    private int id;
+    @DatabaseField(columnName = "image_path")
+    private String imgaePath;
+    @DatabaseField(columnName = "name")
+    private String name;
+    @DatabaseField(columnName = "password")
+    private String pwd;
 
-	@DatabaseField(columnName = "phone")
-	private String phone;
+    @DatabaseField(columnName = "phone")
+    private String phone;
 
-	public User(int id, String imgaePath, String name, String pwd, String phone) {
-		this.id = id;
-		this.imgaePath = imgaePath;
-		this.name = name;
-		this.pwd = pwd;
-		this.phone = phone;
-	}
+    public User(int id, String imgaePath, String name, String pwd, String phone) {
+        this.id = id;
+        this.imgaePath = imgaePath;
+        this.name = name;
+        this.pwd = pwd;
+        this.phone = phone;
+    }
 
-	public User() {
-	}
+    public User(int id, String name, String pwd, String phone) {
+        this.id = id;
+        this.imgaePath = imgaePath;
+        this.name = name;
+        this.pwd = pwd;
+        this.phone = phone;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public User() {
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getImgaePath() {
-		return imgaePath;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setImgaePath(String imgaePath) {
-		this.imgaePath = imgaePath;
-	}
+    public String getImgaePath() {
+        return imgaePath;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setImgaePath(String imgaePath) {
+        this.imgaePath = imgaePath;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getPwd() {
-		return pwd;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
-	}
+    public String getPwd() {
+        return pwd;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 }
