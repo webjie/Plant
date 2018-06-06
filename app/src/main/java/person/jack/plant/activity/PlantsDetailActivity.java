@@ -100,7 +100,7 @@ public class PlantsDetailActivity extends SwipeBackActivity {
             switch (message.what){
                 case 1:
                     int [] value=(int[])message.obj;
-                    tvDetailTemp.setText("温度：："+value[0]+"℃");
+                    tvDetailTemp.setText("温度："+value[0]+"℃");
                     tvDetailHum.setText("湿度："+value[1]+"%");
                     tvDetailLig.setText("光照："+value[2]+"lx");
             }

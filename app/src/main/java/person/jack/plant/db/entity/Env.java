@@ -17,7 +17,7 @@ public class Env {
     @DatabaseField(columnName = "light")
     private int light;
 
-    public Env(int id, int humidity, int temperature, int light) {
+    public Env(int id, int temperature, int humidity, int light) {
         this.id = id;
         this.humidity = humidity;
         this.temperature = temperature;

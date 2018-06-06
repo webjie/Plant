@@ -112,4 +112,5 @@ dependencies {
     implementation 'in.srain.cube:ultra-ptr:1.0.10'
     implementation 'com.android.support:support-v4:23.2.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }

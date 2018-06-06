@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
+import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Plants;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.http.HttpResponseHandler;
@@ -222,6 +223,10 @@ public class DemoPtrFragment extends Fragment {
                 "]";
         try {
             list = JSONArray.parseArray(body, Plants.class);
+            PlantsDao dao=new PlantsDao(getContext());
+
+            List<Plants> plantsList=dao.findAll();
+            list.addAll(plantsList);
             listView.updateLoadMoreViewText(list);
             isLoadAll = list.size() < HttpClient.PAGE_SIZE;
             if (pno == 1) {
