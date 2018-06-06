@@ -22,6 +22,7 @@ public class RePwdActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_re_pwd);
+
         name = (EditText) findViewById(R.id.ed_re_name);
         oldPwd = (EditText) findViewById(R.id.ed_old_pwd);
         newPwd = (EditText) findViewById(R.id.ed_new_pwd);
@@ -29,11 +30,6 @@ public class RePwdActivity extends BaseFragmentActivity {
         back = (Button) findViewById(R.id.btn_rePwd_back);
         btnOk = (Button) findViewById(R.id.btn_ok);
         userDao = new UserDao(AppContext.getInstance());
-
-        final String userName = name.getText().toString();
-        final String userOldPwd = oldPwd.getText().toString();
-        final String userNewPwd = newPwd.getText().toString();
-        final String reTrue = rePwd.getText().toString();
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,14 +42,20 @@ public class RePwdActivity extends BaseFragmentActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = userDao.findByName("aa");
+
+                final String userName = name.getText().toString();
+                final String userOldPwd = oldPwd.getText().toString();
+                final String userNewPwd = newPwd.getText().toString();
+                final String reTrue = rePwd.getText().toString();
+
+                User user = userDao.findByName(userName);
 
                 if (user != null) {
-                    if ("123".equals(user.getPwd())) {
-                        if ("1234".equals("1234")) {
-                            user.setPwd("1234");
+                    if (userOldPwd.equals(user.getPwd())) {
+                        if (userNewPwd.equals(reTrue)) {
+                            user.setPwd(userNewPwd);
                             userDao.update(user);
-                            Log.d("user",userDao.findAll().get(0).getPwd().toString());
+
                             Toast.makeText(RePwdActivity.this, "密码修改成功！", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(RePwdActivity.this, "两次密码不匹配！", Toast.LENGTH_SHORT).show();
@@ -61,8 +63,8 @@ public class RePwdActivity extends BaseFragmentActivity {
                     } else {
                         Toast.makeText(RePwdActivity.this, "密码错误！", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(RePwdActivity.this, "密码错误！", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RePwdActivity.this, "没有该用户！", Toast.LENGTH_SHORT).show();
                 }
             }
         });

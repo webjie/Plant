@@ -37,21 +37,20 @@ public class LoginActivity extends BaseFragmentActivity {
         pwd = (EditText) findViewById(R.id.login_pwd);
         userDao = new UserDao(AppContext.getInstance());
 
-        final String user_name = name.getText().toString();
-        final String user_pwd = pwd.getText().toString();
-
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String user_name = name.getText().toString();
+                final String user_pwd = pwd.getText().toString();
 
                 List<User> list = userDao.findAll();
                 for (User user2 : list
                         ) {
                     Log.d("user", user2.getName());
                 }
-                User user = userDao.findByName("yx");
+                User user = userDao.findByName(user_name);
                 if (user != null) {
-                    if (("1234").equals(user.getPwd())) {
+                    if ((user_pwd).equals(user.getPwd())) {
                         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
                         editor.putString("user_name", user.getName().toString());
                         editor.putBoolean("isLogin", true);
