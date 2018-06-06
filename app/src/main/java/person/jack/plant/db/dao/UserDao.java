@@ -37,6 +37,29 @@ public class UserDao {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 根据姓名查找
+     * @param name
+     * @return User对象
+     */
+    public  User findByName(String name){
+        User user=null;
+        List<User> list=null;
+        try {
+            list=userDao.queryForEq("name",name);
+            if(list.size()==0){
+                user=null;
+            }else{
+                user=list.get(0);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+
+    }
     public List<User> findAll(){
         List<User>list=null;
         try {
