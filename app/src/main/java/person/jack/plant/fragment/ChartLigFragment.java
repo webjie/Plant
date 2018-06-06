@@ -59,7 +59,7 @@ public class ChartLigFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_chart, container, false);
         statusChart = (LineChart) view.findViewById(R.id.status_chart);
         statusName = (TextView) view.findViewById(R.id.status_name);
-        statusName.setText("光照强度");
+        statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的光照强度");
         PlantsStatusActivity activity=(PlantsStatusActivity)getActivity();
         list=activity.getEnvList();
         entryList=new ArrayList<>();
@@ -155,7 +155,6 @@ public class ChartLigFragment extends Fragment {
         });
         xAxis.setDrawGridLines(false);
         xAxis.setLabelCount(4);
-        xAxis.setXOffset(50);
 
         statusChart.getAxisRight().setEnabled(false);
         YAxis yAxis=statusChart.getAxisLeft();

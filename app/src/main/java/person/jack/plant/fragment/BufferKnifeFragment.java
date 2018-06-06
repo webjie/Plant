@@ -67,6 +67,7 @@ public class BufferKnifeFragment extends Fragment {
     private int pno = 1;
     private boolean isLoadAll;
     private List<Plants> list;
+    public static Plants curPlants;
 
     @Bind(R.id.listView)
     ListView listView;
@@ -103,7 +104,7 @@ public class BufferKnifeFragment extends Fragment {
         adapter = new QuickAdapter<Plants>(context, R.layout.statistics_item_layout) {
 
             @Override
-            protected void convert(BaseAdapterHelper helper, Plants shop) {
+            protected void convert(final BaseAdapterHelper helper, Plants shop) {
                 Log.d(TAG, "convert: " + shop.getName());
                 helper.setText(R.id.item_name, shop.getName()); // 自动异步加载图片
 
@@ -134,21 +135,25 @@ public class BufferKnifeFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         UIHelper.showChartActivity(getActivity(), 0);
+                        curPlants=list.get(helper.getPosition());
                     }
                 }).setOnClickListener(R.id.item_hum, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         UIHelper.showChartActivity(getActivity(), 1);
+                        curPlants=list.get(helper.getPosition());
                     }
                 }).setOnClickListener(R.id.item_lig, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         UIHelper.showChartActivity(getActivity(), 2);
+                        curPlants=list.get(helper.getPosition());
                     }
                 }).setOnClickListener(R.id.item_pic, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         UIHelper.showChartActivity(getActivity(), 0);
+                        curPlants=list.get(helper.getPosition());
                     }
                 });
 
@@ -184,16 +189,16 @@ public class BufferKnifeFragment extends Fragment {
 
 
     public void init() {
-        Env env1 = new Env(1, 35, 100, 1500);
-        Env env2 = new Env(1, 28, 70, 856);
-        Env env3 = new Env(1, 25, 80, 1000);
-        Env env4 = new Env(1, 23, 55, 800);
-        Env env5 = new Env(1, 20, 40, 2000);
-        Env env6 = new Env(1, 18, 30, 878);
-        Env env7 = new Env(1, 26, 66, 963);
-        Env env8 = new Env(1, 27, 87, 756);
-        Env env9 = new Env(1, 31, 45, 1143);
-        Env env10 = new Env(1, 20, 48, 2455);
+        Env env1 = new Env(1, 25, 63, 1500);
+        Env env2 = new Env(1, 24, 70, 1450);
+        Env env3 = new Env(1, 24, 65, 1332);
+        Env env4 = new Env(1, 23, 71, 1200);
+        Env env5 = new Env(1, 24, 66, 1450);
+        Env env6 = new Env(1, 22, 70, 1333);
+        Env env7 = new Env(1, 25, 67, 1456);
+        Env env8 = new Env(1, 27, 65, 1250);
+        Env env9 = new Env(1, 25, 60, 1350);
+        Env env10 = new Env(1, 24, 60, 1300);
         envDao.add(env1);
         envDao.add(env2);
         envDao.add(env3);

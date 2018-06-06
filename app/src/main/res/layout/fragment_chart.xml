@@ -14,7 +14,8 @@
         android:layout_height="wrap_content" />
 
     <com.github.mikephil.charting.charts.LineChart
-        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
         android:id="@+id/status_chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></com.github.mikephil.charting.charts.LineChart>

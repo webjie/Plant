@@ -19,6 +19,7 @@ import java.util.List;
 import person.jack.plant.R;
 import person.jack.plant.db.dao.EnvDao;
 import person.jack.plant.db.entity.Env;
+import person.jack.plant.db.entity.Plants;
 import person.jack.plant.fragment.ChartHumFragment;
 import person.jack.plant.fragment.ChartLigFragment;
 import person.jack.plant.fragment.ChartTempFragment;
@@ -39,6 +40,7 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
     List<RadioButton> radioButtonList=new ArrayList<>();
     private EnvDao envDao;
     private static List<Env>envList;
+
 
     public List<Env> getEnvList() {
         return envList;
@@ -72,6 +74,7 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         radioButtonList.add(statusR1);radioButtonList.add(statusR2);radioButtonList.add(statusR3);
 
         for(int i=0;i<radioButtonList.size();i++){
+            radioButtonList.get(i).setClickable(false);
             if(i==curPosition){
                 radioButtonList.get(i).setChecked(true);
             }

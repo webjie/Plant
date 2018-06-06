@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="person.jack.plant.activity.PlantsDetailActivity">
 
     <include layout="@layout/layout_main_header" />
@@ -17,9 +18,8 @@
             android:fitsSystemWindows="true"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <LinearLayout
-                android:background="@color/text_color_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -31,47 +31,52 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
 
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="15dp"
-                    android:textSize="20sp"
-                    android:id="@+id/tv_name"
-                    android:textColor="@color/white"
-                    android:text="车矢菊"
-                    android:layout_width="match_parent"
-                    android:layout_height="25sp" />
-                <TextView
-                    android:textColor="@color/white"
+                <LinearLayout
                     android:layout_marginTop="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:textSize="18sp"
-                    android:id="@+id/tv_date"
-                    android:text="种植时间：2018-5-12"
+                    android:background="@color/white"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="20sp" />
-                <TextView
-                    android:id="@+id/tv_state"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:textSize="18sp"
-                    android:text="当前状态：生长中"
-                    android:layout_width="match_parent"
-                    android:layout_height="20sp" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:textSize="20sp"
+                        android:id="@+id/tv_name"
+                        android:text="车矢菊"
+                        android:layout_width="match_parent"
+                        android:layout_height="25sp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:textSize="18sp"
+                        android:id="@+id/tv_date"
+                        android:text="种植时间：2018-5-12"
+                        android:layout_width="match_parent"
+                        android:layout_height="20sp" />
+                    <TextView
+                        android:id="@+id/tv_state"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:textSize="18sp"
+                        android:text="当前状态：生长中"
+                        android:layout_width="match_parent"
+                        android:layout_height="20sp" />
+                </LinearLayout>
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="25dp"
-                android:background="@color/blue_light"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
                     android:layout_marginLeft="15dp"
                     android:text="当前环境信息"
-                    android:textColor="@color/white"
                     android:textSize="20sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -79,7 +84,6 @@
                 <TextView
                     android:id="@+id/tv_detail_temp"
                     android:textSize="18sp"
-                    android:textColor="@color/white"
                     android:text="温度：15℃"
                     android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
@@ -87,7 +91,6 @@
                 <TextView
                     android:id="@+id/tv_detail_hum"
                     android:textSize="18sp"
-                    android:textColor="@color/white"
                     android:text="湿度：15"
                     android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
@@ -95,12 +98,17 @@
                 <TextView
                     android:id="@+id/tv_detail_lig"
                     android:textSize="18sp"
-                    android:textColor="@color/white"
                     android:text="光照强度：15"
                     android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <WebView
+                android:id="@+id/web_view"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></WebView>
 
         </LinearLayout>
 

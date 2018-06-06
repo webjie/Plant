@@ -5,6 +5,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,7 +33,7 @@ import person.jack.plant.http.HttpClient;
 import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
 
 public class PlantsDetailActivity extends SwipeBackActivity {
-    public static final String TAG="Kaa";
+    public static final String TAG = "Kaa";
 
     @Bind(R.id.btnBack)
     Button btnBack;
@@ -45,6 +49,10 @@ public class PlantsDetailActivity extends SwipeBackActivity {
     private TextView tvDetailTemp;
     private TextView tvDetailHum;
     private TextView tvDetailLig;
+    private WebView webView;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,38 +79,85 @@ public class PlantsDetailActivity extends SwipeBackActivity {
         tvDetailTemp = (TextView) findViewById(R.id.tv_detail_temp);
         tvDetailHum = (TextView) findViewById(R.id.tv_detail_hum);
         tvDetailLig = (TextView) findViewById(R.id.tv_detail_lig);
-        plant=DemoPtrFragment.curPlant;
+        webView = (WebView) findViewById(R.id.web_view);
 
-        if(plant!=null){
-            Log.d(TAG, "initView: "+plant.getName());
-            //先使用默认图片
-            Log.d(TAG, "initView: "+plant.getImage());
-            ivPlant.setImageResource(R.drawable.default_image);
-        tvName.setText(plant.getName());
-//        SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-//        tvDate.setText(dateFormat.format(plant.getPlantingDate()));
+        plant = DemoPtrFragment.curPlant;
 
-            //目前是写死的生长状态
-        tvState.setText(plant.getGrowthStage());
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        String encode=null;
+        try {
+             encode = URLEncoder.encode(plant.getName(), "utf-8");
+            Log.d(TAG, "initView: "+encode);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(encode!=null){
+            webView.loadUrl("https://baike.baidu.com/item/"+encode);
         }
 
+
+
+
+
+        if (plant != null) {
+            Log.d(TAG, "initView: " + plant.getName());
+            //先使用默认图片
+            Log.d(TAG, "initView: " + plant.getImage());
+
+            if ("花生".equals(plant.getName().toString())) {
+                ivPlant.setImageResource(R.drawable.img1);
+            }
+            if ("辣椒".equals(plant.getName().toString())) {
+                ivPlant.setImageResource(R.drawable.img2);
+            }
+            if ("白掌".equals(plant.getName().toString())) {
+                ivPlant.setImageResource(R.drawable.img3);
+            }
+            if ("碧玉".equals(plant.getName().toString())) {
+                ivPlant.setImageResource(R.drawable.img4);
+            }
+            if ("双线竹语".equals(plant.getName().toString())) {
+                ivPlant.setImageResource(R.drawable.img5);
+            }
+            if ("长寿花".equals(plant.getName().toString())) {
+                ivPlant.setImageResource(R.drawable.img6);
+            }
+            tvName.setText(plant.getName());
+            if(plant.getGrowthStage()!=null){
+                tvState.setText("当前生长状态："+plant.getGrowthStage());
+            }else{
+                tvState.setText("当前生长状态：生长中");
+            }
+
+            if(plant.getPlantingDate()!=null){
+                SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
+                tvDate.setText(dateFormat.format(plant.getPlantingDate()));
+            }
+        }
 
 
     }
 
     Timer timer;
     TimerTask timerTask;
-    String url="http://192.168.1.107:8080/Parking/GetAllSense.do";
+    String url = "http://192.168.1.107:8080/Parking/GetAllSense.do";
 
-    Handler handler=new Handler(new Handler.Callback() {
+    Handler handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            switch (message.what){
+            switch (message.what) {
                 case 1:
-                    int [] value=(int[])message.obj;
-                    tvDetailTemp.setText("温度："+value[0]+"℃");
-                    tvDetailHum.setText("湿度："+value[1]+"%");
-                    tvDetailLig.setText("光照："+value[2]+"lx");
+                    int[] value = (int[]) message.obj;
+                    tvDetailTemp.setText("温度：" + value[0] + "℃");
+                    tvDetailHum.setText("湿度：" + value[1] + "%");
+                    tvDetailLig.setText("光照：" + value[2] + "lx");
             }
             return false;
         }
@@ -111,8 +166,8 @@ public class PlantsDetailActivity extends SwipeBackActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        timer=new Timer();
-        timerTask=new TimerTask() {
+        timer = new Timer();
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 HttpClient.getRequest(url, new Callback() {
@@ -124,14 +179,14 @@ public class PlantsDetailActivity extends SwipeBackActivity {
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         try {
-                            JSONObject jsonObject=new JSONObject(new JSONObject(response.body().string()).getString("serverInfo"));
-                            int [] values=new int[3];
-                            values[0]=jsonObject.getInt("temperature");
-                            values[1]=jsonObject.getInt("humidity");
-                            values[2]=jsonObject.getInt("LightIntensity");
-                            Message message=new Message();
-                            message.what=1;
-                            message.obj=values;
+                            JSONObject jsonObject = new JSONObject(new JSONObject(response.body().string()).getString("serverInfo"));
+                            int[] values = new int[3];
+                            values[0] = jsonObject.getInt("temperature");
+                            values[1] = jsonObject.getInt("humidity");
+                            values[2] = jsonObject.getInt("LightIntensity");
+                            Message message = new Message();
+                            message.what = 1;
+                            message.obj = values;
                             handler.sendMessage(message);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -140,18 +195,18 @@ public class PlantsDetailActivity extends SwipeBackActivity {
                 });
             }
         };
-        timer.schedule(timerTask,500,15000);
+        timer.schedule(timerTask, 500, 15000);
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if(timer!=null){
+        if (timer != null) {
             timer.cancel();
             timerTask.cancel();
-            timerTask=null;
-            timer=null;
+            timerTask = null;
+            timer = null;
         }
     }
 }
