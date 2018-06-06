@@ -59,7 +59,8 @@
             android:label="@string/title_activity_plants_status" />
         <activity android:name=".activity.VersionActivity" />
         <activity android:name=".activity.ResActivity" />
-        <activity android:name=".activity.RePwdActivity"></activity>
+        <activity android:name=".activity.RePwdActivity" />
+        <activity android:name=".activity.PersonInfoActivity"></activity>
     </application>
 
 </manifest>

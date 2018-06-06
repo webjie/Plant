@@ -32,14 +32,13 @@
                     android:background="@drawable/login_phone" />
 
                 <EditText
-                    android:id="@+id/name"
+                    android:id="@+id/login_name"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_toRightOf="@+id/imgPhone"
                     android:background="@null"
                     android:hint="帐号"
-                    android:inputType="number"
-                    android:maxLength="11"
+                    android:maxLength="12"
                     android:paddingLeft="15.0dip"
                     android:singleLine="true"
                     android:textColor="#ff111111"
@@ -67,14 +66,14 @@
                     android:background="@drawable/login_lock" />
 
                 <EditText
-                    android:id="@+id/password"
+                    android:id="@+id/login_pwd"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:layout_toRightOf="@+id/imgCode"
                     android:background="@null"
                     android:hint="密码"
-                    android:inputType="number"
-                    android:maxLength="6"
+                    android:inputType="textPassword"
+                    android:maxLength="12"
                     android:paddingLeft="15.0dip"
                     android:singleLine="true"
                     android:textColor="#ff111111"
@@ -93,8 +92,6 @@
             android:layout_marginRight="18.0dip"
             android:layout_marginTop="30.0dip"
             android:background="@drawable/btn_bg_gray"
-            android:clickable="false"
-            android:enabled="false"
             android:text="登录"
             android:textColor="#ffffffff"
             android:textSize="18.0sp" />

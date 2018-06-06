@@ -11,6 +11,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import person.jack.plant.R;
+import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.UserDao;
 import person.jack.plant.db.entity.User;
 import person.jack.plant.ui.UIHelper;
@@ -18,6 +19,7 @@ import person.jack.plant.ui.UIHelper;
 public class ResActivity extends BaseFragmentActivity {
     EditText name, pwd, phone;
     Button back, res;
+    UserDao userDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +30,13 @@ public class ResActivity extends BaseFragmentActivity {
         phone = (EditText) findViewById(R.id.ed_user_phone);
         back = (Button) findViewById(R.id.btn_res_back);
         res = (Button) findViewById(R.id.btn_res);
+        userDao = new UserDao(AppContext.getInstance());
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 UIHelper.showMember(ResActivity.this);
+                finish();
             }
         });
 
@@ -42,17 +46,22 @@ public class ResActivity extends BaseFragmentActivity {
                 String userName = name.getText().toString();
                 String userPwd = pwd.getText().toString();
                 String userPhone = phone.getText().toString();
-                if (isPhone(userPhone)){
-                    User user = new User(1, userName, userPwd, userPhone);
-                    UserDao userDao = new UserDao(ResActivity.this);
-                    userDao.add(user);
-                    Toast.makeText(ResActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
-                    List<User> list = userDao.findAll();
-                    Log.d("user", list.get(0).getName());
-                    UIHelper.showMember(ResActivity.this);
-                }else{
-                    Toast.makeText(ResActivity.this, "手机号码不规范！", Toast.LENGTH_SHORT).show();
+                User user1 = userDao.findByName(userName);
+                if (user1 == null) {
+                    if (isPhone(userPhone)) {
+                        User user = new User(1, userName, userPwd, userPhone);
+                        userDao.add(user);
+                        Toast.makeText(ResActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
+
+                        UIHelper.showMember(ResActivity.this);
+                        finish();
+                    } else {
+                        Toast.makeText(ResActivity.this, "手机号码不规范！", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(ResActivity.this, "已存在该用户！", Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });

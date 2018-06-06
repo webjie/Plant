@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="person.jack.plant.activity.RePwdActivity">
 
     <RelativeLayout
@@ -12,7 +13,7 @@
         android:background="@color/blue">
 
         <Button
-            android:id="@+id/btn_res_back"
+            android:id="@+id/btn_rePwd_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="返回"
@@ -44,7 +45,7 @@
             android:textSize="30sp" />
 
         <EditText
-            android:id="@+id/ed__name"
+            android:id="@+id/ed_re_name"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -112,20 +113,20 @@
             android:textSize="30sp" />
 
         <EditText
-            android:id="@+id/ed_user_phone"
+            android:id="@+id/ed_re_true"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true" />
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_res"
+        android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:text="注册"
+        android:text="确定"
         android:textSize="30sp" />
 </LinearLayout>

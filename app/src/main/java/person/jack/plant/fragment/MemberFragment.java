@@ -3,15 +3,19 @@ package person.jack.plant.fragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import person.jack.plant.R;
+import person.jack.plant.activity.RePwdActivity;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.pulltozoomview.PullToZoomScrollViewEx;
 
@@ -25,6 +29,7 @@ public class MemberFragment extends Fragment {
     private PullToZoomScrollViewEx scrollView;
     TextView name;
     ImageView logo;
+    SharedPreferences sharedPreferences;
 
 
     @Override
@@ -36,14 +41,15 @@ public class MemberFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
-        initData();
         initView();
     }
 
     void initView() {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         scrollView = (PullToZoomScrollViewEx) root.findViewById(R.id.scrollView);
         View headView = LayoutInflater.from(context).inflate(R.layout.member_head_view, null, false);
         name = (TextView) headView.findViewById(R.id.tv_user_name);
+        name.setText(sharedPreferences.getString("user_name", "请登录"));
         logo = (ImageView) headView.findViewById(R.id.iv_user_head);
         View zoomView = LayoutInflater.from(context).inflate(R.layout.member_zoom_view, null, false);
         View contentView = LayoutInflater.from(context).inflate(R.layout.member_content_view, null, false);
@@ -61,7 +67,13 @@ public class MemberFragment extends Fragment {
         headView.findViewById(R.id.tv_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.showLogin(getActivity());
+                boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
+                if (isLogin) {
+                    Toast.makeText(getActivity(), "请退出当前用户", Toast.LENGTH_SHORT).show();
+                } else {
+                    UIHelper.showLogin(getActivity());
+                }
+
             }
         });
 
@@ -69,11 +81,13 @@ public class MemberFragment extends Fragment {
         scrollView.getPullRootView().findViewById(R.id.textBalance).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UIHelper.showPersonInfo(getActivity());
             }
         });
         scrollView.getPullRootView().findViewById(R.id.textRecord).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UIHelper.showRePwd(getActivity());
             }
         });
         scrollView.getPullRootView().findViewById(R.id.textCalculator).setOnClickListener(new View.OnClickListener() {
@@ -94,6 +108,9 @@ public class MemberFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 name.setText("末登录");
                                 logo.setImageResource(R.drawable.head);
+                                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+                                editor.putBoolean("isLogin", false);
+                                editor.commit();
                             }
                         })
                         .setPositiveButton("取消", new DialogInterface.OnClickListener() {
