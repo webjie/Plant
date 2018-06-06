@@ -41,7 +41,7 @@ public class OrmLiteDbTest extends AndroidTestCase {
 //        L.e(articles.toString());
     }
 
-    public void testGetUserById() {
+   /* public void testGetUserById() {
         User user = new UserDao(getContext()).get(1);
 //        L.e(user.getName());
         if (user.getArticles() != null)
@@ -49,7 +49,7 @@ public class OrmLiteDbTest extends AndroidTestCase {
 //                L.e(article.toString());
             }
     }
-
+*/
     public void testAddStudent() throws SQLException {
         Dao dao = DatabaseHelper.getHelper(getContext()).getDao(Student.class);
         Student student = new Student();
