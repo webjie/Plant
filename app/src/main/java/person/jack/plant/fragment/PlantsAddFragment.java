@@ -54,6 +54,7 @@ import java.util.List;
 import javax.xml.transform.URIResolver;
 
 import person.jack.plant.R;
+import person.jack.plant.activity.MainActivity;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Plants;
@@ -200,7 +201,8 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
 
             }
             Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
-
+//            MainActivity mainActivity=(MainActivity)getActivity();
+//            getSupportFragmentManager().getFragments()[0]
             tv_plantDate.setText("选择日期");
             et_plantName.setText("");
         }

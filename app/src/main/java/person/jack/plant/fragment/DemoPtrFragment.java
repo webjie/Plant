@@ -1,5 +1,7 @@
 package person.jack.plant.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,8 +28,10 @@ import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.loadmore.LoadMoreListView;
 import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
 import person.jack.plant.ui.quickadapter.QuickAdapter;
+import person.jack.plant.utils.BitmapUtil;
 import person.jack.plant.utils.DeviceUtil;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
@@ -63,6 +67,8 @@ public class DemoPtrFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_demo_ptr, container, false);
         ButterKnife.bind(this, view);
+
+
         return view;
     }
 
@@ -72,7 +78,7 @@ public class DemoPtrFragment extends Fragment {
         context = (MainActivity) getActivity();
         initData();
         initView();
-        loadData();
+      //  initView();
     }
 
     void initView() {
@@ -99,6 +105,14 @@ public class DemoPtrFragment extends Fragment {
                 }
                 if ("长寿花".equals(shop.getName().toString())){
                     helper.setImageResource(R.id.logo,R.drawable.img6);
+                }
+                if(shop.getImage()!=null){
+                    File file=new File(shop.getImage());
+                    if(file.exists()){
+                        Bitmap bitmap=BitmapFactory.decodeFile(shop.getImage());
+                        helper.setImageBitmap(R.id.logo,bitmap);
+                    }
+
                 }
 
                 helper.setOnClickListener(R.id.btnWatering, new View.OnClickListener() {
@@ -206,7 +220,8 @@ public class DemoPtrFragment extends Fragment {
         isLoadAll = false;
     }
 
-    private void loadData() {
+    public void loadData() {
+        Log.d(TAG, "loadData: ");
         if (isLoadAll) {
             return;
         }
@@ -262,6 +277,12 @@ public class DemoPtrFragment extends Fragment {
 //                //listView.setLoadMoreViewTextError();  //使用模拟数据时，此条目注释
 //            }
 //        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadData();
     }
 
     @Override
