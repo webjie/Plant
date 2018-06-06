@@ -171,18 +171,8 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Plants plants=new Plants(1,R.drawable.default_image,plantName,growthState,date);
-            Log.d("student3--", R.drawable.default_image+"图片路径");
-
-            //添加植物信息，暂时不让添加
+            //Plants plants=new Plants(1,R.drawable.default_image,plantName,growthState,date);
           //  plantsDao.add(plants);
-            List<Plants> list=plantsDao.findAll();
-            for (Plants p:list
-                 ) {
-                Log.d("student3--",p.getImage()+"所有数据存进去路径");
-
-            }
-             //添加
             Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
             tv_plantDate.setText("选择日期");
             et_plantName.setText("");
@@ -324,7 +314,6 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             chooseImagePath = imagePath;
-            Toast.makeText(getContext(), "路径" + chooseImagePath, Toast.LENGTH_SHORT).show();
             img_PlantImg.setImageBitmap(bitmap);
         } else {
             Toast.makeText(getContext(), "寻找图片失败", Toast.LENGTH_SHORT).show();
@@ -353,8 +342,8 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         }else{
             imageUri= Uri.fromFile(outputImage);
         }
-        String path=getImagePath(imageUri,null);
-        Toast.makeText(getContext(), "照相相片路径：" + path, Toast.LENGTH_SHORT).show();
+
+
         //启动相机程序
         Intent intent=new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri

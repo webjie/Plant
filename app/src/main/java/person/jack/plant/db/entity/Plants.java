@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Created by yanxu on 2018/6/4.
  */
-@DatabaseTable(tableName = "plants")
+@DatabaseTable(tableName = "plant_record")
 public class Plants {
     /**
      * id
@@ -22,8 +22,8 @@ public class Plants {
     /**
      * 图片
      */
-    @DatabaseField (columnName = "image")
-    private Integer Image;
+    @DatabaseField (columnName = "image_path")
+    private String imagepath;
     /**
      * 植物名称
      */
@@ -32,12 +32,12 @@ public class Plants {
     /**
      * 种植日期
      */
-    @DatabaseField (columnName = "plantingDate")
+    @DatabaseField (columnName = "planting_date")
     private Date plantingDate;
     /**
      * 生长阶段
      */
-    @DatabaseField (columnName = "growthStage")
+    @DatabaseField (columnName = "growth_stage")
     private String growthStage;
     /**
      * 湿度
@@ -59,17 +59,17 @@ public class Plants {
     public Plants() {
     }
 
-    public Plants(Integer id, Integer image, String name, String growthStage, Date plantingDate) {
+    public Plants(Integer id, String image, String name, String growthStage, Date plantingDate) {
         this.id = id;
-        this.Image = image;
+        this.imagepath = image;
         this.name = name;
         this.plantingDate = plantingDate;
         this.growthStage = growthStage;
     }
 
-    public Plants(Integer id, Integer image, String name, Date plantingDate, String growthStage, Integer hum, Integer light, Integer temp) {
+    public Plants(Integer id, String image, String name, Date plantingDate, String growthStage, Integer hum, Integer light, Integer temp) {
         this.id = id;
-        Image = image;
+        this.imagepath = image;
         this.name = name;
         this.plantingDate = plantingDate;
         this.growthStage = growthStage;
@@ -110,12 +110,12 @@ public class Plants {
         this.id = id;
     }
 
-    public Integer getImage() {
-        return Image;
+    public String getImage() {
+        return imagepath;
     }
 
-    public void setImage(Integer image) {
-        Image = image;
+    public void setImage(String image) {
+        imagepath= image;
     }
 
     public String getName() {

@@ -6,60 +6,69 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Collection;
 
-@DatabaseTable(tableName = "tb_user")
+@DatabaseTable(tableName = "user_record")
 public class User 
 {
-	@DatabaseField(generatedId = true)
+	@DatabaseField(columnName = "id",generatedId = true)
 	private int id;
+	@DatabaseField(columnName = "image_path")
+	private String imgaePath;
 	@DatabaseField(columnName = "name")
 	private String name;
+	@DatabaseField(columnName = "password")
+	private String pwd;
 
-	@ForeignCollectionField
-	private Collection<Article> articles;
+	@DatabaseField(columnName = "phone")
+	private String phone;
 
-	public Collection<Article> getArticles()
-	{
-		return articles;
+	public User(int id, String imgaePath, String name, String pwd, String phone) {
+		this.id = id;
+		this.imgaePath = imgaePath;
+		this.name = name;
+		this.pwd = pwd;
+		this.phone = phone;
 	}
 
-	public void setArticles(Collection<Article> articles)
-	{
-		this.articles = articles;
+	public User() {
 	}
 
-	public User()
-	{
-	}
-
-	public int getId()
-	{
+	public int getId() {
 		return id;
 	}
 
-	public void setId(int id)
-	{
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getName()
-	{
+	public String getImgaePath() {
+		return imgaePath;
+	}
+
+	public void setImgaePath(String imgaePath) {
+		this.imgaePath = imgaePath;
+	}
+
+	public String getName() {
 		return name;
 	}
 
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "User [id=" + id + ", name=" + name + ", articles=" + articles
-				+ "]";
+	public String getPwd() {
+		return pwd;
 	}
 
-	
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 
+	public String getPhone() {
+		return phone;
+	}
 
-	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 }

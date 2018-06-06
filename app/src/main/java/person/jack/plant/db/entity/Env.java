@@ -6,7 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 /**
  * Created by yanxu on 2018/6/6.
  */
-@DatabaseTable (tableName = "env")
+@DatabaseTable (tableName = "env_record")
 public class Env {
     @DatabaseField(columnName = "id",generatedId = true)
     private int id;
