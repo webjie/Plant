@@ -60,6 +60,9 @@ import person.jack.plant.activity.MainActivity;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Plants;
+import person.jack.plant.http.HttpClient;
+import person.jack.plant.model.MyAppContants;
+import person.jack.plant.utils.Utils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -208,6 +211,11 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
 //            MainActivity mainActivity=(MainActivity)getActivity();
 //            getSupportFragmentManager().getFragments()[0]
+
+            if(plants.getImage()!=null){
+                Utils.getPlantTypeByImage(plants.getImage());
+            }
+
             try{
                 MainActivity mainActivity=(MainActivity)getActivity();
                 MainPagerFragment mainPagerFragment=(MainPagerFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("HomeFragment");
