@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import person.jack.plant.adapter.WarAdapter;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.WarnRecordDao;
 import person.jack.plant.db.entity.WarnRecord;
+import person.jack.plant.utils.Utils;
 
 /**
  * 警告记录
@@ -39,11 +41,7 @@ public class WarnFragment extends Fragment {
 
         list = warnRecordDao.findAll();
         if (list.size() == 0 || list == null) {
-            init();
-            list = warnRecordDao.findAll();
-            adapter = new WarAdapter(getContext(), R.layout.fragment_warn_item, list);
-            listView.setAdapter(adapter);
-
+            Toast.makeText(getContext(),"暂无报警记录",Toast.LENGTH_SHORT).show();
         } else {
             adapter = new WarAdapter(getContext(), R.layout.fragment_warn_item, list);
             listView.setAdapter(adapter);

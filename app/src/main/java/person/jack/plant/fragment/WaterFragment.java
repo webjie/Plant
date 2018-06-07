@@ -45,18 +45,31 @@ public class WaterFragment extends Fragment {
         initView(view);
 
         waterList = waterRecordDao.findAll();
-        if (waterList.size() == 0 || waterList == null) {
-            init();
-            waterList = waterRecordDao.findAll();
-        }
-        List<String> stringList =new ArrayList<>();
-        for(int i=0;i<waterList.size();i++){
-            stringList.add(waterList.get(i).getName());
-        }
+        List<String>stringList=new ArrayList<>();
 
-        stringList.add("查询所有记录");
-        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,stringList);
-        spn_water.setAdapter(arrayAdapter);
+
+        if(waterList.size()!=0){
+            for(int i=0;i<waterList.size();i++){
+                if(stringList.size()==0){
+                    stringList.add(waterList.get(i).getName());
+                }else{
+                    for(int j=0;j<stringList.size();j++){
+                        if(!stringList.get(j).toString().equals(waterList.get(i).getName())){
+                            stringList.add(waterList.get(i).getName());
+                        }
+                    }
+                }
+
+            }
+
+            stringList.add("查询所有记录");
+            ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,stringList);
+            spn_water.setAdapter(arrayAdapter);
+
+
+        }else{
+            Toast.makeText(getContext(),"暂无灌溉记录",Toast.LENGTH_SHORT).show();
+        }
 
 
         return view;
@@ -65,7 +78,6 @@ public class WaterFragment extends Fragment {
     public void init() {
         WaterRecord water1 = new WaterRecord(1, "辣椒", new Date());
         WaterRecord water2 = new WaterRecord(1, "白掌", new Date());
-
         WaterRecord water3 = new WaterRecord(1, "碧玉", new Date());
         WaterRecord water4 = new WaterRecord(1, "双线竹语", new Date());
         WaterRecord water5 = new WaterRecord(1, "长寿花", new Date());
