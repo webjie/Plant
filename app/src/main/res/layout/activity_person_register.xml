@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    tools:context="person.jack.plant.activity.ResActivity">
+    tools:context="person.jack.plant.activity.PersonRegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

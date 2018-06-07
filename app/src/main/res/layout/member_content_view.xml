@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textBalance"
+        android:id="@+id/textPersonInfo"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/list_item_selector"
@@ -27,7 +27,7 @@
         android:background="@drawable/list_view_divider" />
 
     <TextView
-        android:id="@+id/textRecord"
+        android:id="@+id/textChangePwd"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/list_item_selector"
@@ -48,7 +48,7 @@
         android:background="@drawable/list_view_divider" />
 
     <TextView
-        android:id="@+id/textCalculator"
+        android:id="@+id/textVersion"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/list_item_selector"
@@ -69,7 +69,7 @@
         android:background="@drawable/list_view_divider" />
 
     <TextView
-        android:id="@+id/textSetting"
+        android:id="@+id/textLogout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/list_item_selector"

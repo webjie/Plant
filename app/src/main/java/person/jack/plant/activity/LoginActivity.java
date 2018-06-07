@@ -1,8 +1,6 @@
 package person.jack.plant.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +14,7 @@ import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.UserDao;
 import person.jack.plant.db.entity.User;
 import person.jack.plant.ui.UIHelper;
-
+import person.jack.plant.utils.SharedPreferences;
 
 /**
  * 5.登录界面-没有实现远程登录功能-chenle
@@ -25,12 +23,13 @@ public class LoginActivity extends BaseFragmentActivity {
     EditText name, pwd;
     Button btnLogin;
     UserDao userDao;
-
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = new SharedPreferences();
 
         btnLogin = (Button) findViewById(R.id.btnSure);
         name = (EditText) findViewById(R.id.login_name);
@@ -40,21 +39,14 @@ public class LoginActivity extends BaseFragmentActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String user_name = name.getText().toString();
-                final String user_pwd = pwd.getText().toString();
+                final String userName = name.getText().toString();
+                final String password = pwd.getText().toString();
 
-                List<User> list = userDao.findAll();
-                for (User user2 : list
-                        ) {
-                    Log.d("user", user2.getName());
-                }
-                User user = userDao.findByName(user_name);
+                User user = userDao.findByName(userName);
                 if (user != null) {
-                    if ((user_pwd).equals(user.getPwd())) {
-                        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this).edit();
-                        editor.putString("user_name", user.getName().toString());
-                        editor.putBoolean("isLogin", true);
-                        editor.commit();
+                    if ((password).equals(user.getPwd())) {
+                        sharedPreferences.putString("userName", user.getName());
+                        sharedPreferences.putBoolean("isLogin", true);
                         UIHelper.showMember(LoginActivity.this);
                         finish();
                     } else {

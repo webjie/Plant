@@ -3,9 +3,7 @@ package person.jack.plant.fragment;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import person.jack.plant.R;
-import person.jack.plant.activity.RePwdActivity;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.pulltozoomview.PullToZoomScrollViewEx;
+import person.jack.plant.utils.SharedPreferences;
 
 /**
  * 我的信息界面，包括头部登录用户图片信息，可缩放背景图片，导航菜单
@@ -41,15 +39,15 @@ public class MemberFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
+        sharedPreferences = new SharedPreferences();
         initView();
     }
 
     void initView() {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         scrollView = (PullToZoomScrollViewEx) root.findViewById(R.id.scrollView);
         View headView = LayoutInflater.from(context).inflate(R.layout.member_head_view, null, false);
         name = (TextView) headView.findViewById(R.id.tv_user_name);
-        name.setText(sharedPreferences.getString("user_name", "请登录"));
+        name.setText(sharedPreferences.getString("userName", "请登录"));
         logo = (ImageView) headView.findViewById(R.id.iv_user_head);
         View zoomView = LayoutInflater.from(context).inflate(R.layout.member_zoom_view, null, false);
         View contentView = LayoutInflater.from(context).inflate(R.layout.member_content_view, null, false);
@@ -78,39 +76,50 @@ public class MemberFragment extends Fragment {
         });
 
 
-        scrollView.getPullRootView().findViewById(R.id.textBalance).setOnClickListener(new View.OnClickListener() {
+        scrollView.getPullRootView().findViewById(R.id.textPersonInfo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!UIHelper.isLogin()){
+                    UIHelper.ToastMessage(getContext(), "请先登录！");
+                    return;
+                }
                 UIHelper.showPersonInfo(getActivity());
             }
         });
-        scrollView.getPullRootView().findViewById(R.id.textRecord).setOnClickListener(new View.OnClickListener() {
+        scrollView.getPullRootView().findViewById(R.id.textChangePwd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!UIHelper.isLogin()){
+                    UIHelper.ToastMessage(getContext(), "请先登录！");
+                    return;
+                }
                 UIHelper.showRePwd(getActivity());
             }
         });
-        scrollView.getPullRootView().findViewById(R.id.textCalculator).setOnClickListener(new View.OnClickListener() {
+        scrollView.getPullRootView().findViewById(R.id.textVersion).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UIHelper.showVersion(getActivity());
             }
         });
 
-        scrollView.getPullRootView().findViewById(R.id.textSetting).setOnClickListener(new View.OnClickListener() {
+        scrollView.getPullRootView().findViewById(R.id.textLogout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!UIHelper.isLogin()){
+                    UIHelper.ToastMessage(getContext(), "未登录！");
+                    return;
+                }
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
                         .setTitle("提示")
                         .setMessage("确定退出登录吗？")
                         .setNegativeButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                name.setText("末登录");
+                                name.setText("未登录");
                                 logo.setImageResource(R.drawable.head);
-                                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                                editor.putBoolean("isLogin", false);
-                                editor.commit();
+                                sharedPreferences.putBoolean("isLogin", false);
+                                sharedPreferences.putString("userName", null);
                             }
                         })
                         .setPositiveButton("取消", new DialogInterface.OnClickListener() {
@@ -136,4 +145,5 @@ public class MemberFragment extends Fragment {
     private void initData() {
 
     }
+
 }

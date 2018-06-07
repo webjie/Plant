@@ -11,9 +11,10 @@ import person.jack.plant.activity.MainActivity;
 import person.jack.plant.activity.PersonInfoActivity;
 import person.jack.plant.activity.PlantsDetailActivity;
 import person.jack.plant.activity.PlantsStatusActivity;
-import person.jack.plant.activity.RePwdActivity;
-import person.jack.plant.activity.ResActivity;
+import person.jack.plant.activity.PersonChangePwdActivity;
+import person.jack.plant.activity.PersonRegisterActivity;
 import person.jack.plant.activity.VersionActivity;
+import person.jack.plant.utils.SharedPreferences;
 
 /**
  * 应用程序UI工具包：封装UI相关的一些操作
@@ -62,12 +63,12 @@ public class UIHelper {
     }
 
     public static void showRes(Activity context) {
-        Intent intent = new Intent(context, ResActivity.class);
+        Intent intent = new Intent(context, PersonRegisterActivity.class);
         context.startActivity(intent);
     }
 
     public static void showRePwd(Activity context) {
-        Intent intent = new Intent(context, RePwdActivity.class);
+        Intent intent = new Intent(context, PersonChangePwdActivity.class);
         context.startActivity(intent);
     }
 
@@ -97,4 +98,16 @@ public class UIHelper {
         context.startActivity(intent);
     }
 
+    /**
+     * 检查用户是否登录
+     */
+    public static boolean isLogin(){
+        SharedPreferences sharedPreferences = new SharedPreferences();
+        String userName = sharedPreferences.getString("userName", "");
+        if (userName == null || userName.length() == 0){
+            return  false;
+        }else{
+            return true;
+        }
+    }
 }

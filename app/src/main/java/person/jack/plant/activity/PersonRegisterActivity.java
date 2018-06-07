@@ -2,13 +2,10 @@ package person.jack.plant.activity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.List;
 
 import person.jack.plant.R;
 import person.jack.plant.common.AppContext;
@@ -16,7 +13,7 @@ import person.jack.plant.db.dao.UserDao;
 import person.jack.plant.db.entity.User;
 import person.jack.plant.ui.UIHelper;
 
-public class ResActivity extends BaseFragmentActivity {
+public class PersonRegisterActivity extends BaseFragmentActivity {
     EditText name, pwd, phone;
     Button back, res;
     UserDao userDao;
@@ -24,7 +21,7 @@ public class ResActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_res);
+        setContentView(R.layout.activity_person_register);
         name = (EditText) findViewById(R.id.ed_user_name);
         pwd = (EditText) findViewById(R.id.ed_user_pwd);
         phone = (EditText) findViewById(R.id.ed_user_phone);
@@ -35,7 +32,7 @@ public class ResActivity extends BaseFragmentActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIHelper.showMember(ResActivity.this);
+                UIHelper.showMember(PersonRegisterActivity.this);
                 finish();
             }
         });
@@ -51,15 +48,15 @@ public class ResActivity extends BaseFragmentActivity {
                     if (isPhone(userPhone)) {
                         User user = new User(1, userName, userPwd, userPhone);
                         userDao.add(user);
-                        Toast.makeText(ResActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PersonRegisterActivity.this, "注册成功！", Toast.LENGTH_SHORT).show();
 
-                        UIHelper.showMember(ResActivity.this);
+                        UIHelper.showMember(PersonRegisterActivity.this);
                         finish();
                     } else {
-                        Toast.makeText(ResActivity.this, "手机号码不规范！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PersonRegisterActivity.this, "手机号码不规范！", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(ResActivity.this, "已存在该用户！", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonRegisterActivity.this, "已存在该用户！", Toast.LENGTH_SHORT).show();
                 }
 
 
