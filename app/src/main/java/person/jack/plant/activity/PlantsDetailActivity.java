@@ -109,7 +109,6 @@ public class PlantsDetailActivity extends SwipeBackActivity {
 
 
 
-        if (plant != null) {
             if ("花生".equals(plant.getName().toString())) {
                 ivPlant.setImageResource(R.drawable.img1);
             }
@@ -149,7 +148,6 @@ public class PlantsDetailActivity extends SwipeBackActivity {
                 SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
                 tvDate.setText(dateFormat.format(plant.getPlantingDate()));
             }
-        }
 
 
     }

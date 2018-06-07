@@ -68,7 +68,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class PlantsAddFragment extends Fragment implements View.OnClickListener {
-    private EditText et_plantId;
+
     private EditText et_plantName;
     private Spinner spn_plantLive;
     private TextView tv_plantDate;
@@ -105,7 +105,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
     }
 
     private void initView(View view) {
-        et_plantId = (EditText) view.findViewById(R.id.et_plantId);
+
         et_plantName = (EditText) view.findViewById(R.id.et_plantName);
         spn_plantLive = (Spinner) view.findViewById(R.id.spn_plantLive);
 
@@ -223,6 +223,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             }
 
             et_plantName.setText("");
+            img_PlantImg.setImageResource(R.drawable.plantlogo);
         }
     }
     /**
