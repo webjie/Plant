@@ -4,10 +4,12 @@ package person.jack.plant.fragment;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -71,12 +73,12 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
     private Spinner spn_plantLive;
     private TextView tv_plantDate;
     private Button btn_plantSave;
-    private String growthState = "";
+    private String growthState = "l";
     private PlantsDao plantsDao;
    private ImageView img_PlantImg;
     private static final int TAKE_PHOTO = 1;
     private static final int CHOOSE_PHOTO=2;
-    private String chooseImagePath;
+    private String chooseImagePath="null";
     private Uri imageUri;
     private List<Plants> list=new ArrayList<>();
 
@@ -106,7 +108,11 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         et_plantId = (EditText) view.findViewById(R.id.et_plantId);
         et_plantName = (EditText) view.findViewById(R.id.et_plantName);
         spn_plantLive = (Spinner) view.findViewById(R.id.spn_plantLive);
+
+
         tv_plantDate = (TextView) view.findViewById(R.id.tv_plantDate);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        tv_plantDate.setText(format.format(new Date()));
         btn_plantSave = (Button) view.findViewById(R.id.btn_plantSave);
         tv_plantDate.setOnClickListener(this);
         btn_plantSave.setOnClickListener(this);
@@ -139,11 +145,12 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 dialog.show();
                 break;
             case R.id.btn_plantSave:
-                if(chooseImagePath==null){
-                    Toast.makeText(getContext(),"请点击图片设置植物头像",Toast.LENGTH_LONG).show();
-                }else{
+               /* if(chooseImagePath==null){
+
+                   chooseImagePath=getResourcesUri(R.drawable.default_image);
+                }*/
                     submit();
-                }
+
 
                 break;
             case R.id.img_PlantImg:
@@ -180,9 +187,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         String plantName = et_plantName.getText().toString().trim();
         if (plantName.equals("")) {
             Toast.makeText(getContext(), "植物名称不能为空", Toast.LENGTH_SHORT).show();
-        } else if (tv_plantDate.getText().toString().equals("选择日期")) {
-            Toast.makeText(getContext(), "请选择日期", Toast.LENGTH_SHORT).show();
-        } else {
+        }  else {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {
@@ -374,6 +379,14 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri
         );
         startActivityForResult(intent,TAKE_PHOTO);
+    }
+    private String getResourcesUri(int id){
+        Resources resources=getResources();
+        String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+                resources.getResourcePackageName(id) + "/" +
+                resources.getResourceTypeName(id) + "/" +
+                resources.getResourceEntryName(id);
+        return uriPath;
     }
 
 

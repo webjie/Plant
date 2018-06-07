@@ -19,7 +19,9 @@ import com.squareup.picasso.Picasso;
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
 import person.jack.plant.db.dao.PlantsDao;
+import person.jack.plant.db.dao.WaterRecordDao;
 import person.jack.plant.db.entity.Plants;
+import person.jack.plant.db.entity.WaterRecord;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.http.HttpResponseHandler;
 import person.jack.plant.http.RestApiResponse;
@@ -32,6 +34,7 @@ import person.jack.plant.utils.BitmapUtil;
 import person.jack.plant.utils.DeviceUtil;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -54,7 +57,7 @@ public class DemoPtrFragment extends Fragment {
     private SearchParam param;
     private int pno = 1;
     private boolean isLoadAll;
-
+    private WaterRecordDao waterRecordDao;
     @Bind(R.id.rotate_header_list_view_frame)
     PtrClassicFrameLayout mPtrFrame;
     @Bind(R.id.listView)
@@ -84,7 +87,7 @@ public class DemoPtrFragment extends Fragment {
     void initView() {
         adapter = new QuickAdapter<Plants>(context, R.layout.recommend_shop_list_item) {
             @Override
-            protected void convert(final BaseAdapterHelper helper, Plants shop) {
+            protected void convert(final BaseAdapterHelper helper, final Plants shop) {
 
                 helper.setText(R.id.tv_name, shop.getName()); // 自动异步加载图片
 
@@ -107,18 +110,25 @@ public class DemoPtrFragment extends Fragment {
                     helper.setImageResource(R.id.logo,R.drawable.img6);
                 }
                 if(shop.getImage()!=null){
-                    File file=new File(shop.getImage());
-                    if(file.exists()){
-                        Bitmap bitmap=BitmapFactory.decodeFile(shop.getImage());
-                        helper.setImageBitmap(R.id.logo,bitmap);
+                    if(shop.getImage().equals("null")){
+                        helper.setImageResource(R.id.logo,R.drawable.default_image);
+                    }else{
+                        File file=new File(shop.getImage());
+                        if(file.exists()){
+                            Bitmap bitmap=BitmapFactory.decodeFile(shop.getImage());
+                            helper.setImageBitmap(R.id.logo,bitmap);
+                        }
                     }
+
 
                 }
 
                 helper.setOnClickListener(R.id.btnWatering, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        waterRecordDao =new WaterRecordDao(getContext());
+                        WaterRecord waterRecord=new WaterRecord(1,shop.getName(),new Date());
+                        waterRecordDao.add(waterRecord);
                         //需要调用网络接口f
                         Toast.makeText(context, "浇水成功", Toast.LENGTH_SHORT).show();
                     }
