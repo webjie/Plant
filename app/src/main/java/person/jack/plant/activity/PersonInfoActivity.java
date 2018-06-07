@@ -2,7 +2,7 @@ package person.jack.plant.activity;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,15 +32,20 @@ public class PersonInfoActivity extends BaseFragmentActivity {
         userDao = new UserDao(AppContext.getInstance());
 
         String userName = sharedPreferences.getString("user_name", "");
-        User user = userDao.findByName(userName);
-        name.setText(user.getName().toString());
-        phone.setText(user.getPhone().toString());
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UIHelper.showMember(PersonInfoActivity.this);
-                finish();
-            }
-        });
+        if (userName != null && userName.length() > 0){
+            User user = userDao.findByName(userName);
+            name.setText(user.getName());
+            phone.setText(user.getPhone());
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    UIHelper.showMember(PersonInfoActivity.this);
+                    finish();
+                }
+            });
+        }else{
+            UIHelper.showLogin(PersonInfoActivity.this);
+            finish();
+        }
     }
 }
