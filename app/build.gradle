@@ -113,4 +113,5 @@ dependencies {
     implementation 'com.android.support:support-v4:23.2.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.f0ris.sweetalert:library:1.5.1'
 }

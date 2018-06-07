@@ -85,3 +85,7 @@
 -keep public class org.codehaus.* { *; }
 -keep public class java.nio.* { *; }
 
+#SweetAlertDialog
+-keep class cn.pedant.SweetAlert.Rotate3dAnimation {
+  public <init>(...);
+}

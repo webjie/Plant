@@ -1,10 +1,10 @@
 package person.jack.plant.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import person.jack.plant.R;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.pulltozoomview.PullToZoomScrollViewEx;
 import person.jack.plant.utils.SharedPreferences;
 
 /**
- * 我的信息界面，包括头部登录用户图片信息，可缩放背景图片，导航菜单
+ * 我的信息界面，包括头部登录用户图片信息，可缩放背景图片，导航菜单，退出登录
  */
 public class MemberFragment extends Fragment {
 
@@ -82,7 +83,6 @@ public class MemberFragment extends Fragment {
             }
         });
 
-
         scrollView.getPullRootView().findViewById(R.id.textPersonInfo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,26 +117,37 @@ public class MemberFragment extends Fragment {
                     UIHelper.ToastMessage(getContext(), "未登录！");
                     return;
                 }
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity())
-                        .setTitle("提示")
-                        .setMessage("确定退出登录吗？")
-                        .setNegativeButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                name.setText("未登录");
-                                logo.setImageResource(R.drawable.head);
-                                sharedPreferences.putBoolean("isLogin", false);
-                                sharedPreferences.putString("userName", null);
-                            }
-                        })
-                        .setPositiveButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .create();
-                alertDialog.show();
+
+                try{
+                    final SweetAlertDialog dlg = new SweetAlertDialog(getActivity(), SweetAlertDialog.NORMAL_TYPE);
+                    dlg.setTitleText("提示");
+                    dlg.showCancelButton(true);
+                    dlg.setCancelText("取消");
+                    dlg.setConfirmText("确定");
+                    dlg.setContentText("确定要退出登录吗？");
+                    dlg.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            name.setText("未登录");
+                            logo.setImageResource(R.drawable.head);
+                            sharedPreferences.putBoolean("isLogin", false);
+                            sharedPreferences.putString("userName", null);
+                            sweetAlertDialog.dismiss();
+                        }
+                    });
+
+                    dlg.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        @Override
+                        public void onCancel(DialogInterface dialog) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dlg.show();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Log.d("plant", e.getMessage());
+                }
 
             }
         });
