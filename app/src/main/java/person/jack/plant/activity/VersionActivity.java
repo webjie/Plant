@@ -7,27 +7,37 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import person.jack.plant.R;
 import person.jack.plant.ui.UIHelper;
 
 public class VersionActivity extends BaseFragmentActivity {
-    TextView version;
-    Button back;
+    @Bind(R.id.btnBack)
+    Button btnBack;
+    @Bind(R.id.textHeadTitle)
+    TextView textHeadTitle;
+
+    @Bind(R.id.textVersion)
+    TextView textVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_version);
-        version=(TextView)findViewById(R.id.tv_version);
-        back=(Button)findViewById(R.id.btn_version_back);
-        String ver=getVersion();
-        version.setText(ver);
-        back.setOnClickListener(new View.OnClickListener() {
+        ButterKnife.bind(this);
+
+        textHeadTitle.setText("版本信息");
+        btnBack.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIHelper.showMember(VersionActivity.this);
+                finish();
             }
         });
+
+        String ver=getVersion();
+        textVersion.setText(ver);
     }
 
     /**

@@ -5,6 +5,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import person.jack.plant.R;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.UserDao;
@@ -16,6 +18,10 @@ import person.jack.plant.utils.SharedPreferences;
  * 我的-个人信息界面，chenle
  */
 public class PersonInfoActivity extends BaseFragmentActivity {
+    @Bind(R.id.btnBack)
+    Button btnBack;
+    @Bind(R.id.textHeadTitle)
+    TextView textHeadTitle;
 
     Button back;
     TextView name, phone;
@@ -26,23 +32,26 @@ public class PersonInfoActivity extends BaseFragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_info);
-        sharedPreferences = new SharedPreferences();
+        ButterKnife.bind(this);
 
-        name = (TextView) findViewById(R.id.person_name);
-        phone = (TextView) findViewById(R.id.person_phone);
-        back = (Button) findViewById(R.id.btn_person_back);
-        userDao = new UserDao(AppContext.getInstance());
-
-        String userName = sharedPreferences.getString("userName", "");
-        User user = userDao.findByName(userName);
-        name.setText(user.getName());
-        phone.setText(user.getPhone());
-        back.setOnClickListener(new View.OnClickListener() {
+        textHeadTitle.setText("个人信息 ");
+        btnBack.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIHelper.showMember(PersonInfoActivity.this);
                 finish();
             }
         });
+
+        sharedPreferences = new SharedPreferences();
+        name = (TextView) findViewById(R.id.person_name);
+        phone = (TextView) findViewById(R.id.person_phone);
+        userDao = new UserDao(AppContext.getInstance());
+        String userName = sharedPreferences.getString("userName", "");
+        User user = userDao.findByName(userName);
+        if(user != null) {
+            name.setText(user.getName());
+            phone.setText(user.getPhone());
+        }
     }
 }

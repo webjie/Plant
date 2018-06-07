@@ -1,53 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context="person.jack.plant.activity.VersionActivity">
 
-    <RelativeLayout
-        android:background="@color/blue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_main_header" />
 
-        <Button
-            android:id="@+id/btn_version_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="返回"
-            android:textColor="#fff" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="版本信息"
-            android:textColor="#fff"
-            android:textSize="30sp" />
-
-    </RelativeLayout>
+    <!-- 表单 -->
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="版本号："
-            android:textSize="20sp"
-            android:layout_width="150dp"
-            android:layout_height="50dp" />
-        <TextView
-            android:id="@+id/tv_version"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:id="@+id/cx_form"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_bar"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_marginTop="@dimen/csy_pd"
+        android:background="@drawable/csy_form"
+        android:orientation="vertical"
+        android:padding="@dimen/space_5">
+
+        <LinearLayout
+            style="@style/csy_row"
+            android:layout_height="@dimen/space_50">
+
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="软件名称" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/product_name"
+                    style="@style/csy_textbox"
+                    android:text="@string/app_name"
+                    android:layout_marginLeft="@dimen/space_8" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/csy_row1"
+            android:layout_height="@dimen/csy_btn_h">
+
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="版本号" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/csy_tip_h"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/textVersion"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8" />
+            </RelativeLayout>
+        </LinearLayout>
+
     </LinearLayout>
-
-
-</LinearLayout>
+</RelativeLayout>

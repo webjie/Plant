@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class MemberFragment extends Fragment {
     private PullToZoomScrollViewEx scrollView;
     TextView name;
     ImageView logo;
+    LinearLayout layoutPerson;
     SharedPreferences sharedPreferences;
 
 
@@ -46,9 +48,14 @@ public class MemberFragment extends Fragment {
     void initView() {
         scrollView = (PullToZoomScrollViewEx) root.findViewById(R.id.scrollView);
         View headView = LayoutInflater.from(context).inflate(R.layout.member_head_view, null, false);
+        layoutPerson =  (LinearLayout) headView.findViewById(R.id.layout_person);
+        if (UIHelper.isLogin()){
+            layoutPerson.setVisibility(View.GONE);
+        }
         name = (TextView) headView.findViewById(R.id.tv_user_name);
         name.setText(sharedPreferences.getString("userName", "请登录"));
         logo = (ImageView) headView.findViewById(R.id.iv_user_head);
+
         View zoomView = LayoutInflater.from(context).inflate(R.layout.member_zoom_view, null, false);
         View contentView = LayoutInflater.from(context).inflate(R.layout.member_content_view, null, false);
         scrollView.setHeaderView(headView);
@@ -58,7 +65,7 @@ public class MemberFragment extends Fragment {
         headView.findViewById(R.id.tv_register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.showRes(getActivity());
+                UIHelper.showRegister(getActivity());
             }
         });
 
@@ -93,7 +100,7 @@ public class MemberFragment extends Fragment {
                     UIHelper.ToastMessage(getContext(), "请先登录！");
                     return;
                 }
-                UIHelper.showRePwd(getActivity());
+                UIHelper.showChangePwd(getActivity());
             }
         });
         scrollView.getPullRootView().findViewById(R.id.textVersion).setOnClickListener(new View.OnClickListener() {

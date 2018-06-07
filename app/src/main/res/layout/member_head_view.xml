@@ -24,7 +24,7 @@
         android:textSize="16sp" />
 
     <LinearLayout
-        android:id="@+id/ll_action_button"
+        android:id="@+id/layout_person"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

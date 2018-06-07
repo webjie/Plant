@@ -1,79 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context="person.jack.plant.activity.PersonInfoActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/blue">
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_main_header" />
 
-        <Button
-            android:id="@+id/btn_person_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="返回"
-            android:textColor="#fff" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="个人信息"
-            android:textColor="#fff"
-            android:textSize="30sp" />
-
-    </RelativeLayout>
-
+    <!-- 表单 -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/cx_form"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:orientation="horizontal">
+        android:layout_below="@id/title_bar"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_marginTop="@dimen/csy_pd"
+        android:background="@drawable/csy_form"
+        android:orientation="vertical"
+        android:padding="@dimen/space_5">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="用户名："
-            android:textSize="20sp" />
+        <LinearLayout
+            style="@style/csy_row"
+            android:layout_height="@dimen/space_50">
 
-        <TextView
-            android:id="@+id/person_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="20sp" />
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="用户名" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/person_name"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/csy_row1"
+            android:layout_height="@dimen/csy_btn_h">
+
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="手机号" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/csy_tip_h"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/person_phone"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8"  />
+            </RelativeLayout>
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="手机号："
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/person_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

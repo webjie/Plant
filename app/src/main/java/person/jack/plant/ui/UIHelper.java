@@ -62,12 +62,12 @@ public class UIHelper {
         context.startActivity(intent);
     }
 
-    public static void showRes(Activity context) {
+    public static void showRegister(Activity context) {
         Intent intent = new Intent(context, PersonRegisterActivity.class);
         context.startActivity(intent);
     }
 
-    public static void showRePwd(Activity context) {
+    public static void showChangePwd(Activity context) {
         Intent intent = new Intent(context, PersonChangePwdActivity.class);
         context.startActivity(intent);
     }

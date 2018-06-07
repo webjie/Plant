@@ -1,101 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context="person.jack.plant.activity.PersonRegisterActivity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/layout_main_header" />
+
+    <!-- 表单 -->
+    <LinearLayout
+        android:id="@+id/cx_form"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue">
+        android:layout_below="@id/title_bar"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_marginTop="@dimen/csy_pd"
+        android:background="@drawable/csy_form"
+        android:orientation="vertical"
+        android:padding="@dimen/space_5">
 
-        <Button
-            android:id="@+id/btn_res_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="返回"
-            android:textColor="#fff" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:text="用户注册"
-            android:textColor="#fff"
-            android:textSize="30sp" />
+        <LinearLayout
+            style="@style/csy_row"
+            android:layout_height="@dimen/space_50">
 
-    </RelativeLayout>
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="用户名" />
 
-    <LinearLayout
-        android:layout_marginTop="60dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="用户名："
-            android:textSize="30sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/ed_user_name"
-            android:layout_width="200dp"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_height="wrap_content" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:layout_gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/ed_user_name"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:hint="请输入用户名"/>
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/csy_row1"
+            android:layout_height="@dimen/csy_btn_h">
+
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="密码" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/csy_tip_h"
+                android:layout_gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/ed_user_pwd"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:hint="请输入密码"/>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/csy_row1"
+            android:layout_height="@dimen/csy_btn_h">
+
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="手机号码" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/csy_tip_h"
+                android:layout_gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/ed_user_phone"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:hint="请输入手机号码" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="密码："
-            android:textSize="30sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/ed_user_pwd"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="手机号："
-            android:textSize="30sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
-            android:id="@+id/ed_user_phone"
-            android:inputType="number"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+
     <Button
         android:id="@+id/btn_res"
-        android:layout_marginTop="30dp"
-        android:text="注册"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/csy_btn_h"
+        android:layout_below="@+id/cx_form"
+        android:layout_margin="@dimen/space_5"
+        android:background="@drawable/csy_btn"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/csy_text_ts"/>
 
-</LinearLayout>
+</RelativeLayout>
