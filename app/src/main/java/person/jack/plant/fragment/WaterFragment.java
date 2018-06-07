@@ -22,7 +22,9 @@ import java.util.List;
 import person.jack.plant.R;
 import person.jack.plant.adapter.WaterRecordAdaper;
 import person.jack.plant.common.AppContext;
+import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.dao.WaterRecordDao;
+import person.jack.plant.db.entity.Plants;
 import person.jack.plant.db.entity.WaterRecord;
 
 /**
@@ -32,62 +34,45 @@ import person.jack.plant.db.entity.WaterRecord;
 
 public class WaterFragment extends Fragment {
     private WaterRecordAdaper waterRecordAdaper;
-    private List<WaterRecord> waterList = new ArrayList<>();
+    private List<WaterRecord> waterList ;
     private ListView lv_water;
     private WaterRecordDao waterRecordDao;
     private Spinner spn_water;
+    private PlantsDao plantsDao;
+    private List<Plants>plantsList;
+    private List<String>spinList=new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_water, container, false);
         waterRecordDao = new WaterRecordDao(AppContext.getInstance());
+        plantsDao=new PlantsDao(getContext());
         initView(view);
 
-        waterList = waterRecordDao.findAll();
-        List<String>stringList=new ArrayList<>();
-
-
-        if(waterList.size()!=0){
-            for(int i=0;i<waterList.size();i++){
-                if(stringList.size()==0){
-                    stringList.add(waterList.get(i).getName());
-                }else{
-                    for(int j=0;j<stringList.size();j++){
-                        if(!stringList.get(j).toString().equals(waterList.get(i).getName())){
-                            stringList.add(waterList.get(i).getName());
-                        }
-                    }
-                }
-
-            }
-
-            stringList.add("查询所有记录");
-            ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,stringList);
-            spn_water.setAdapter(arrayAdapter);
-
-
-        }else{
-            Toast.makeText(getContext(),"暂无灌溉记录",Toast.LENGTH_SHORT).show();
-        }
-
-
+       init();
         return view;
     }
-
     public void init() {
-        WaterRecord water1 = new WaterRecord(1, "辣椒", new Date());
-        WaterRecord water2 = new WaterRecord(1, "白掌", new Date());
-        WaterRecord water3 = new WaterRecord(1, "碧玉", new Date());
-        WaterRecord water4 = new WaterRecord(1, "双线竹语", new Date());
-        WaterRecord water5 = new WaterRecord(1, "长寿花", new Date());
-        WaterRecord water6 = new WaterRecord(1, "花生", new Date());
-        waterRecordDao.add(water1);
-        waterRecordDao.add(water2);
-        waterRecordDao.add(water3);
-        waterRecordDao.add(water4);
-        waterRecordDao.add(water5);
-        waterRecordDao.add(water6);
+        spinList.clear();
+        waterList = waterRecordDao.findAll();
+        plantsList=plantsDao.findAll();
+        if(plantsList.size()!=0){
+            for(int i=0;i<plantsList.size();i++){
+                spinList.add(plantsList.get(i).getName());
+            }
+        }
+        spinList.add("花生");
+        spinList.add("辣椒");
+        spinList.add("白掌");
+        spinList.add("碧玉");
+        spinList.add("双竹丝语");
+        spinList.add("长寿花");
+        spinList.add("查询所有记录");
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,spinList);
+        spn_water.setAdapter(arrayAdapter);
+
+
 
     }
 

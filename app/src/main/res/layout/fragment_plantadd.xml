@@ -61,7 +61,7 @@
         <TextView
             style="@style/csy_row_label"
             android:layout_width="100dp"
-            android:text="名             称" />
+            android:text="名       称" />
         <EditText
             android:id="@+id/et_plantName"
             style="@style/csy_textbox"

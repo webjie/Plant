@@ -41,7 +41,7 @@ public class WarnFragment extends Fragment {
 
         list = warnRecordDao.findAll();
         if (list.size() == 0 || list == null) {
-            Toast.makeText(getContext(),"暂无报警记录",Toast.LENGTH_SHORT).show();
+
         } else {
             adapter = new WarAdapter(getContext(), R.layout.fragment_warn_item, list);
             listView.setAdapter(adapter);
