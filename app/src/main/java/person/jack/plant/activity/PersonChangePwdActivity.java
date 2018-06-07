@@ -13,14 +13,18 @@ import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.UserDao;
 import person.jack.plant.db.entity.User;
 import person.jack.plant.ui.UIHelper;
+import person.jack.plant.utils.SharedPreferences;
 
+/**
+ * 修改密码界面 ，chenle
+ */
 public class PersonChangePwdActivity extends BaseFragmentActivity {
     @Bind(R.id.btnBack)
     Button btnBack;
     @Bind(R.id.textHeadTitle)
     TextView textHeadTitle;
 
-    EditText name, oldPwd, newPwd, rePwd;
+    EditText oldPwd, newPwd, rePwd;
     Button btnOk;
     UserDao userDao;
 
@@ -39,7 +43,6 @@ public class PersonChangePwdActivity extends BaseFragmentActivity {
             }
         });
 
-        name = (EditText) findViewById(R.id.ed_re_name);
         oldPwd = (EditText) findViewById(R.id.ed_old_pwd);
         newPwd = (EditText) findViewById(R.id.ed_new_pwd);
         rePwd = (EditText) findViewById(R.id.ed_re_true);
@@ -50,27 +53,30 @@ public class PersonChangePwdActivity extends BaseFragmentActivity {
             @Override
             public void onClick(View view) {
 
-                final String userName = name.getText().toString();
+                SharedPreferences sharedPreferences = new SharedPreferences();
+                final String userName = sharedPreferences.getString("userName","");
+                if (userName == null || userName.length() == 0){
+                    UIHelper.ToastMessage(getApplicationContext(), "无法获取用户信息，请重新登录！");
+                    UIHelper.showLogin(PersonChangePwdActivity.this);
+                    finish();
+                }
                 final String userOldPwd = oldPwd.getText().toString();
                 final String userNewPwd = newPwd.getText().toString();
                 final String reTrue = rePwd.getText().toString();
 
                 User user = userDao.findByName(userName);
+
                 String msg;
-                if (user != null) {
-                    if (userOldPwd.equals(user.getPwd())) {
-                        if (userNewPwd.equals(reTrue)) {
-                            user.setPwd(userNewPwd);
-                            userDao.update(user);
-                            msg = "密码修改成功！";
-                        } else {
-                            msg = "两次密码不匹配";
-                        }
+                if (userOldPwd.equals(user.getPwd())) {
+                    if (userNewPwd.equals(reTrue)) {
+                        user.setPwd(userNewPwd);
+                        userDao.update(user);
+                        msg = "密码修改成功！";
                     } else {
-                        msg = "密码错误";
+                        msg = "两次密码不匹配";
                     }
                 } else {
-                    msg = "没有该用户！";
+                    msg = "密码错误";
                 }
                 UIHelper.ToastMessage(getApplicationContext(),msg);
             }

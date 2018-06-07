@@ -26,32 +26,6 @@
 
         <LinearLayout
             style="@style/csy_row"
-            android:layout_height="@dimen/space_50">
-
-            <TextView
-                style="@style/csy_row_label"
-                android:layout_width="100dp"
-                android:text="用户名" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/space_50"
-                android:layout_gravity="center_vertical">
-
-                <EditText
-                    android:id="@+id/ed_re_name"
-                    style="@style/csy_textbox"
-                    android:layout_marginLeft="@dimen/space_8"
-                    android:hint="请输入用户名"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            style="@style/csy_row1"
             android:layout_height="@dimen/csy_btn_h">
 
             <TextView
