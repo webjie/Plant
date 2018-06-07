@@ -1,5 +1,7 @@
 package person.jack.plant.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -107,10 +110,6 @@ public class PlantsDetailActivity extends SwipeBackActivity {
 
 
         if (plant != null) {
-            Log.d(TAG, "initView: " + plant.getName());
-            //先使用默认图片
-            Log.d(TAG, "initView: " + plant.getImage());
-
             if ("花生".equals(plant.getName().toString())) {
                 ivPlant.setImageResource(R.drawable.img1);
             }
@@ -129,6 +128,16 @@ public class PlantsDetailActivity extends SwipeBackActivity {
             if ("长寿花".equals(plant.getName().toString())) {
                 ivPlant.setImageResource(R.drawable.img6);
             }
+
+                if(plant.getImage()!=null){
+                    File file=new File(plant.getImage());
+                    if(file.exists()){
+                        Bitmap bitmap= BitmapFactory.decodeFile(plant.getImage());
+                        ivPlant.setImageBitmap(bitmap);
+                    }
+
+                }
+
             tvName.setText(plant.getName());
             if(plant.getGrowthStage()!=null){
                 tvState.setText("当前生长状态："+plant.getGrowthStage());
@@ -147,7 +156,7 @@ public class PlantsDetailActivity extends SwipeBackActivity {
 
     Timer timer;
     TimerTask timerTask;
-    String url = "http://192.168.1.107:8080/Parking/GetAllSense.do";
+    String url = "";
 
     Handler handler = new Handler(new Handler.Callback() {
         @Override

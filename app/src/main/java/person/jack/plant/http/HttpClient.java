@@ -43,6 +43,9 @@ public class HttpClient {
     private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain;");
     private static OkHttpClient client;
 
+    public static final String IMG_REG="https://api.ai.qq.com/fcgi-bin/vision/vision_imgidentify";
+
+
     public static final MediaType JSONString = MediaType.parse("application/json; charset=utf-8");
 
     static {

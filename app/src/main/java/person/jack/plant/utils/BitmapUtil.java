@@ -3,6 +3,17 @@ package person.jack.plant.utils;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
+import android.util.Base64InputStream;
+import android.util.Log;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import static person.jack.plant.activity.PlantsDetailActivity.TAG;
 
 /**
  * Created by tiansj on 15/11/16.
@@ -52,5 +63,32 @@ public class BitmapUtil {
         options.inJustDecodeBounds = false;
         Bitmap src = BitmapFactory.decodeFile(pathName, options);
         return createScaleBitmap(src, reqWidth, reqHeight);
+    }
+
+    //图片转化成base64字符串
+    public static String getImageStr(String path) {//将图片文件转化为字节数组字符串，并对其进行Base64编码处理
+        File file=new File(path);
+        Log.d(TAG, "getImageStr: "+path);
+        byte [] encoder = null;
+        InputStream in = null;
+        byte[] data = null;
+        if(file.exists()){
+
+
+            //读取图片字节数组
+            try
+            {
+                in = new FileInputStream(path);
+                data = new byte[in.available()];
+                in.read(data);
+                in.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return Base64.encodeToString(data,Base64.DEFAULT);//返回Base64编码过的字节数组字符
+
     }
 }

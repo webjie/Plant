@@ -197,20 +197,20 @@ public class BufferKnifeFragment extends Fragment {
             }
         });
 
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    Picasso.with(context).pauseTag(context);
-                } else {
-                    Picasso.with(context).resumeTag(context);
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            }
-        });
+//        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(AbsListView view, int scrollState) {
+//                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+//                    Picasso.with(context).pauseTag(context);
+//                } else {
+//                    Picasso.with(context).resumeTag(context);
+//                }
+//            }
+//
+//            @Override
+//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+//            }
+//        });
     }
 
 

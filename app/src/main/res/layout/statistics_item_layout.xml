@@ -6,15 +6,13 @@
     <RelativeLayout
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
-
         android:layout_width="80dp"
         android:layout_height="80dp">
 
         <ImageView
             android:id="@+id/item_pic"
-            android:src="@drawable/default_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
         <TextView
             android:id="@+id/item_name"
             android:layout_alignParentBottom="true"
