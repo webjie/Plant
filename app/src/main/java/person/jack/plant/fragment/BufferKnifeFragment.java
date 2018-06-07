@@ -30,8 +30,12 @@ import person.jack.plant.R;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.EnvDao;
 import person.jack.plant.db.dao.PlantsDao;
+import person.jack.plant.db.dao.ValueSetDao;
+import person.jack.plant.db.dao.WarnRecordDao;
 import person.jack.plant.db.entity.Env;
 import person.jack.plant.db.entity.Plants;
+import person.jack.plant.db.entity.ValueSet;
+import person.jack.plant.db.entity.WarnRecord;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.http.HttpResponseHandler;
 import person.jack.plant.http.RestApiResponse;
@@ -47,6 +51,7 @@ import person.jack.plant.ui.quickadapter.QuickAdapter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -71,6 +76,8 @@ public class BufferKnifeFragment extends Fragment {
     private boolean isLoadAll;
     private List<Plants> list;
     public static Plants curPlants;
+    private ValueSetDao valueSetDao;
+    private WarnRecordDao warnRecordDao;
 
     @Bind(R.id.listView)
     ListView listView;
@@ -87,6 +94,8 @@ public class BufferKnifeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recommend_shop_list, container, false);
         ButterKnife.bind(this, view);
+        warnRecordDao=new WarnRecordDao(getContext());
+        valueSetDao=new ValueSetDao(getContext());
 
         return view;
     }
@@ -384,6 +393,7 @@ public class BufferKnifeFragment extends Fragment {
                         plants.setTemp(value[0]-random.nextInt(5));
                         plants.setHum(value[1]-random.nextInt(5));
                         plants.setLight(value[2]+random.nextInt(100));
+                initWarnRecord(plants.getName(),plants.getTemp(),plants.getHum(),plants.getLight());
 
                         temList.add(plants);
                     }
@@ -398,6 +408,63 @@ public class BufferKnifeFragment extends Fragment {
             return false;
         }
     });
+  public void initWarnRecord(String name,int tem,int hum,int light) {
+      ValueSet valueTem = valueSetDao.findValueName("温度");
+      ValueSet valueHum = valueSetDao.findValueName("湿度");
+      ValueSet valueLight = valueSetDao.findValueName("光照");
+
+      if (valueTem != null) {
+          if (tem > valueTem.getMax() || tem < valueTem.getMin()) {
+                  WarnRecord warnRecord = warnRecordDao.findByNameAndType(name,"温度");
+                  if (warnRecord != null) {
+                      warnRecord.setName(name);
+                      warnRecord.setType("温度");
+                      warnRecord.setValue(tem);
+                      warnRecord.setWarnDate(new Date());
+                      warnRecordDao.update(warnRecord);
+                  } else {
+                      WarnRecord warnRecord1 = new WarnRecord(1, name, "温度", tem, new Date());
+                      warnRecordDao.add(warnRecord1);
+                  }
+          }
+          if (valueHum != null) {
+              if (hum > valueHum.getMax() || hum < valueHum.getMin()) {
+                  WarnRecord warnRecord = warnRecordDao.findByNameAndType(name,"湿度");
+                  if (warnRecord != null) {
+                      warnRecord.setName(name);
+                      warnRecord.setType("湿度");
+                      warnRecord.setValue(hum);
+                      warnRecord.setWarnDate(new Date());
+                      warnRecordDao.update(warnRecord);
+                  } else {
+                      WarnRecord warnRecord1 = new WarnRecord(1, name, "湿度", hum, new Date());
+                      warnRecordDao.add(warnRecord1);
+                  }
 
 
-}
+              }
+          }
+
+          if (valueLight != null) {
+              if (light > valueLight.getMax() || light < valueLight.getMin()) {
+                  WarnRecord warnRecord = warnRecordDao.findByNameAndType(name,"光照");
+                  if (warnRecord != null) {
+                      warnRecord.setName(name);
+                      warnRecord.setType("光照");
+                      warnRecord.setValue(light);
+                      warnRecord.setWarnDate(new Date());
+                      warnRecordDao.update(warnRecord);
+                  } else {
+                      WarnRecord warnRecord1 = new WarnRecord(1, name, "光照", light, new Date());
+                      warnRecordDao.add(warnRecord1);
+                  }
+
+
+              }
+          }
+
+
+      }
+
+
+  }}

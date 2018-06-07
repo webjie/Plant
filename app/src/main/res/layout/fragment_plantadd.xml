@@ -2,17 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+
 
 
     >
+
     <ImageView
         android:id="@+id/img_PlantImg"
         android:layout_width="160dp"
         android:layout_height="130dp"
         android:src="@drawable/default_image"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/csy_form"
+        android:padding="5dp"
+        android:layout_gravity="center_horizontal"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@drawable/csy_form"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_marginTop="@dimen/csy_pd"
+        android:padding="@dimen/space_5"
+
+        >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,127 +54,74 @@
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:background="@drawable/linear_back"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-
-
+        style="@style/csy_row"
+        android:layout_height="@dimen/space_50"
         >
 
         <TextView
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="名        称"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:layout_marginLeft="5dp"
-            />
-
+            style="@style/csy_row_label"
+            android:layout_width="100dp"
+            android:text="名       称" />
         <EditText
             android:id="@+id/et_plantName"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:background="@drawable/edit2_back"
-            android:textColor="#fff"
-            android:textSize="18sp"
+            style="@style/csy_textbox"
+            android:layout_marginLeft="@dimen/space_8"
             android:maxLines="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:singleLine="true"
-            android:paddingLeft="5dp"
-
-            />
+            android:hint="请输入植物名称"/>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:background="@drawable/linear_back"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        style="@style/csy_row"
+        android:layout_height="@dimen/space_50"
         >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            style="@style/csy_row_label"
+            android:layout_width="100dp"
             android:text="生长阶段"
-            android:layout_marginLeft="5dp"
-            android:textColor="#fff"
-            android:textSize="18sp"
+
             />
         <Spinner
             android:id="@+id/spn_plantLive"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            style="@style/spinner_style"
             android:entries="@array/plant_live"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            style="@style/csy_textbox"
+            android:layout_marginLeft="@dimen/space_8"
 
             />
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:background="@drawable/linear_back"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        style="@style/csy_row"
+        android:layout_height="@dimen/space_50"
         >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            style="@style/csy_row_label"
+            android:layout_width="100dp"
             android:text="种植日期"
-
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:layout_marginLeft="5dp"
-
             />
         <TextView
             android:id="@+id/tv_plantDate"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:paddingLeft="5dp"
+            style="@style/csy_textbox"
+            android:layout_marginLeft="@dimen/space_8"
 
-            android:text="选择日期"
-            android:textColor="#fff"
-            android:textSize="18sp"
-            android:gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/edit2_back"
             />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        >
+
+
+    </LinearLayout>
+
         <Button
             android:id="@+id/btn_plantSave"
-            android:layout_width="300dp"
-            android:layout_height="40dp"
-            android:textColor="#fff"
-            android:text="保存"
-            android:textSize="18sp"
-            android:background="@drawable/linear_back"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/csy_btn_h"
+            android:layout_below="@+id/cx_form"
+            android:layout_margin="@dimen/space_5"
+            android:background="@drawable/csy_btn"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/csy_text_ts"
             />
-
-    </LinearLayout>
-
 
 
 

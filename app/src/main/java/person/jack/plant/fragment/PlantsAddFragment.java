@@ -221,7 +221,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             }catch (Exception e){
                 e.printStackTrace();
             }
-            tv_plantDate.setText("选择日期");
+
             et_plantName.setText("");
         }
     }

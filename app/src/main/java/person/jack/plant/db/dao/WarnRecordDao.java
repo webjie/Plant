@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
 
 import java.sql.SQLException;
+import java.sql.Wrapper;
 import java.util.List;
 
 import person.jack.plant.db.DatabaseHelper;
@@ -58,4 +60,59 @@ public class WarnRecordDao {
         return list;
 
     }
+
+    /**
+     * 根据环境名查询
+     * @param name
+     * @return
+     */
+    public WarnRecord findByNameAndType(String name,String type){
+        List<WarnRecord>list=null;
+        QueryBuilder queryBuilder=warnDao.queryBuilder();
+        //list=queryBuilder.query();
+        WarnRecord warnRecord=null;
+        try {
+            list=warnDao.queryBuilder().where().eq("name",name).and().eq("type",type).query();
+            Log.d("findByNameType","list长度"+list.size());
+            if(list.size()==0){
+                warnRecord=null;
+            }else{
+                warnRecord=list.get(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return warnRecord;
+
+    }
+
+    /**
+     * 更新
+     * @param warnRecord
+     */
+    public void update(WarnRecord warnRecord){
+        try {
+            warnDao.update(warnRecord);
+            Log.d("student3","警告更新成功");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.d("student3","警告更新失败");
+        }
+
+    }
+
+    /**
+     * 删除
+     * @param warnRecord
+     */
+    public void delete(WarnRecord warnRecord){
+        try {
+            warnDao.delete(warnRecord);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
