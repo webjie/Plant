@@ -24,6 +24,10 @@ public class MainPagerFragment extends Fragment {
     private PagerSlidingTabStrip tabs;
     private ViewPager pager;
 
+    public ViewPager getPager() {
+        return pager;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_pager, container, false);
@@ -48,6 +52,18 @@ public class MainPagerFragment extends Fragment {
     }
 
     class NewsAdapter extends FragmentPagerAdapter {
+        Fragment curFragment;
+
+        public Fragment getCurFragment() {
+            return curFragment;
+        }
+
+        @Override
+        public void setPrimaryItem(ViewGroup container, int position, Object object) {
+            curFragment=(Fragment)object;
+            super.setPrimaryItem(container, position, object);
+        }
+
         public NewsAdapter(FragmentManager fm) {
             super(fm);
         }

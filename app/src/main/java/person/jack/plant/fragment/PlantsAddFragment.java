@@ -208,6 +208,19 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
 //            MainActivity mainActivity=(MainActivity)getActivity();
 //            getSupportFragmentManager().getFragments()[0]
+            try{
+                MainActivity mainActivity=(MainActivity)getActivity();
+                MainPagerFragment mainPagerFragment=(MainPagerFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("HomeFragment");
+                DemoPtrFragment demoPtrFragment=(DemoPtrFragment)mainPagerFragment.getChildFragmentManager().getFragments().get(1);
+                demoPtrFragment.setLoadAll(false);
+                demoPtrFragment.loadData();
+
+                BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("ImFragment");
+                bufferKnifeFragment.setLoadAll(false);
+                bufferKnifeFragment.loadData();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             tv_plantDate.setText("选择日期");
             et_plantName.setText("");
         }

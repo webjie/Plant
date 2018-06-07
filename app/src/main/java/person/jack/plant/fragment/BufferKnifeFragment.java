@@ -1,6 +1,8 @@
 package person.jack.plant.fragment;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -42,6 +44,7 @@ import person.jack.plant.ui.pulltorefresh.PullToRefreshListView;
 import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
 import person.jack.plant.ui.quickadapter.QuickAdapter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +78,10 @@ public class BufferKnifeFragment extends Fragment {
     QuickAdapter<Plants> adapter;
     private EnvDao envDao;
     private List<Env> envList;
+
+    public void setLoadAll(boolean loadAll) {
+        isLoadAll = loadAll;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,6 +138,16 @@ public class BufferKnifeFragment extends Fragment {
                     helper.setText(R.id.item_hum, shop.getHum() + "");
                     helper.setText(R.id.item_lig, shop.getLight() + "");
                 }
+
+                if(shop.getImage()!=null){
+                    File file=new File(shop.getImage());
+                    if(file.exists()){
+                        Bitmap bitmap= BitmapFactory.decodeFile(shop.getImage());
+                        helper.setImageBitmap(R.id.item_pic,bitmap);
+                    }
+
+                }
+
                 helper.setOnClickListener(R.id.item_temp, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -219,10 +236,16 @@ public class BufferKnifeFragment extends Fragment {
         isLoadAll = false;
     }
 
-    private void loadData() {
+    public void loadData() {
         if (isLoadAll) {
             return;
         }
+
+        if(list!=null){
+            list.clear();
+            adapter.clear();
+        }
+
         param.setPno(pno);
         //使用模拟数据
         String body = "[" +
@@ -235,6 +258,9 @@ public class BufferKnifeFragment extends Fragment {
                 "]";
         try {
             list = JSONArray.parseArray(body, Plants.class);
+            PlantsDao dao=new PlantsDao(getContext());
+            List<Plants> plantsList=dao.findAll();
+            list.addAll(plantsList);
             isLoadAll = list.size() < HttpClient.PAGE_SIZE;
             if (pno == 1) {
                 adapter.clear();
