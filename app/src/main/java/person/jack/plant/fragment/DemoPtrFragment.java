@@ -66,6 +66,10 @@ public class DemoPtrFragment extends Fragment {
     List<Plants> list;
     public static Plants curPlant;
 
+    public void setLoadAll(boolean loadAll) {
+        isLoadAll = loadAll;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_demo_ptr, container, false);
@@ -236,6 +240,11 @@ public class DemoPtrFragment extends Fragment {
             return;
         }
         param.setPno(pno);
+
+        if(list!=null){
+            list.clear();
+            adapter.clear();
+        }
 
         //使用模拟数据
         String body = "[" +
