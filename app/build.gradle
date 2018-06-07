@@ -18,6 +18,7 @@ packer {
 android {
     compileSdkVersion 23
     buildToolsVersion '26.0.2'
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         // Warning:Renderscript support mode is not currently supported with renderscript target 21+
         renderscriptTargetApi 20

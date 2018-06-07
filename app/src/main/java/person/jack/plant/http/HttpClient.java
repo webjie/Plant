@@ -16,6 +16,7 @@ import person.jack.plant.model.SearchParam;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +29,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import person.jack.plant.utils.Base64Util;
 
 /**
  * Created by tiansj on 15/2/27.
@@ -43,8 +45,13 @@ public class HttpClient {
     private static final MediaType MEDIA_TYPE = MediaType.parse("text/plain;");
     private static OkHttpClient client;
 
+    /**
+     * 花草识别接口
+     */
     public static final String IMG_REG="https://api.ai.qq.com/fcgi-bin/vision/vision_imgidentify";
-
+    /**
+     *
+     */
 
     public static final MediaType JSONString = MediaType.parse("application/json; charset=utf-8");
 
@@ -75,6 +82,7 @@ public class HttpClient {
             return response;
         }
     }
+
     public static void getRequest(String url, okhttp3.Callback callback) {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().get().url(url).build();
@@ -85,6 +93,29 @@ public class HttpClient {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().post(requestBody).url(url).build();
         client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * Authorization方法
+     * @param userQQ 开发者创建应用时的QQ号
+     * @param AppID 开发者创建应用后的AppID
+     * @param SecretID 开发者创建应用后的SecretID
+     * @param SecretKey 开发者创建应用后的SecretKey
+     * @return sign
+     * @throws Exception
+     */
+    public static String getSign(String userQQ,String AppID,String SecretID,String SecretKey) throws Exception{
+        long tnowTimes = new Date().getTime()/1000;
+        long enowTimes = tnowTimes+2592000;
+        String rRandomNum = HMACSHA1.genRandomNum(10);
+        String param = "u=" + userQQ + "&a=" + AppID + "&k=" + SecretID + "&e="
+                + enowTimes + "&t=" + tnowTimes + "&r=" + rRandomNum + "&f=";
+        byte [] hmacSign = HMACSHA1.getSignature(param, SecretKey);
+        byte[] all = new byte[hmacSign.length+param.getBytes().length];
+        System.arraycopy(hmacSign, 0, all, 0, hmacSign.length);
+        System.arraycopy(param.getBytes(), 0, all, hmacSign.length, param.getBytes().length);
+        String sign = Base64Util.encode(all);
+        return sign;
     }
 
 

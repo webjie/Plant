@@ -6,8 +6,31 @@ import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.widget.Toast;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 import person.jack.plant.common.AppContext;
+import person.jack.plant.http.HttpClient;
+import person.jack.plant.http.HttpResponseHandler;
+import person.jack.plant.http.RestApiResponse;
+import person.jack.plant.model.MyAppContants;
+
+import static person.jack.plant.activity.PlantsDetailActivity.TAG;
 
 
 /**
@@ -102,7 +125,73 @@ public class Utils {
             return false;
     }
 
+    public static void getPlantTypeByImage(String path){
+        String time_stamp = System.currentTimeMillis() / 1000 + "";
+        String nonce_str= TencentAISign.getRandomString(10);
 
+        Handler handler=new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message message) {
+
+                return false;
+            }
+        });
+
+        //网络图片
+        try {
+            //本地图片
+        byte[] imageData= UrlMethodUtil.local2byte(path);
+//            byte[] imageData= UrlMethodUtil.url2byte("https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=3495450057,3472067227&fm=5");
+            String img64= Base64Util.encode(imageData);
+            final Map<String,String> person_Id_body = new HashMap<>();
+            person_Id_body.put("app_id", String.valueOf(MyAppContants.APP_ID_AI));
+            person_Id_body.put("time_stamp",time_stamp);
+            person_Id_body.put("nonce_str", nonce_str);
+            person_Id_body.put("image", img64);
+            person_Id_body.put("scene","2");
+
+            String sign=TencentAISignSort.getSignature(person_Id_body);
+            person_Id_body.put("sign",sign);
+            final Map<String,String> headers=new HashMap<>();
+            headers.put("Content-Type", "application/x-www-form-urlencoded");
+
+            if(HttpClient.isNetworkAvailable()){
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HttpResponse responseBD = null;
+                        try {
+                            responseBD = HttpsUtil4Tencent.doPostTencentAI(MyAppContants.IMAGE_LABEL_PLANTS, headers, person_Id_body);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        String json = null;
+                        try {
+                            json = EntityUtils.toString(responseBD.getEntity());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println(json);  //这个就是我们的要的数据了
+                    }
+                }).start();
+
+
+            }else{
+
+
+            }
+
+            Log.d(TAG, "getPlantTypeByImage: "+sign);
+            Log.d(TAG, "getPlantTypeByImage: "+img64);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
 
     static String getString(Context context, int resId){
