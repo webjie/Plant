@@ -223,6 +223,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             }
 
             et_plantName.setText("");
+           chooseImagePath="null";
             img_PlantImg.setImageResource(R.drawable.plantlogo);
         }
     }
