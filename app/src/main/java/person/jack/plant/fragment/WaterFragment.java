@@ -107,7 +107,11 @@ public class WaterFragment extends Fragment {
                         waterList.clear();
                         waterRecordAdaper = new WaterRecordAdaper(getContext(), R.layout.item_water_record, waterList);
                         lv_water.setAdapter(waterRecordAdaper);
-                        Toast.makeText(getContext(), "暂无"+name+"的灌溉记录", Toast.LENGTH_SHORT).show();
+                        MainPagerFragment mainPagerFragment=(MainPagerFragment)getParentFragment();
+                        if(((MainPagerFragment) getParentFragment()).pager.getCurrentItem()==3){
+                            Toast.makeText(getContext(), "暂无"+name+"的灌溉记录", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
 
                 }

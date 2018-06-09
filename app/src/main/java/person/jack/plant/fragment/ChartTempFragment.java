@@ -34,6 +34,7 @@ import java.util.TimerTask;
 import person.jack.plant.R;
 import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.db.entity.Env;
+import person.jack.plant.db.entity.Plants;
 
 import static person.jack.plant.ui.UIHelper.TAG;
 
@@ -51,7 +52,7 @@ public class ChartTempFragment extends Fragment {
 
     private LineChart statusChart;
     private TextView statusName;
-    private List<Env> list;
+    private List<Plants> list;
     private List<Entry> entryList;
 
 
@@ -64,11 +65,11 @@ public class ChartTempFragment extends Fragment {
         statusName = (TextView) view.findViewById(R.id.status_name);
         statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的温度");
         PlantsStatusActivity activity=(PlantsStatusActivity)getActivity();
-        list=activity.getEnvList();
+        list=activity.getplantsList();
         entryList=new ArrayList<>();
         for(int i=0;i<5;i++){
-            Env env=list.get(i);
-            Entry entry=new Entry(i,env.getTemperature());
+            Plants env=list.get(i);
+            Entry entry=new Entry(i,env.getTemp());
             entryList.add(entry);
         }
         initChart();
@@ -86,7 +87,7 @@ public class ChartTempFragment extends Fragment {
                         Entry entryq=entryList.get(i);
                         entryq.setX(entryq.getX()-1);
                     }
-                    Entry entry=new Entry(entryList.size(),list.get(random.nextInt(9)).getTemperature());
+                    Entry entry=new Entry(entryList.size(),list.get(random.nextInt(9)).getTemp());
                     entryList.add(entry);
 
                     XAxis xAxis=statusChart.getXAxis();

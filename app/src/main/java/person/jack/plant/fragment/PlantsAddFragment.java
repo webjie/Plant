@@ -391,27 +391,27 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 //如果document的类型是uri则通过document id 处理
                 String id = docId.split(":")[1];//解析出数字格式id
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-               // imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
-                cropPhoto(uri);
+               imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+
 
             } else if ("com.android.provider.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId
                         (Uri.parse("content:///downloads/public_downloads"), Long.valueOf(docId));
 
-                //imagePath = getImagePath(contentUri, null);
-                cropPhoto(uri);
+                imagePath = getImagePath(contentUri, null);
+
             }
         } else if ("content".equalsIgnoreCase(uri.getScheme())) {
             //如果是content类型的uri则使用普通方式处理
-           // imagePath = getImagePath(uri, null);
-            cropPhoto(uri);
+            imagePath = getImagePath(uri, null);
+
         } else if ("file".equalsIgnoreCase(uri.getScheme())) {
             //如果是file 类型的uri 则直接获取图片路径
-           // imagePath = uri.getPath();
+            imagePath = uri.getPath();
 
-            cropPhoto(uri);
+
         }
-        //displayImages(imagePath);
+       displayImages(imagePath);
     }
     /**
      * 生成图片

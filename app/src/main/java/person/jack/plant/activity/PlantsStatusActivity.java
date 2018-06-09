@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import person.jack.plant.R;
-import person.jack.plant.db.dao.EnvDao;
+import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Env;
 import person.jack.plant.db.entity.Plants;
 import person.jack.plant.fragment.ChartHumFragment;
@@ -38,21 +38,21 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
     private ViewPager statusPager;
     private List<Fragment> list;
     List<RadioButton> radioButtonList=new ArrayList<>();
-    private EnvDao envDao;
-    private static List<Env>envList;
+    private PlantsDao PlantsDao;
+    private static List<Plants>plantsList;
 
 
-    public List<Env> getEnvList() {
-        return envList;
+    public List<Plants> getplantsList() {
+        return plantsList;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plants_status);
-        envDao=new EnvDao(this);
-        envList=envDao.findAll();
-        Log.d("envList","envList长度"+envList.size());
+        PlantsDao=new PlantsDao(this);
+        plantsList=PlantsDao.findAll();
+        Log.d("plantsList","plantsList长度"+plantsList.size());
         initFragment();
         initView();
 

@@ -101,25 +101,25 @@ public class DemoPtrFragment extends Fragment {
             protected void convert(final BaseAdapterHelper helper, final Plants shop) {
 
                 helper.setText(R.id.tv_name, shop.getName()); // 自动异步加载图片
-
-                if ("花生".equals(shop.getName().toString())){
-                    helper.setImageResource(R.id.logo,R.drawable.img1);
-                }
-                if ("辣椒".equals(shop.getName().toString())){
-                    helper.setImageResource(R.id.logo,R.drawable.img2);
-                }
-                if ("白掌".equals(shop.getName().toString())){
-                    helper.setImageResource(R.id.logo,R.drawable.img3);
-                }
-                if ("碧玉".equals(shop.getName().toString())){
-                    helper.setImageResource(R.id.logo,R.drawable.img4);
-                }
-                if ("双线竹语".equals(shop.getName().toString())){
-                    helper.setImageResource(R.id.logo,R.drawable.img5);
-                }
-                if ("长寿花".equals(shop.getName().toString())){
-                    helper.setImageResource(R.id.logo,R.drawable.img6);
-                }
+//
+//                if ("花生".equals(shop.getName().toString())){
+//                    helper.setImageResource(R.id.logo,R.drawable.img1);
+//                }
+//                if ("辣椒".equals(shop.getName().toString())){
+//                    helper.setImageResource(R.id.logo,R.drawable.img2);
+//                }
+//                if ("白掌".equals(shop.getName().toString())){
+//                    helper.setImageResource(R.id.logo,R.drawable.img3);
+//                }
+//                if ("碧玉".equals(shop.getName().toString())){
+//                    helper.setImageResource(R.id.logo,R.drawable.img4);
+//                }
+//                if ("双线竹语".equals(shop.getName().toString())){
+//                    helper.setImageResource(R.id.logo,R.drawable.img5);
+//                }
+//                if ("长寿花".equals(shop.getName().toString())){
+//                    helper.setImageResource(R.id.logo,R.drawable.img6);
+//                }
                 if(shop.getImage()!=null){
                     if(shop.getImage().equals("null")){
                         helper.setImageResource(R.id.logo,R.drawable.default_image);
@@ -291,21 +291,18 @@ public class DemoPtrFragment extends Fragment {
             adapter.clear();
         }
 
-        //使用模拟数据
-        String body = "[" +
-                "{ \"name\":\"花生\" , \"logo\":\"img1.jpg\" }," +
-                "{ \"name\":\"辣椒\" , \"logo\":\"img1.jpg\" }," +
-                "{ \"name\":\"白掌\" , \"logo\":\"img1.jpg\" }," +
-                "{ \"name\":\"碧玉\" , \"logo\":\"img1.jpg\" }," +
-                "{ \"name\":\"双线竹语\" , \"logo\":\"img1.jpg\" }," +
-                "{ \"name\":\"长寿花\" , \"logo\":\"img1.jpg\" }," +
-                "]";
+//        //使用模拟数据
+//        String body = "[" +
+//                "{ \"name\":\"花生\" , \"logo\":\"img1.jpg\" }," +
+//                "{ \"name\":\"辣椒\" , \"logo\":\"img1.jpg\" }," +
+//                "{ \"name\":\"白掌\" , \"logo\":\"img1.jpg\" }," +
+//                "{ \"name\":\"碧玉\" , \"logo\":\"img1.jpg\" }," +
+//                "{ \"name\":\"双线竹语\" , \"logo\":\"img1.jpg\" }," +
+//                "{ \"name\":\"长寿花\" , \"logo\":\"img1.jpg\" }," +
+//                "]";
         try {
-            list = JSONArray.parseArray(body, Plants.class);
+            list = plantsDao.findAll();
             PlantsDao dao=new PlantsDao(getContext());
-
-            List<Plants> plantsList=dao.findAll();
-            list.addAll(plantsList);
             listView.updateLoadMoreViewText(list);
             isLoadAll = list.size() < HttpClient.PAGE_SIZE;
             if (pno == 1) {

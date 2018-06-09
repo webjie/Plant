@@ -22,7 +22,7 @@ public class MainPagerFragment extends Fragment {
     private static String[] URLS = new String[]{"", "", "", ""};
 
     private PagerSlidingTabStrip tabs;
-    private ViewPager pager;
+    public ViewPager pager;
 
     public ViewPager getPager() {
         return pager;
@@ -32,6 +32,7 @@ public class MainPagerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_pager, container, false);
         pager = (ViewPager) view.findViewById(R.id.pager);
+        pager.setOffscreenPageLimit(1);
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         return view;
     }

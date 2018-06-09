@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="getEnv" >http://www.0531yun.cn/wsjc/Device/getDeviceData.do</string>
+    <string name="userName">180604htrj</string>
+    <string name="password">180604htrj</string>
+</resources>

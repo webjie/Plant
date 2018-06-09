@@ -32,6 +32,7 @@ import java.util.TimerTask;
 import person.jack.plant.R;
 import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.db.entity.Env;
+import person.jack.plant.db.entity.Plants;
 
 import static person.jack.plant.ui.UIHelper.TAG;
 
@@ -48,7 +49,7 @@ public class ChartLigFragment extends Fragment {
 
     private LineChart statusChart;
     private TextView statusName;
-    private List<Env> list;
+    private List<Plants> list;
     private List<Entry> entryList;
 
 
@@ -61,11 +62,11 @@ public class ChartLigFragment extends Fragment {
         statusName = (TextView) view.findViewById(R.id.status_name);
         statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的光照强度");
         PlantsStatusActivity activity=(PlantsStatusActivity)getActivity();
-        list=activity.getEnvList();
+        list=activity.getplantsList();
         entryList=new ArrayList<>();
         for(int i=0;i<5;i++){
-            Env env=list.get(i);
-            Entry entry=new Entry(i,env.getLight());
+            Plants p=list.get(i);
+            Entry entry=new Entry(i,p.getLight());
             entryList.add(entry);
         }
         initChart();
