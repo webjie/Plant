@@ -58,6 +58,7 @@ public class ChartTempFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView: ");
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_chart, container, false);
         statusChart = (LineChart) view.findViewById(R.id.status_chart);

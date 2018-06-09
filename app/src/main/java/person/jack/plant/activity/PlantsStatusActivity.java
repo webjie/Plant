@@ -56,8 +56,6 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plants_status);
         PlantsDao=new PlantsDao(this);
-        plantsList=PlantsDao.findAll();
-        Log.d("plantsList","plantsList长度"+plantsList.size());
         receiver=new MyBroadcastReceiver();
         IntentFilter filter=new IntentFilter("plants.chart.update");
         registerReceiver(receiver,filter);
@@ -91,7 +89,7 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         MViewPagerAdapter adapter=new MViewPagerAdapter(getSupportFragmentManager(),list);
         statusPager.setAdapter(adapter);
         statusPager.setCurrentItem(curPosition);
-        statusPager.setOffscreenPageLimit(3);
+        statusPager.setOffscreenPageLimit(2);
 
         statusPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -130,10 +128,10 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
 
     private void initFragment(){
         list=new ArrayList<>();
-        ChartTempFragment tempFragment=new ChartTempFragment();
-        ChartHumFragment humFragment=new ChartHumFragment();
-        ChartLigFragment ligFragment=new ChartLigFragment();
-        list.add(tempFragment);list.add(humFragment);list.add(ligFragment);
+//        ChartTempFragment tempFragment=new ChartTempFragment();
+//        ChartHumFragment humFragment=new ChartHumFragment();
+//        ChartLigFragment ligFragment=new ChartLigFragment();
+//        list.add(tempFragment);list.add(humFragment);list.add(ligFragment);
     }
 
     @Override

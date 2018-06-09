@@ -405,12 +405,8 @@ public class BufferKnifeFragment extends Fragment {
                     Intent intent=new Intent("plants.chart.update");
                     intent.putExtra("updateChart",value);
                     getActivity().sendBroadcast(intent);
-
-
                     adapter.clear();
                     adapter.addAll(temList);
-
-
                     Log.d(TAG, "handleMessage: " + temList.size());
                     adapter.notifyDataSetChanged();
                     break;
