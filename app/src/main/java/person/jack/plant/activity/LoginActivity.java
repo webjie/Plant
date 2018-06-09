@@ -17,7 +17,8 @@ import person.jack.plant.ui.UIHelper;
 import person.jack.plant.utils.SharedPreferences;
 
 /**
- * 5.登录界面-没有实现远程登录功能-chenle
+ * 5.用户登录功能
+ *  author : cl
  */
 public class LoginActivity extends BaseFragmentActivity {
     EditText name, pwd;

@@ -20,7 +20,7 @@ import person.jack.plant.ui.pulltozoomview.PullToZoomScrollViewEx;
 import person.jack.plant.utils.SharedPreferences;
 
 /**
- * 我的信息界面，包括头部登录用户图片信息，可缩放背景图片，导航菜单，退出登录
+ * 我的信息界面，包括头部登录用户图片信息，可缩放背景图片，用户注册、登录，个人信息，修改密码，软件版本，，退出登录
  */
 public class MemberFragment extends Fragment {
 

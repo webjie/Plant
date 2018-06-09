@@ -12,6 +12,9 @@ import butterknife.ButterKnife;
 import person.jack.plant.R;
 import person.jack.plant.ui.UIHelper;
 
+/**
+ * 软件版本：显示当前版本信息 chenle
+ */
 public class VersionActivity extends BaseFragmentActivity {
     @Bind(R.id.btnBack)
     Button btnBack;

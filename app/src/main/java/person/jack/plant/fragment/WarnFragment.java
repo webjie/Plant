@@ -22,8 +22,8 @@ import person.jack.plant.db.entity.WarnRecord;
 import person.jack.plant.utils.Utils;
 
 /**
- * 警告记录
- * Created by Administrator on 2018/6/4.
+ *  报警记录
+ * Created by cl on 2018/6/4.
  */
 
 public class WarnFragment extends Fragment {
