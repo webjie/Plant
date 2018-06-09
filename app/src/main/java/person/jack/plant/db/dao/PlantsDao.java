@@ -44,6 +44,32 @@ public class PlantsDao {
             Log.d("student3","植物添加失败");
         }
     }
+    /**
+     * 更新植物
+     * @param plants
+     */
+    public void updatePlant(Plants plants){
+        try {
+            plantDao.update(plants);
+            Log.d("student3","植物更新成功");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.d("student3","植物更新失败");
+        }
+    }
+    /**
+     * 删除植物
+     * @param plants
+     */
+    public void deletePlant(Plants plants){
+        try {
+            plantDao.delete(plants);
+            Log.d("student3","植物删除成功");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.d("student3","植物删除失败");
+        }
+    }
 
     /**
      *
@@ -59,5 +85,22 @@ public class PlantsDao {
         }
         return list;
     }
+    public Plants findByName(String name){
+        List<Plants> list=null;
+        Plants plants=null;
+        try {
+            list= plantDao.queryForEq("name",name);
+            if(list.size()==0){
+                plants=null;
+
+            }else{
+                plants=list.get(0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return plants;
+    }
+
 
 }

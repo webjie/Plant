@@ -105,18 +105,42 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/plant_add_form"
+        android:layout_marginTop="10dp"
+        >
 
-    <Button
-        android:id="@+id/btn_plantSave"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/csy_btn_h"
-        android:layout_below="@+id/plant_add_form"
-        android:layout_margin="@dimen/space_5"
-        android:background="@drawable/csy_btn"
-        android:gravity="center"
-        android:text="确定"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/csy_text_ts"
-        />
+        <Button
+            android:id="@+id/btn_plantSave"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/csy_btn_h"
+            android:layout_below="@+id/plant_add_form"
+            android:layout_margin="@dimen/space_5"
+            android:background="@drawable/csy_btn"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="新增植物"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/csy_text_ts"
+            />
+        <Button
+            android:id="@+id/btn_plantUpdate"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="@dimen/csy_btn_h"
+            android:layout_below="@+id/btn_plantSave"
+            android:layout_margin="@dimen/space_5"
+            android:background="@drawable/csy_btn"
+            android:gravity="center"
+            android:text="更新植物"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/csy_text_ts"
+            />
+
+    </LinearLayout>
+
 
 </RelativeLayout>

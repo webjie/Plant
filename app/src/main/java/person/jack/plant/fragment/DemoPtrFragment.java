@@ -1,5 +1,7 @@
 package person.jack.plant.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
@@ -54,6 +57,8 @@ import static person.jack.plant.ui.UIHelper.TAG;
 public class DemoPtrFragment extends Fragment {
     private MainActivity context;
 
+    private RelativeLayout relativeLayout;
+
     private SearchParam param;
     private int pno = 1;
     private boolean isLoadAll;
@@ -65,6 +70,8 @@ public class DemoPtrFragment extends Fragment {
     QuickAdapter<Plants> adapter;
     List<Plants> list;
     public static Plants curPlant;
+    private PlantsDao plantsDao;
+
 
     public void setLoadAll(boolean loadAll) {
         isLoadAll = loadAll;
@@ -83,9 +90,9 @@ public class DemoPtrFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         context = (MainActivity) getActivity();
+        plantsDao=new PlantsDao(getContext());
         initData();
         initView();
-      //  initView();
     }
 
     void initView() {
@@ -123,9 +130,46 @@ public class DemoPtrFragment extends Fragment {
                             helper.setImageBitmap(R.id.logo,bitmap);
                         }
                     }
-
-
                 }
+
+
+               helper.setOnLongClickListener(R.id.shop_item,new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                        builder.setMessage("确定删除吗？");
+                        builder.setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                              Plants plants=plantsDao.findByName(shop.getName());
+                              if(plants!=null){
+                                  plantsDao.deletePlant(plants);
+                                  Toast.makeText(getContext(),"删除成功",Toast.LENGTH_SHORT).show();
+                                  try{
+                                      MainActivity mainActivity=(MainActivity)getActivity();
+                                      MainPagerFragment mainPagerFragment=(MainPagerFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("HomeFragment");
+                                      DemoPtrFragment demoPtrFragment=(DemoPtrFragment)mainPagerFragment.getChildFragmentManager().getFragments().get(1);
+                                      demoPtrFragment.setLoadAll(false);
+                                      demoPtrFragment.loadData();
+
+                                      BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("ImFragment");
+                                      if(bufferKnifeFragment!=null){
+                                          bufferKnifeFragment.setLoadAll(false);
+                                          bufferKnifeFragment.loadData();
+
+                                      }
+                                  }catch (Exception e){
+                                      e.printStackTrace();
+                                  }
+                                  loadData();
+                              }
+                            }
+                        });
+                        builder.setPositiveButton("取消",null);
+                        builder.show();
+                        return false;
+                    }
+                });
 
                 helper.setOnClickListener(R.id.btnWatering, new View.OnClickListener() {
                     @Override
@@ -209,6 +253,7 @@ public class DemoPtrFragment extends Fragment {
 
             }
         });
+
 
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
