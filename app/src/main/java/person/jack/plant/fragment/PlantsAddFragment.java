@@ -234,6 +234,8 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                     bufferKnifeFragment.loadData();
 
                 }
+                Utils.getPlantTypeByImage(plants.getImage());
+
             }catch (Exception e){
                 e.printStackTrace();
             }

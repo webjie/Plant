@@ -1,6 +1,8 @@
 package person.jack.plant.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -400,6 +402,11 @@ public class BufferKnifeFragment extends Fragment {
 
                         temList.add(plants);
                     }
+                    Intent intent=new Intent("plants.chart.update");
+                    intent.putExtra("updateChart",value);
+                    getActivity().sendBroadcast(intent);
+
+
                     adapter.clear();
                     adapter.addAll(temList);
 

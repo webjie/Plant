@@ -74,56 +74,56 @@ public class ChartLigFragment extends Fragment {
         return view;
     }
 
-    Handler handler=new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            switch (message.what){
-                case 0:
-                    entryList.remove(0);
-                    for(int i=0;i<entryList.size();i++){
-                        Entry entryq=entryList.get(i);
-                        entryq.setX(entryq.getX()-1);
-                    }
-                    Entry entry=new Entry(entryList.size(),list.get(random.nextInt(9)).getLight());
-                    entryList.add(entry);
-
-                    XAxis xAxis=statusChart.getXAxis();
-                    setChart();
-                    break;
-            }
-            return false;
-        }
-    });
-
-    Timer timer;
-    TimerTask timerTask;
-    Random random=new Random();
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        timer=new Timer();
-        timerTask=new TimerTask() {
-            @Override
-            public void run() {
-                Message message=new Message();
-                message.what=0;
-                handler.sendMessage(message);
-            }
-        };
-        timer.schedule(timerTask,0,3000);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(timer!=null){
-            timer.cancel();
-            timerTask.cancel();
-            timerTask=null;
-            timer=null;
-        }
-    }
+//    Handler handler=new Handler(new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message message) {
+//            switch (message.what){
+//                case 0:
+//                    entryList.remove(0);
+//                    for(int i=0;i<entryList.size();i++){
+//                        Entry entryq=entryList.get(i);
+//                        entryq.setX(entryq.getX()-1);
+//                    }
+//                    Entry entry=new Entry(entryList.size(),list.get(random.nextInt(9)).getLight());
+//                    entryList.add(entry);
+//
+//                    XAxis xAxis=statusChart.getXAxis();
+//                    setChart();
+//                    break;
+//            }
+//            return false;
+//        }
+//    });
+//
+//    Timer timer;
+//    TimerTask timerTask;
+//    Random random=new Random();
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        timer=new Timer();
+//        timerTask=new TimerTask() {
+//            @Override
+//            public void run() {
+//                Message message=new Message();
+//                message.what=0;
+//                handler.sendMessage(message);
+//            }
+//        };
+//        timer.schedule(timerTask,0,3000);
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if(timer!=null){
+//            timer.cancel();
+//            timerTask.cancel();
+//            timerTask=null;
+//            timer=null;
+//        }
+//    }
 
     private void initChart(){
         statusChart.setDescription(null);
@@ -164,14 +164,24 @@ public class ChartLigFragment extends Fragment {
         yAxis.setDrawGridLines(true);
         yAxis.setLabelCount(4);
 
-        setChart();
+        setChart(0);
     }
 
-    private void setChart(){
+    public void setChart(int value){
         LineData data;
         LineDataSet set;
 
         if(statusChart.getLineData()!=null&&statusChart.getLineData().getDataSetCount()>0){
+            if(entryList.size()==5){
+                entryList.remove(0);
+                for(int i=0;i<entryList.size();i++){
+                    Entry entryq=entryList.get(i);
+                    entryq.setX(entryq.getX()-1);
+                }
+            }
+            Entry entry=new Entry(entryList.size(),value);
+            entryList.add(entry);
+
             data=statusChart.getLineData();
             set=(LineDataSet)data.getDataSetByIndex(0);
 

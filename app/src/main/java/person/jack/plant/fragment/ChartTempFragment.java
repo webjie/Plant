@@ -52,7 +52,6 @@ public class ChartTempFragment extends Fragment {
 
     private LineChart statusChart;
     private TextView statusName;
-    private List<Plants> list;
     private List<Entry> entryList;
 
 
@@ -64,69 +63,53 @@ public class ChartTempFragment extends Fragment {
         statusChart = (LineChart) view.findViewById(R.id.status_chart);
         statusName = (TextView) view.findViewById(R.id.status_name);
         statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的温度");
-        PlantsStatusActivity activity=(PlantsStatusActivity)getActivity();
-        list=activity.getplantsList();
         entryList=new ArrayList<>();
-        for(int i=0;i<5;i++){
-            Plants env=list.get(i);
-            Entry entry=new Entry(i,env.getTemp());
-            entryList.add(entry);
-        }
         initChart();
-
         return view;
     }
 
-    Handler handler=new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            switch (message.what){
-                case 0:
-                    entryList.remove(0);
-                    for(int i=0;i<entryList.size();i++){
-                        Entry entryq=entryList.get(i);
-                        entryq.setX(entryq.getX()-1);
-                    }
-                    Entry entry=new Entry(entryList.size(),list.get(random.nextInt(9)).getTemp());
-                    entryList.add(entry);
+//    Handler handler=new Handler(new Handler.Callback() {
+//        @Override
+//        public boolean handleMessage(Message message) {
+//            switch (message.what){
+//                case 0:
+//
+//                    setChart();
+//                    break;
+//            }
+//            return false;
+//        }
+//    });
 
-                    XAxis xAxis=statusChart.getXAxis();
-                    setChart();
-                    break;
-            }
-            return false;
-        }
-    });
-
-    Timer timer;
-    TimerTask timerTask;
-    Random random=new Random();
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        timer=new Timer();
-        timerTask=new TimerTask() {
-            @Override
-            public void run() {
-                Message message=new Message();
-                message.what=0;
-                handler.sendMessage(message);
-            }
-        };
-        timer.schedule(timerTask,0,3000);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(timer!=null){
-            timer.cancel();
-            timerTask.cancel();
-            timerTask=null;
-            timer=null;
-        }
-    }
+//    Timer timer;
+//    TimerTask timerTask;
+//    Random random=new Random();
+//
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        timer=new Timer();
+//        timerTask=new TimerTask() {
+//            @Override
+//            public void run() {
+//                Message message=new Message();
+//                message.what=0;
+//                handler.sendMessage(message);
+//            }
+//        };
+//        timer.schedule(timerTask,0,3000);
+//    }
+//
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        if(timer!=null){
+//            timer.cancel();
+//            timerTask.cancel();
+//            timerTask=null;
+//            timer=null;
+//        }
+//    }
 
     private void initChart(){
         statusChart.setDescription(null);
@@ -167,14 +150,26 @@ public class ChartTempFragment extends Fragment {
         yAxis.setDrawGridLines(true);
         yAxis.setLabelCount(4);
 
-        setChart();
+        setChart(0);
     }
 
-    private void setChart(){
+    public  void setChart(int value){
         LineData data;
         LineDataSet set;
 
         if(statusChart.getLineData()!=null&&statusChart.getLineData().getDataSetCount()>0){
+            if(entryList.size()==5){
+                entryList.remove(0);
+                for(int i=0;i<entryList.size();i++){
+                    Entry entryq=entryList.get(i);
+                    entryq.setX(entryq.getX()-1);
+                }
+            }
+
+            Entry entry=new Entry(entryList.size(),value);
+            entryList.add(entry);
+
+
             data=statusChart.getLineData();
             set=(LineDataSet)data.getDataSetByIndex(0);
 
@@ -196,7 +191,9 @@ public class ChartTempFragment extends Fragment {
             data.setValueTextSize(15f);
             statusChart.setData(data);
             statusChart.invalidate();
+            Log.d(TAG, "setChart: initialize chart");
         }
     }
+
 
 }

@@ -1,5 +1,9 @@
 package person.jack.plant.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,7 +29,7 @@ import person.jack.plant.fragment.ChartLigFragment;
 import person.jack.plant.fragment.ChartTempFragment;
 
 public class PlantsStatusActivity extends BaseFragmentActivity {
-
+    public final static String TAG="plant";
 
     private RelativeLayout layoutHeader;
     private Button btnBack;
@@ -40,6 +44,7 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
     List<RadioButton> radioButtonList=new ArrayList<>();
     private PlantsDao PlantsDao;
     private static List<Plants>plantsList;
+    MyBroadcastReceiver receiver;
 
 
     public List<Plants> getplantsList() {
@@ -53,6 +58,9 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         PlantsDao=new PlantsDao(this);
         plantsList=PlantsDao.findAll();
         Log.d("plantsList","plantsList长度"+plantsList.size());
+        receiver=new MyBroadcastReceiver();
+        IntentFilter filter=new IntentFilter("plants.chart.update");
+        registerReceiver(receiver,filter);
         initFragment();
         initView();
 
@@ -83,6 +91,7 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         MViewPagerAdapter adapter=new MViewPagerAdapter(getSupportFragmentManager(),list);
         statusPager.setAdapter(adapter);
         statusPager.setCurrentItem(curPosition);
+        statusPager.setOffscreenPageLimit(3);
 
         statusPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -127,6 +136,12 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         list.add(tempFragment);list.add(humFragment);list.add(ligFragment);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
+    }
+
     class MViewPagerAdapter extends FragmentPagerAdapter{
         List<Fragment> list;
 
@@ -147,6 +162,19 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
     }
 
 
+    class MyBroadcastReceiver extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int [] value=intent.getIntArrayExtra("updateChart");
+            ChartTempFragment chartTempFragment=(ChartTempFragment)list.get(0);
+            chartTempFragment.setChart(value[0]);
+            ChartHumFragment chartHumFragment=(ChartHumFragment)list.get(1);
+            chartHumFragment.setChart(value[1]);
+            ChartLigFragment chartLigFragment=(ChartLigFragment)list.get(2);
+            chartLigFragment.setChart(value[2]);
 
+            Log.d(TAG, "onReceive: 更新图表");
+        }
+    }
 
 }
