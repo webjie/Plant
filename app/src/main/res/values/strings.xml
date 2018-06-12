@@ -47,10 +47,16 @@
     <string name="set_complete">设置成功</string>
     <string name="forget_gesture">忘记手势密码</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_plants_detail">PlantsDetailActivity</string>
     <string name="title_activity_plants_status">PlantsStatusActivity</string>
 
+    <!-- 首页按钮 -->
+    <string name="btn_search">状态查询</string>
+    <string name="btn_camera">在线监控</string>
+    <string name="btn_control">种植控制</string>
+    <string name="btn_alert">故障报警</string>
+    <string name="btn_type">种植选型</string>
+    <string name="btn_chat">种植交流</string>
 
 </resources>

@@ -52,7 +52,7 @@ import okhttp3.Request;
 import static person.jack.plant.ui.UIHelper.TAG;
 
 /**
- * 首页-获取远程服务器商品列表
+ * 首页-获取远程服务器植物列表
  */
 public class DemoPtrFragment extends Fragment {
     private MainActivity context;

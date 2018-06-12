@@ -5,6 +5,73 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
+
+    <RadioGroup
+        android:id="@+id/group"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:id="@+id/btn_home_route"
+                style="@style/main_content_home_btn"
+                android:drawableTop="@drawable/btn_search"
+                android:text="@string/btn_search" />
+
+            <RadioButton
+                android:id="@+id/btn_home_tmc"
+                style="@style/main_content_home_btn"
+                android:drawableTop="@drawable/btn_camera"
+                android:text="@string/btn_camera" />
+
+            <RadioButton
+                android:id="@+id/btn_home_gas_station"
+                style="@style/main_content_home_btn"
+                android:drawableTop="@drawable/btn_control"
+                android:text="@string/btn_control" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <RadioButton
+                android:id="@+id/btn_home_4s"
+                style="@style/main_content_home_btn"
+                android:drawableTop="@drawable/btn_alert"
+                android:text="@string/btn_alert" />
+
+            <RadioButton
+                android:id="@+id/btn_home_emergency"
+                style="@style/main_content_home_btn"
+                android:drawableTop="@drawable/btn_type"
+                android:text="@string/btn_type" />
+
+            <RadioButton
+                android:id="@+id/btn_home_traffic_violation"
+                style="@style/main_content_home_btn"
+                android:drawableTop="@drawable/btn_chat"
+                android:text="@string/btn_chat" />
+
+        </LinearLayout>
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/viewSplit"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:background="#EDEDED" />
+
     <in.srain.cube.views.ptr.PtrClassicFrameLayout
         android:id="@+id/rotate_header_list_view_frame"
         android:layout_width="match_parent"

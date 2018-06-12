@@ -144,4 +144,18 @@
 		<item name="android:scaleType">center</item>
 	</style>
 
+	<!-- 首页按钮 -->
+	<style name="main_content_home_btn">
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:paddingBottom">5dp</item>
+		<item name="android:drawablePadding">3dp</item>
+		<item name="android:textSize">@dimen/text_size_13</item>
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:gravity">center</item>
+		<item name="android:background">@color/white</item>
+		<item name="android:button">@null</item>
+	</style>
+
 </resources>
