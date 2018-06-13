@@ -61,14 +61,14 @@ public class ChartLigFragment extends Fragment {
         statusChart = (LineChart) view.findViewById(R.id.status_chart);
         statusName = (TextView) view.findViewById(R.id.status_name);
         statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的光照强度");
-        PlantsStatusActivity activity=(PlantsStatusActivity)getActivity();
-        list=activity.getplantsList();
+//        PlantsStatusActivity activity=(PlantsStatusActivity)getActivity();
+//        list=activity.getplantsList();
         entryList=new ArrayList<>();
-        for(int i=0;i<5;i++){
-            Plants p=list.get(i);
-            Entry entry=new Entry(i,p.getLight());
-            entryList.add(entry);
-        }
+//        for(int i=0;i<5;i++){
+//            Plants p=list.get(i);
+//            Entry entry=new Entry(i,p.getLight());
+//            entryList.add(entry);
+//        }
         initChart();
 
         return view;

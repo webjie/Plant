@@ -1,6 +1,8 @@
 package person.jack.plant.fragment;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -29,6 +31,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import person.jack.plant.R;
+import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.EnvDao;
 import person.jack.plant.db.dao.PlantsDao;
@@ -44,6 +47,8 @@ import person.jack.plant.http.JsonAnalysis;
 import person.jack.plant.http.RestApiResponse;
 import person.jack.plant.model.SearchParam;
 import person.jack.plant.model.SearchPlant;
+import person.jack.plant.model.SerializableMap;
+import person.jack.plant.service.MyEnvStatusService;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.loadmore.LoadMoreListView;
 import person.jack.plant.ui.pulltorefresh.PullToRefreshBase;
@@ -83,6 +88,7 @@ public class BufferKnifeFragment extends Fragment {
     private ValueSetDao valueSetDao;
     private PlantsDao plantsDao;
     private WarnRecordDao warnRecordDao;
+    MyBroadcastReceiver myBroadcastReceiver;
 
     @Bind(R.id.listView)
     ListView listView;
@@ -97,9 +103,16 @@ public class BufferKnifeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.recommend_shop_list, container, false);
         ButterKnife.bind(this, view);
+        //启动服务
+        Intent intent = new Intent(getActivity(), MyEnvStatusService.class);
+        getActivity().startService(intent);
+        //注册广播
+        myBroadcastReceiver=new MyBroadcastReceiver();
+        IntentFilter filter=new IntentFilter("plants.chart.update");
+        getActivity().registerReceiver(myBroadcastReceiver,filter);
         warnRecordDao = new WarnRecordDao(getContext());
         valueSetDao = new ValueSetDao(getContext());
-        plantsDao=new PlantsDao(getContext());
+        plantsDao = new PlantsDao(getContext());
         return view;
     }
 
@@ -121,24 +134,6 @@ public class BufferKnifeFragment extends Fragment {
                 Log.d(TAG, "convert: " + shop.getName());
                 helper.setText(R.id.item_name, shop.getName()); // 自动异步加载图片
 
-//                if ("花生".equals(shop.getName().toString())) {
-//                    helper.setBackgroundRes(R.id.item_pic, R.drawable.img1);
-//                }
-//                if ("辣椒".equals(shop.getName().toString())) {
-//                    helper.setBackgroundRes(R.id.item_pic, R.drawable.img2);
-//                }
-//                if ("白掌".equals(shop.getName().toString())) {
-//                    helper.setBackgroundRes(R.id.item_pic, R.drawable.img3);
-//                }
-//                if ("碧玉".equals(shop.getName().toString())) {
-//                    helper.setBackgroundRes(R.id.item_pic, R.drawable.img4);
-//                }
-//                if ("双线竹语".equals(shop.getName().toString())) {
-//                    helper.setBackgroundRes(R.id.item_pic, R.drawable.img5);
-//                }
-//                if ("长寿花".equals(shop.getName().toString())) {
-//                    helper.setBackgroundRes(R.id.item_pic, R.drawable.img6);
-//                }
                 if (shop.getHum() != null) {
                     helper.setText(R.id.item_temp, shop.getTemp() + "");
                     helper.setText(R.id.item_hum, shop.getHum() + "");
@@ -220,12 +215,10 @@ public class BufferKnifeFragment extends Fragment {
         if (isLoadAll) {
             return;
         }
-
         if (list != null) {
             list.clear();
             adapter.clear();
         }
-
         param.setPno(pno);
 //        //使用模拟数据
 //        String body = "[" +
@@ -279,75 +272,6 @@ public class BufferKnifeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                Log.d(TAG, "run: ");
-
-                String jsonString = "[\n" +
-                        "    {\n" +
-                        "        \"DevKey\": \"105\",\n" +
-                        "        \"DevName\": \"1号主机\",\n" +
-                        "        \"DevType\": \"0\",\n" +
-                        "        \"DevAddr\": \"10000043\",\n" +
-                        "        \"DevTempName\": \"温度(℃)\",\n" +
-                        "        \"DevTempValue\": \"23\",\n" +
-                        "        \"DevHumiName\": \"湿度(%RH)\",\n" +
-                        "        \"DevHumiValue\": \"60\",\n" +
-                        "        \"DevStatus\": \"false\",\n" +
-                        "        \"DevLng\": \"0.0\",\n" +
-                        "        \"DevLat\": \"0.0\",\n" +
-                        "        \"TempStatus\": \"0\",\n" +
-                        "        \"HumiStatus\": \"0\",\n" +
-                        "        \"devDataType1\": \"0\",\n" +
-                        "        \"devDataType2\": \"0\",\n" +
-                        "        \"devPos\": \"1\"\n" +
-                        "    }]\n";
-
-
-//                HttpClient.getRequest(url, new Callback() {
-//                    @Override
-//                    public void onFailure(Call call, IOException e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException {
-//                        try {
-//                            JSONObject jsonObject=new JSONObject(new JSONObject(response.body().string()).getString("serverInfo"));
-//                            int [] temp=new int[3];
-//                            temp[0]=jsonObject.getInt("temperature")/3;
-//                            temp[1]=jsonObject.getInt("humidity")+20;
-//                            temp[2]=jsonObject.getInt("LightIntensity");
-//                            Message message=new Message();
-//                            message.what=1;
-//                            message.obj=temp;
-//                            handler.sendMessage(message);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-                Map<String, int[]> map = null;
-                Message message = new Message();
-                try {
-                    map = JsonAnalysis.getEnv(jsonString);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (map != null && map.size() != 0) {
-                    message.what = 1;
-                    message.obj = map;
-                } else {
-                    message.what = 2;
-                }
-                handler.sendMessage(message);
-
-            }
-        };
-        timer.schedule(timerTask, 500, 5000);
-
         Picasso.with(context).resumeTag(context);
     }
 
@@ -355,66 +279,17 @@ public class BufferKnifeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Picasso.with(context).pauseTag(context);
-        if (timer != null) {
-            timer.cancel();
-            timerTask.cancel();
-            timerTask = null;
-            timer = null;
-        }
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Picasso.with(context).cancelTag(context);
+        getActivity().unregisterReceiver(myBroadcastReceiver);
     }
 
-    Timer timer;
-    TimerTask timerTask;
     Random random = new Random();
-    String url;
-
-    Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            switch (message.what) {
-                case 1:
-                    Map<String, int[]> map = (Map<String, int[]>) message.obj;
-                    int[] value = map.get(0 + "");
-                    ;
-                    //多个传感器在此添加判断
-                    for (int i = 0; i < map.size(); i++) {
-//                        value
-                    }
-                    List<Plants> temList = new ArrayList<>();
-                    for (int i = 0; i < list.size(); i++) {
-                        Plants plants = adapter.getItem(i);
-
-                        plants.setTemp(value[0] - random.nextInt(3));
-                        plants.setHum(value[1] - random.nextInt(5));
-                        plants.setLight(value[2] + random.nextInt(100));
-                        initWarnRecord(plants.getName(), plants.getTemp(), plants.getHum(), plants.getLight());
-                        try{
-                            plantsDao.updatePlant(plants);
-                        }catch (Exception e){
-                            e.printStackTrace();
-                        }
-
-                        temList.add(plants);
-                    }
-                    Intent intent=new Intent("plants.chart.update");
-                    intent.putExtra("updateChart",value);
-                    getActivity().sendBroadcast(intent);
-                    adapter.clear();
-                    adapter.addAll(temList);
-                    Log.d(TAG, "handleMessage: " + temList.size());
-                    adapter.notifyDataSetChanged();
-                    break;
-            }
-            return false;
-        }
-    });
-
 
     public void initWarnRecord(String name, int tem, int hum, int light) {
         ValueSet valueTem = valueSetDao.findValueName("温度");
@@ -475,5 +350,42 @@ public class BufferKnifeFragment extends Fragment {
         }
 
 
+    }
+
+    class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d(TAG, "onReceive: 统计界面接收广播");
+            Bundle bundle = intent.getExtras();
+            SerializableMap serializableMap = (SerializableMap) bundle.get("map");
+            Map<String, int[]> map = serializableMap.getMap();
+            int[] value = map.get(0 + "");
+            ;
+            //多个传感器在此添加判断
+            for (int i = 0; i < map.size(); i++) {
+//                        value
+            }
+            List<Plants> temList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                Plants plants = adapter.getItem(i);
+
+                plants.setTemp(value[0] - random.nextInt(3));
+                plants.setHum(value[1] - random.nextInt(5));
+                plants.setLight(value[2] + random.nextInt(100));
+                initWarnRecord(plants.getName(), plants.getTemp(), plants.getHum(), plants.getLight());
+                try {
+                    plantsDao.updatePlant(plants);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                temList.add(plants);
+            }
+            adapter.clear();
+            adapter.addAll(temList);
+            adapter.notifyDataSetChanged();
+
+            Log.d(TAG, "onReceive: 更新图表");
+        }
     }
 }

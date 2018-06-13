@@ -113,7 +113,6 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
             }
         });
 
-
         textHeadTitle.setText("实时环境信息");
         btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -128,10 +127,10 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
 
     private void initFragment(){
         list=new ArrayList<>();
-//        ChartTempFragment tempFragment=new ChartTempFragment();
-//        ChartHumFragment humFragment=new ChartHumFragment();
-//        ChartLigFragment ligFragment=new ChartLigFragment();
-//        list.add(tempFragment);list.add(humFragment);list.add(ligFragment);
+        ChartTempFragment tempFragment=new ChartTempFragment();
+        ChartHumFragment humFragment=new ChartHumFragment();
+        ChartLigFragment ligFragment=new ChartLigFragment();
+        list.add(tempFragment);list.add(humFragment);list.add(ligFragment);
     }
 
     @Override
