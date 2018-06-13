@@ -205,8 +205,9 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 e.printStackTrace();
             }
             Plants plants=plantsDao.findByName(plantName);
+            Plants plants1=null;
             if(plants==null){
-                Plants plants1=new Plants(1,chooseImagePath,plantName,growthState,date);
+                plants1=new Plants(1,chooseImagePath,plantName,growthState,date);
                 plantsDao.add(plants1);
                 Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
                 et_plantName.setText("");
@@ -234,7 +235,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                     bufferKnifeFragment.loadData();
 
                 }
-                Utils.getPlantTypeByImage(plants.getImage());
+                Utils.getPlantTypeByImage(plants1.getImage());
 
             }catch (Exception e){
                 e.printStackTrace();

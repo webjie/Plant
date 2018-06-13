@@ -179,8 +179,12 @@ public class ChartLigFragment extends Fragment {
                     entryq.setX(entryq.getX()-1);
                 }
             }
-            Entry entry=new Entry(entryList.size(),value);
-            entryList.add(entry);
+            try{
+                Entry entry=new Entry(entryList.size(),value);
+                entryList.add(entry);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
             data=statusChart.getLineData();
             set=(LineDataSet)data.getDataSetByIndex(0);

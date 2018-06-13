@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import person.jack.plant.R;
 import person.jack.plant.db.dao.PlantsDao;
@@ -27,6 +28,7 @@ import person.jack.plant.db.entity.Plants;
 import person.jack.plant.fragment.ChartHumFragment;
 import person.jack.plant.fragment.ChartLigFragment;
 import person.jack.plant.fragment.ChartTempFragment;
+import person.jack.plant.model.SerializableMap;
 
 public class PlantsStatusActivity extends BaseFragmentActivity {
     public final static String TAG="plant";
@@ -130,7 +132,8 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         ChartTempFragment tempFragment=new ChartTempFragment();
         ChartHumFragment humFragment=new ChartHumFragment();
         ChartLigFragment ligFragment=new ChartLigFragment();
-        list.add(tempFragment);list.add(humFragment);list.add(ligFragment);
+        list.add(tempFragment);
+
     }
 
     @Override
@@ -162,14 +165,21 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
     class MyBroadcastReceiver extends BroadcastReceiver{
         @Override
         public void onReceive(Context context, Intent intent) {
-            int [] value=intent.getIntArrayExtra("updateChart");
-            ChartTempFragment chartTempFragment=(ChartTempFragment)list.get(0);
-            chartTempFragment.setChart(value[0]);
-            ChartHumFragment chartHumFragment=(ChartHumFragment)list.get(1);
-            chartHumFragment.setChart(value[1]);
-            ChartLigFragment chartLigFragment=(ChartLigFragment)list.get(2);
-            chartLigFragment.setChart(value[2]);
+            try {
+                Bundle bundle = intent.getExtras();
+                SerializableMap serializableMap = (SerializableMap) bundle.get("map");
+                Map<String, int[]> map = serializableMap.getMap();
+                int[] value = map.get(0 + "");
+                ChartTempFragment chartTempFragment=(ChartTempFragment)list.get(0);
+                chartTempFragment.setChart(value[0]);
+//                ChartHumFragment chartHumFragment=(ChartHumFragment)list.get(1);
+//                chartHumFragment.setChart(value[1]);
+//                ChartLigFragment chartLigFragment=(ChartLigFragment)list.get(2);
+//                chartLigFragment.setChart(value[2]);
 
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             Log.d(TAG, "onReceive: 更新图表");
         }
     }

@@ -66,6 +66,7 @@ public class ChartTempFragment extends Fragment {
         statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的温度");
         entryList=new ArrayList<>();
         initChart();
+        setChart(0);
         return view;
     }
 
@@ -151,7 +152,7 @@ public class ChartTempFragment extends Fragment {
         yAxis.setDrawGridLines(true);
         yAxis.setLabelCount(4);
 
-        setChart(0);
+
     }
 
     public  void setChart(int value){
@@ -159,19 +160,21 @@ public class ChartTempFragment extends Fragment {
         LineDataSet set;
 
         if(statusChart.getLineData()!=null&&statusChart.getLineData().getDataSetCount()>0){
-            if(entryList.size()==5){
+            if(entryList!=null&&entryList.size()==5){
                 entryList.remove(0);
                 for(int i=0;i<entryList.size();i++){
                     Entry entryq=entryList.get(i);
                     entryq.setX(entryq.getX()-1);
                 }
             }
+            try{
+                Entry entry=new Entry(entryList.size(),value);
+                entryList.add(entry);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-            Entry entry=new Entry(entryList.size(),value);
-            entryList.add(entry);
-
-
-            data=statusChart.getLineData();
+            data=statusChart.getData();
             set=(LineDataSet)data.getDataSetByIndex(0);
 
             set.notifyDataSetChanged();
@@ -180,19 +183,25 @@ public class ChartTempFragment extends Fragment {
             statusChart.invalidate();
             Log.d(TAG, "setChart: ");
         }else{
-            set=new LineDataSet(entryList,"");
-            set.setCircleColor(Color.BLUE);
-            set.setCircleRadius(2f);
-            set.setDrawCircleHole(false);
-            set.setLineWidth(3f);
-            set.setColor(Color.BLUE);
+            try{
+                set=new LineDataSet(entryList,"");
+                set.setCircleColor(Color.BLUE);
+                set.setCircleRadius(2f);
+                set.setDrawCircleHole(false);
+                set.setLineWidth(3f);
+                set.setColor(Color.BLUE);
 
-            data=new LineData(set);
-            data.setDrawValues(true);
-            data.setValueTextSize(15f);
-            statusChart.setData(data);
-            statusChart.invalidate();
-            Log.d(TAG, "setChart: initialize chart");
+                data=new LineData(set);
+                data.setDrawValues(true);
+                data.setValueTextSize(15f);
+
+                statusChart.setData(data);
+
+//                statusChart.invalidate();
+                Log.d(TAG, "setChart: initialize chart");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
     }
 
