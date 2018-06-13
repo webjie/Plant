@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class ChartTempFragment extends Fragment {
         statusChart = (LineChart) view.findViewById(R.id.status_chart);
         statusName = (TextView) view.findViewById(R.id.status_name);
         statusName.setText(BufferKnifeFragment.curPlants.getName()+"当前的温度");
-        entryList=new ArrayList<>();
+
         initChart();
         setChart(0);
         return view;
@@ -156,8 +157,8 @@ public class ChartTempFragment extends Fragment {
     }
 
     public  void setChart(int value){
-        LineData data;
-        LineDataSet set;
+        LineData data=null;
+        LineDataSet set=null;
 
         if(statusChart.getLineData()!=null&&statusChart.getLineData().getDataSetCount()>0){
             if(entryList!=null&&entryList.size()==5){
@@ -184,24 +185,28 @@ public class ChartTempFragment extends Fragment {
             Log.d(TAG, "setChart: ");
         }else{
             try{
-                set=new LineDataSet(entryList,"");
+                entryList=new ArrayList<>();
+                entryList.add(new Entry(0,BufferKnifeFragment.curPlants.getTemp()));
+                set=new LineDataSet(entryList,null);
                 set.setCircleColor(Color.BLUE);
                 set.setCircleRadius(2f);
                 set.setDrawCircleHole(false);
                 set.setLineWidth(3f);
                 set.setColor(Color.BLUE);
+                set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
 
-                data=new LineData(set);
+                data=new LineData();
+                data.addDataSet(set);
                 data.setDrawValues(true);
                 data.setValueTextSize(15f);
 
-                statusChart.setData(data);
 
-//                statusChart.invalidate();
-                Log.d(TAG, "setChart: initialize chart");
             }catch (Exception e){
                 e.printStackTrace();
             }
+            statusChart.setData(data);
+            statusChart.invalidate();
+            Log.d(TAG, "setChart: initialize chart");
         }
     }
 

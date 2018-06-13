@@ -201,12 +201,15 @@ public class ChartHumFragment extends Fragment {
             statusChart.invalidate();
             Log.d(TAG, "setChart: ");
         }else{
+            entryList.add(new Entry(0,BufferKnifeFragment.curPlants.getHum()));
             set=new LineDataSet(entryList,"");
             set.setCircleColor(Color.BLUE);
             set.setCircleRadius(2f);
             set.setDrawCircleHole(false);
             set.setLineWidth(3f);
             set.setColor(Color.BLUE);
+            set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
 
             data=new LineData(set);
             data.setDrawValues(true);

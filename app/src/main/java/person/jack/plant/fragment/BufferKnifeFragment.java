@@ -289,7 +289,6 @@ public class BufferKnifeFragment extends Fragment {
         getActivity().unregisterReceiver(myBroadcastReceiver);
     }
 
-    Random random = new Random();
 
     public void initWarnRecord(String name, int tem, int hum, int light) {
         ValueSet valueTem = valueSetDao.findValueName("温度");
@@ -369,9 +368,9 @@ public class BufferKnifeFragment extends Fragment {
             for (int i = 0; i < list.size(); i++) {
                 Plants plants = adapter.getItem(i);
 
-                plants.setTemp(value[0] - random.nextInt(3));
-                plants.setHum(value[1] - random.nextInt(5));
-                plants.setLight(value[2] + random.nextInt(100));
+                plants.setTemp(value[0]);
+                plants.setHum(value[1] );
+                plants.setLight(value[2] );
                 initWarnRecord(plants.getName(), plants.getTemp(), plants.getHum(), plants.getLight());
                 try {
                     plantsDao.updatePlant(plants);

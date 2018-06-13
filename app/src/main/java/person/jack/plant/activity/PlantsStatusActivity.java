@@ -133,7 +133,8 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
         ChartHumFragment humFragment=new ChartHumFragment();
         ChartLigFragment ligFragment=new ChartLigFragment();
         list.add(tempFragment);
-
+        list.add(humFragment);
+        list.add(ligFragment);
     }
 
     @Override
@@ -172,10 +173,10 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
                 int[] value = map.get(0 + "");
                 ChartTempFragment chartTempFragment=(ChartTempFragment)list.get(0);
                 chartTempFragment.setChart(value[0]);
-//                ChartHumFragment chartHumFragment=(ChartHumFragment)list.get(1);
-//                chartHumFragment.setChart(value[1]);
-//                ChartLigFragment chartLigFragment=(ChartLigFragment)list.get(2);
-//                chartLigFragment.setChart(value[2]);
+                ChartHumFragment chartHumFragment=(ChartHumFragment)list.get(1);
+                chartHumFragment.setChart(value[1]);
+                ChartLigFragment chartLigFragment=(ChartLigFragment)list.get(2);
+                chartLigFragment.setChart(value[2]);
 
             }catch (Exception e){
                 e.printStackTrace();
