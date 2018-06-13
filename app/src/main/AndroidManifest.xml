@@ -63,6 +63,8 @@
         <activity android:name=".activity.PersonRegisterActivity" />
         <activity android:name=".activity.PersonChangePwdActivity" />
         <activity android:name=".activity.PersonInfoActivity" />
+        <activity android:name=".activity.FailureWarnActivity">
+        </activity>
 
         <service
             android:name=".service.MyEnvStatusService"
