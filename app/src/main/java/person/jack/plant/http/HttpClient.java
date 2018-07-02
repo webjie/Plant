@@ -49,6 +49,12 @@ public class HttpClient {
      * 花草识别接口
      */
     public static final String IMG_REG="https://api.ai.qq.com/fcgi-bin/vision/vision_imgidentify";
+
+    /**
+     * 传感器接口
+     */
+    public static final String DEV_ADDRESS="http://www.0531yun.cn/wsjc/Device/getDeviceData.do?userID=180604htrj&userPassword=180604htrj";
+
     /**
      *
      */

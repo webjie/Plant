@@ -17,7 +17,10 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.data.Entry;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,9 +46,11 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
 
     private ViewPager statusPager;
     private List<Fragment> list;
-    List<RadioButton> radioButtonList=new ArrayList<>();
-    private PlantsDao PlantsDao;
     private static List<Plants>plantsList;
+    private List<RadioButton> radioButtonList=new ArrayList<>();
+    private Map<String,List<Entry>> chartEntryMap=new HashMap<>();
+
+    private PlantsDao PlantsDao;
     MyBroadcastReceiver receiver;
 
 
@@ -115,6 +120,15 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
             }
         });
 
+        List<Entry> tempEntry=new ArrayList<>();
+        List<Entry> humiEntry=new ArrayList<>();
+        List<Entry> ligtEntry=new ArrayList<>();
+
+        chartEntryMap.put("tempChart",tempEntry);
+        chartEntryMap.put("humiEntry",humiEntry);
+        chartEntryMap.put("ligtEntry",ligtEntry);
+
+
         textHeadTitle.setText("实时环境信息");
         btnBack.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -170,13 +184,15 @@ public class PlantsStatusActivity extends BaseFragmentActivity {
                 Bundle bundle = intent.getExtras();
                 SerializableMap serializableMap = (SerializableMap) bundle.get("map");
                 Map<String, int[]> map = serializableMap.getMap();
-                int[] value = map.get(0 + "");
+                int[] value = map.get("values");
+
                 ChartTempFragment chartTempFragment=(ChartTempFragment)list.get(0);
                 chartTempFragment.setChart(value[0]);
                 ChartHumFragment chartHumFragment=(ChartHumFragment)list.get(1);
                 chartHumFragment.setChart(value[1]);
                 ChartLigFragment chartLigFragment=(ChartLigFragment)list.get(2);
                 chartLigFragment.setChart(value[2]);
+
 
             }catch (Exception e){
                 e.printStackTrace();

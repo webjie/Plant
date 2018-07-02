@@ -59,4 +59,8 @@
     <string name="btn_type">种植选型</string>
     <string name="btn_chat">种植交流</string>
 
+    <!--传感器名称 -->
+    <string name="dev_soil">土壤温湿度传感器</string>
+    <string name="dev_light">光照传感器</string>
+
 </resources>

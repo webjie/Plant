@@ -161,15 +161,16 @@ public class ChartTempFragment extends Fragment {
         LineDataSet set=null;
 
         if(statusChart.getLineData()!=null&&statusChart.getLineData().getDataSetCount()>0){
-            if(entryList!=null&&entryList.size()==5){
+
+            if(entryList.size()==5){
                 entryList.remove(0);
                 for(int i=0;i<entryList.size();i++){
-                    Entry entryq=entryList.get(i);
+                    Entry entryq=(Entry)entryList.get(i);
                     entryq.setX(entryq.getX()-1);
                 }
             }
             try{
-                Entry entry=new Entry(entryList.size(),value);
+                Entry entry=new Entry( entryList.size(),value);
                 entryList.add(entry);
             }catch (Exception e){
                 e.printStackTrace();

@@ -358,7 +358,7 @@ public class BufferKnifeFragment extends Fragment {
             Bundle bundle = intent.getExtras();
             SerializableMap serializableMap = (SerializableMap) bundle.get("map");
             Map<String, int[]> map = serializableMap.getMap();
-            int[] value = map.get(0 + "");
+            int[] value = map.get("values");
             ;
             //多个传感器在此添加判断
             for (int i = 0; i < map.size(); i++) {
