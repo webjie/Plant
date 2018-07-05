@@ -19,19 +19,19 @@
             >
 
             <RadioButton
-                android:id="@+id/btn_home_route"
+                android:id="@+id/btn_home_search"
                 style="@style/main_content_home_btn"
                 android:drawableTop="@drawable/btn_search"
                 android:text="@string/btn_search" />
 
             <RadioButton
-                android:id="@+id/btn_home_tmc"
+                android:id="@+id/btn_home_camera"
                 style="@style/main_content_home_btn"
                 android:drawableTop="@drawable/btn_camera"
                 android:text="@string/btn_camera" />
 
             <RadioButton
-                android:id="@+id/btn_home_gas_station"
+                android:id="@+id/btn_home_control"
                 style="@style/main_content_home_btn"
                 android:drawableTop="@drawable/btn_control"
                 android:text="@string/btn_control" />
@@ -45,19 +45,19 @@
             >
 
             <RadioButton
-                android:id="@+id/btn_home_4s"
+                android:id="@+id/btn_home_alert"
                 style="@style/main_content_home_btn"
                 android:drawableTop="@drawable/btn_alert"
                 android:text="@string/btn_alert" />
 
             <RadioButton
-                android:id="@+id/btn_home_emergency"
+                android:id="@+id/btn_home_type"
                 style="@style/main_content_home_btn"
                 android:drawableTop="@drawable/btn_type"
                 android:text="@string/btn_type" />
 
             <RadioButton
-                android:id="@+id/btn_home_traffic_violation"
+                android:id="@+id/btn_home_chat"
                 style="@style/main_content_home_btn"
                 android:drawableTop="@drawable/btn_chat"
                 android:text="@string/btn_chat" />

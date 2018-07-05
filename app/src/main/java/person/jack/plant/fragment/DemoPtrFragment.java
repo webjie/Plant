@@ -1,9 +1,14 @@
 package person.jack.plant.fragment;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -26,14 +32,11 @@ import person.jack.plant.db.dao.WaterRecordDao;
 import person.jack.plant.db.entity.Plants;
 import person.jack.plant.db.entity.WaterRecord;
 import person.jack.plant.http.HttpClient;
-import person.jack.plant.http.HttpResponseHandler;
-import person.jack.plant.http.RestApiResponse;
 import person.jack.plant.model.SearchParam;
 import person.jack.plant.ui.UIHelper;
 import person.jack.plant.ui.loadmore.LoadMoreListView;
 import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
 import person.jack.plant.ui.quickadapter.QuickAdapter;
-import person.jack.plant.utils.BitmapUtil;
 import person.jack.plant.utils.DeviceUtil;
 
 import java.io.File;
@@ -55,6 +58,9 @@ import static person.jack.plant.ui.UIHelper.TAG;
  * 首页-获取远程服务器植物列表
  */
 public class DemoPtrFragment extends Fragment {
+    public static final String APP_PACKAGE_NAME = "cn.com.broadlink.econtrol.plus"; //包名
+    public static final String APP_NAME = "ihc.apk";         //apk安装包名
+
     private MainActivity context;
 
     private RelativeLayout relativeLayout;
@@ -63,10 +69,31 @@ public class DemoPtrFragment extends Fragment {
     private int pno = 1;
     private boolean isLoadAll;
     private WaterRecordDao waterRecordDao;
+
     @Bind(R.id.rotate_header_list_view_frame)
     PtrClassicFrameLayout mPtrFrame;
+
     @Bind(R.id.listView)
     LoadMoreListView listView;
+
+    @Bind(R.id.btn_home_search)
+    RadioButton btnHomeSearch;
+
+    @Bind(R.id.btn_home_camera)
+    RadioButton btnHomeCamera;
+
+    @Bind(R.id.btn_home_control)
+    RadioButton btnHomeControl;
+
+    @Bind(R.id.btn_home_alert)
+    RadioButton btnHomeAlert;
+
+    @Bind(R.id.btn_home_type)
+    RadioButton btnHomeType;
+
+    @Bind(R.id.btn_home_chat)
+    RadioButton btnHomeChat;
+
     QuickAdapter<Plants> adapter;
     List<Plants> list;
     public static Plants curPlant;
@@ -89,10 +116,58 @@ public class DemoPtrFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         context = (MainActivity) getActivity();
         plantsDao=new PlantsDao(getContext());
+        initButton();
         initData();
         initView();
     }
 
+    /**
+     * 6个功能按钮，单击事件
+     */
+    private void initButton() {
+        btnHomeSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //UIHelper.showBtnParkingActivity(context);
+            }
+        });
+
+        btnHomeCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //UIHelper.showBtnGasActivity(context);
+            }
+        });
+
+        btnHomeControl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                launchApp(getContext());
+            }
+        });
+
+        btnHomeAlert.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                //UIHelper.showBtn4SActivity(context);
+            }
+        });
+
+        btnHomeType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.showBtnHomeTmcActivity(context);
+            }
+        });
+
+        btnHomeChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.showRoutePlanActivity(context);
+            }
+        });
+
+    }
     void initView() {
         adapter = new QuickAdapter<Plants>(context, R.layout.recommend_shop_list_item) {
             @Override
@@ -362,4 +437,46 @@ public class DemoPtrFragment extends Fragment {
         Picasso.with(context).cancelTag(context);
     }
 
+    /**
+     * 启动App
+     * @param context
+     */
+    public static void launchApp(Context context) {
+        // 判断是否安装过App，否则去市场下载
+        if (isAppInstalled(context, APP_PACKAGE_NAME)) {
+            context.startActivity(context.getPackageManager().getLaunchIntentForPackage(APP_PACKAGE_NAME));
+        } else {
+            goToMarket(context, APP_NAME);
+        }
+    }
+
+    /**
+     * 检测某个应用是否安装
+     *
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public static boolean isAppInstalled(Context context, String packageName) {
+        try {
+            context.getPackageManager().getPackageInfo(packageName, 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    /**
+     * 去市场下载页面
+     */
+    public static void goToMarket(Context context, String appName) {
+        UIHelper.ToastMessage(context, "请先下载并安装智慧星APP");
+        Uri uri = Uri.parse("http://apk.broadlink.com.cn/" + appName);
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            context.startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
