@@ -133,7 +133,7 @@ public class DemoPtrFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title",getString(R.string.msgCamera));
+                bundle.putString("title",getString(R.string.btn_camera));
                 bundle.putString("url",getString(R.string.urlCamera));
                 UIHelper.showWeb(getActivity(), bundle);
             }
@@ -149,7 +149,7 @@ public class DemoPtrFragment extends Fragment {
         btnHomeAlert.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                //UIHelper.showBtn4SActivity(context);
+                UIHelper.showAlert(getActivity());
             }
         });
 
@@ -157,7 +157,7 @@ public class DemoPtrFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title",getString(R.string.msgType));
+                bundle.putString("title",getString(R.string.btn_type));
                 bundle.putString("url",getString(R.string.urlType));
                 UIHelper.showWeb(getActivity(), bundle);
             }
@@ -167,7 +167,7 @@ public class DemoPtrFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putString("title",getString(R.string.msgChat));
+                bundle.putString("title",getString(R.string.btn_chat));
                 bundle.putString("url",getString(R.string.urlChat));
                 UIHelper.showWeb(getActivity(), bundle);
             }

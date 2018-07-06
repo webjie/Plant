@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import person.jack.plant.activity.FailureWarnActivity;
 import person.jack.plant.activity.HouseDetailActivity;
 import person.jack.plant.activity.LoginActivity;
 import person.jack.plant.activity.MainActivity;
@@ -49,6 +50,11 @@ public class UIHelper {
         Toast.makeText(cont, msg, time).show();
     }
 
+    /**
+     * 调用WebView，显示Url地址内容
+     * @param context
+     * @param bundle
+     */
     public static void showWeb(Activity context, Bundle bundle) {
         Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra("navigate", bundle);
@@ -103,6 +109,15 @@ public class UIHelper {
 
     public static void showMember(Activity context) {
         Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 显示故障报警界面
+     * @param context
+     */
+    public static void showAlert(Activity context) {
+        Intent intent = new Intent(context, FailureWarnActivity.class);
         context.startActivity(intent);
     }
 
