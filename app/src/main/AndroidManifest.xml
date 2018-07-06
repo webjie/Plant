@@ -63,13 +63,15 @@
         <activity android:name=".activity.PersonRegisterActivity" />
         <activity android:name=".activity.PersonChangePwdActivity" />
         <activity android:name=".activity.PersonInfoActivity" />
-        <activity android:name=".activity.FailureWarnActivity">
-        </activity>
+        <activity android:name=".activity.FailureWarnActivity" />
 
         <service
             android:name=".service.MyEnvStatusService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.ChooseActivity"></activity>
     </application>
 
 </manifest>
