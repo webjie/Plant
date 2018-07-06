@@ -14,6 +14,7 @@ import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.activity.PersonChangePwdActivity;
 import person.jack.plant.activity.PersonRegisterActivity;
 import person.jack.plant.activity.VersionActivity;
+import person.jack.plant.activity.WebViewActivity;
 import person.jack.plant.utils.SharedPreferences;
 
 /**
@@ -45,6 +46,11 @@ public class UIHelper {
             return;
         }
         Toast.makeText(cont, msg, time).show();
+    }
+
+    public static void showWeb(Activity context) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        context.startActivity(intent);
     }
 
     public static void showHome(Activity context) {
@@ -101,12 +107,12 @@ public class UIHelper {
     /**
      * 检查用户是否登录
      */
-    public static boolean isLogin(){
+    public static boolean isLogin() {
         SharedPreferences sharedPreferences = new SharedPreferences();
         String userName = sharedPreferences.getString("userName", "");
-        if (userName == null || userName.length() == 0){
-            return  false;
-        }else{
+        if (userName == null || userName.length() == 0) {
+            return false;
+        } else {
             return true;
         }
     }

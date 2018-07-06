@@ -26,7 +26,7 @@ public class KnowLedgeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_konwledge,container,false);
-        webView=(WebView)view.findViewById(R.id.web_view);
+        webView=(WebView)view.findViewById(R.id.web_konw_view);
         return view;
     }
 

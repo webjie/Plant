@@ -70,8 +70,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.ChooseActivity"></activity>
+        <activity android:name=".activity.WebViewActivity" />
     </application>
 
 </manifest>

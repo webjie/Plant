@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="person.jack.plant.activity.WebViewActivity">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="#437fef" >
+
+        <TextView
+            android:id="@+id/text_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="marquee"
+            android:gravity="center_horizontal|center"
+            android:singleLine="true"
+            android:text="标题"
+            android:textColor="#ffffffff"
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_web_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:drawablePadding="6dp"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:text="返回"
+            android:textColor="#ffffffff"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+
+    <WebView
+        android:id="@+id/web_all_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></WebView>
+
+</LinearLayout>

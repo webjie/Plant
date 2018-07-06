@@ -5,11 +5,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,9 +24,19 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONArray;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.header.StoreHouseHeader;
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
 import person.jack.plant.db.dao.PlantsDao;
@@ -39,19 +51,6 @@ import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
 import person.jack.plant.ui.quickadapter.QuickAdapter;
 import person.jack.plant.utils.DeviceUtil;
 
-import java.io.File;
-import java.util.Date;
-import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-import in.srain.cube.views.ptr.header.StoreHouseHeader;
-import okhttp3.Request;
-
 import static person.jack.plant.ui.UIHelper.TAG;
 
 /**
@@ -64,6 +63,8 @@ public class DemoPtrFragment extends Fragment {
     private MainActivity context;
 
     private RelativeLayout relativeLayout;
+
+    SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
 
     private SearchParam param;
     private int pno = 1;
@@ -156,15 +157,22 @@ public class DemoPtrFragment extends Fragment {
         btnHomeType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //UIHelper.showBtnHomeTmcActivity(context);
+                editor.clear();
+                editor.putString("title","种植选型");
+                editor.putString("url","http://plant.sturgeon.mopaasapp.com/secondaryWeb/encyclopedias.jsp");
+                editor.commit();
+                UIHelper.showWeb(getActivity());
             }
         });
 
         btnHomeChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //UIHelper.showRoutePlanActivity(context);
-
+                editor.clear();
+                editor.putString("title","种植交流");
+                editor.putString("url","http://plant.sturgeon.mopaasapp.com/secondaryWeb/news.jsp");
+                editor.commit();
+                UIHelper.showWeb(getActivity());
             }
         });
 
