@@ -132,7 +132,10 @@ public class DemoPtrFragment extends Fragment {
         btnHomeCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //UIHelper.showBtnGasActivity(context);
+                Bundle bundle = new Bundle();
+                bundle.putString("title",getString(R.string.msgCamera));
+                bundle.putString("url",getString(R.string.urlCamera));
+                UIHelper.showWeb(getActivity(), bundle);
             }
         });
 
