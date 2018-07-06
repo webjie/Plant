@@ -3,6 +3,7 @@ package person.jack.plant.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import person.jack.plant.activity.HouseDetailActivity;
@@ -48,8 +49,9 @@ public class UIHelper {
         Toast.makeText(cont, msg, time).show();
     }
 
-    public static void showWeb(Activity context) {
+    public static void showWeb(Activity context, Bundle bundle) {
         Intent intent = new Intent(context, WebViewActivity.class);
+        intent.putExtra("navigate", bundle);
         context.startActivity(intent);
     }
 

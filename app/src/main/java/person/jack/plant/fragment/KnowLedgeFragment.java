@@ -16,7 +16,7 @@ import android.webkit.WebViewClient;
 import person.jack.plant.R;
 
 /**
- * Created by Administrator on 2018/6/4.
+ * 植物百科界面 chenle on 2018/6/4.
  */
 
 public class KnowLedgeFragment extends Fragment{
@@ -36,7 +36,7 @@ public class KnowLedgeFragment extends Fragment{
 
         webView.setWebViewClient(new WebViewClient());
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://www.hua36.com");
+        webView.loadUrl(getString(R.string.urlKnowledge));
     }
 
     @Override

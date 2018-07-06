@@ -3,4 +3,13 @@
     <string name="getEnv" >http://www.0531yun.cn/wsjc/Device/getDeviceData.do</string>
     <string name="userName">180604htrj</string>
     <string name="password">180604htrj</string>
+
+    <string name="urlApp" >http://apk.broadlink.com.cn/</string>
+    <string name="urlChat" >http://plant.sturgeon.mopaasapp.com/secondaryWeb/news.jsp</string>
+    <string name="urlKnowledge" >http://www.hua36.com</string>
+    <string name="urlType" >http://plant.sturgeon.mopaasapp.com/secondaryWeb/encyclopedias.jsp</string>
+    <string name="msgApp">请先下载并安装智慧星APP</string>
+    <string name="msgChat">种植交流</string>
+    <string name="msgType">种植选型</string>
+
 </resources>

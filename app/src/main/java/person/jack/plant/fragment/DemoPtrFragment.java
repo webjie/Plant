@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -39,6 +38,7 @@ import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.StoreHouseHeader;
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
+import person.jack.plant.activity.WebViewActivity;
 import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.dao.WaterRecordDao;
 import person.jack.plant.db.entity.Plants;
@@ -50,6 +50,7 @@ import person.jack.plant.ui.loadmore.LoadMoreListView;
 import person.jack.plant.ui.quickadapter.BaseAdapterHelper;
 import person.jack.plant.ui.quickadapter.QuickAdapter;
 import person.jack.plant.utils.DeviceUtil;
+import person.jack.plant.utils.SharedPreferences;
 
 import static person.jack.plant.ui.UIHelper.TAG;
 
@@ -61,11 +62,6 @@ public class DemoPtrFragment extends Fragment {
     public static final String APP_NAME = "ihc.apk";         //apk安装包名
 
     private MainActivity context;
-
-    private RelativeLayout relativeLayout;
-
-    SharedPreferences.Editor editor= PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-
     private SearchParam param;
     private int pno = 1;
     private boolean isLoadAll;
@@ -157,22 +153,20 @@ public class DemoPtrFragment extends Fragment {
         btnHomeType.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.clear();
-                editor.putString("title","种植选型");
-                editor.putString("url","http://plant.sturgeon.mopaasapp.com/secondaryWeb/encyclopedias.jsp");
-                editor.commit();
-                UIHelper.showWeb(getActivity());
+                Bundle bundle = new Bundle();
+                bundle.putString("title",getString(R.string.msgType));
+                bundle.putString("url",getString(R.string.urlType));
+                UIHelper.showWeb(getActivity(), bundle);
             }
         });
 
         btnHomeChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.clear();
-                editor.putString("title","种植交流");
-                editor.putString("url","http://plant.sturgeon.mopaasapp.com/secondaryWeb/news.jsp");
-                editor.commit();
-                UIHelper.showWeb(getActivity());
+                Bundle bundle = new Bundle();
+                bundle.putString("title",getString(R.string.msgChat));
+                bundle.putString("url",getString(R.string.urlChat));
+                UIHelper.showWeb(getActivity(), bundle);
             }
         });
 
@@ -373,15 +367,6 @@ public class DemoPtrFragment extends Fragment {
             adapter.clear();
         }
 
-//        //使用模拟数据
-//        String body = "[" +
-//                "{ \"name\":\"花生\" , \"logo\":\"img1.jpg\" }," +
-//                "{ \"name\":\"辣椒\" , \"logo\":\"img1.jpg\" }," +
-//                "{ \"name\":\"白掌\" , \"logo\":\"img1.jpg\" }," +
-//                "{ \"name\":\"碧玉\" , \"logo\":\"img1.jpg\" }," +
-//                "{ \"name\":\"双线竹语\" , \"logo\":\"img1.jpg\" }," +
-//                "{ \"name\":\"长寿花\" , \"logo\":\"img1.jpg\" }," +
-//                "]";
         try {
             list = plantsDao.findAll();
             PlantsDao dao=new PlantsDao(getContext());
@@ -396,30 +381,7 @@ public class DemoPtrFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        HttpClient.getRecommendShops(param, new HttpResponseHandler() {
-//            @Override
-//            public void onSuccess(RestApiResponse response) {
-//                mPtrFrame.refreshComplete();
-//                List<Plants> list = JSONArray.parseArray(response.body, Plants.class);
-//                listView.updateLoadMoreViewText(list);
-//                isLoadAll = list.size() < HttpClient.PAGE_SIZE;
-//                if(pno == 1) {
-//                    adapter.clear();
-//                }
-//                adapter.addAll(list);
-//                pno++;
-//            }
-//
-//            @Override
-//            public void onFailure(Request request, Exception e) {
-//                mPtrFrame.refreshComplete();
-//
-//
-//
-//
-//                //listView.setLoadMoreViewTextError();  //使用模拟数据时，此条目注释
-//            }
-//        });
+
     }
 
     @Override
@@ -479,8 +441,8 @@ public class DemoPtrFragment extends Fragment {
      * 去市场下载页面
      */
     public static void goToMarket(Context context, String appName) {
-        UIHelper.ToastMessage(context, "请先下载并安装智慧星APP");
-        Uri uri = Uri.parse("http://apk.broadlink.com.cn/" + appName);
+        UIHelper.ToastMessage(context, context.getString(R.string.msgApp));
+        Uri uri = Uri.parse(context.getString(R.string.urlApp)  + appName);
         Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
         try {
             context.startActivity(goToMarket);
