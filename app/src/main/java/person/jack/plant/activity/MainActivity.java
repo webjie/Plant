@@ -27,12 +27,12 @@ public class MainActivity extends BaseFragmentActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String CURR_INDEX = "currIndex";
-    private static int currIndex = 0;
+    public static int currIndex = 0;
 
-    private RadioGroup group;
+    public RadioGroup group;
 
     private ArrayList<String> fragmentTags;
-    private FragmentManager fragmentManager;
+    public FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class MainActivity extends BaseFragmentActivity {
         showFragment();
     }
 
-    private void showFragment() {
+    public void showFragment() {
         if (currIndex == 4) {
             if (!UIHelper.isLogin()) {
                 UIHelper.showLogin(MainActivity.this);

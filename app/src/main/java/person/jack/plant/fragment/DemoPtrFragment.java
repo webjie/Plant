@@ -12,6 +12,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -125,7 +127,14 @@ public class DemoPtrFragment extends Fragment {
         btnHomeSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //UIHelper.showBtnParkingActivity(context);
+//                FragmentManager manager= getActivity().getSupportFragmentManager();
+//                FragmentTransaction transaction=manager.beginTransaction();
+//                Fragment fragment=manager.findFragmentByTag("ImFragment");
+//                transaction.show(fragment);
+                    MainActivity mainActivity=(MainActivity)getActivity();
+                    MainActivity.currIndex=1;
+                    mainActivity.showFragment();
+                    mainActivity.group.check(R.id.foot_bar_im);
             }
         });
 
