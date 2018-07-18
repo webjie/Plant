@@ -16,22 +16,27 @@
         android:orientation="horizontal">
 
         <TextView
+            android:gravity="center"
+            android:textSize="10sp"
             android:layout_marginLeft="15dp"
             android:text="植物图片"
-            android:layout_width="80dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content" />
         <TextView
+            android:textSize="10sp"
             android:layout_marginLeft="10dp"
             android:text="温度（℃）"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:textSize="10sp"
             android:text="湿度（%）"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:textSize="10sp"
             android:text="光照强度（xl）"
             android:layout_weight="1"
             android:layout_width="wrap_content"

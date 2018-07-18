@@ -73,7 +73,7 @@ import okhttp3.Request;
 import static person.jack.plant.activity.PlantsDetailActivity.TAG;
 
 /**
- * 统计界面 kakee
+ *实时界面 kakee
  * 2018-6-5
  */
 public class BufferKnifeFragment extends Fragment {
@@ -85,9 +85,12 @@ public class BufferKnifeFragment extends Fragment {
     private boolean isLoadAll;
     private List<Plants> list;
     public static Plants curPlants;
+
+
     private ValueSetDao valueSetDao;
     private PlantsDao plantsDao;
     private WarnRecordDao warnRecordDao;
+
     MyBroadcastReceiver myBroadcastReceiver;
 
     @Bind(R.id.listView)
@@ -110,6 +113,7 @@ public class BufferKnifeFragment extends Fragment {
         myBroadcastReceiver=new MyBroadcastReceiver();
         IntentFilter filter=new IntentFilter("plants.chart.update");
         getActivity().registerReceiver(myBroadcastReceiver,filter);
+
         warnRecordDao = new WarnRecordDao(getContext());
         valueSetDao = new ValueSetDao(getContext());
         plantsDao = new PlantsDao(getContext());

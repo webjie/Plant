@@ -224,10 +224,6 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             }
             try{
                 MainActivity mainActivity=(MainActivity)getActivity();
-                MainPagerFragment mainPagerFragment=(MainPagerFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("HomeFragment");
-                DemoPtrFragment demoPtrFragment=(DemoPtrFragment)mainPagerFragment.getChildFragmentManager().getFragments().get(1);
-                demoPtrFragment.setLoadAll(false);
-                demoPtrFragment.loadData();
 
                 BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("ImFragment");
                 if(bufferKnifeFragment!=null){

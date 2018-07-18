@@ -31,6 +31,9 @@ import person.jack.plant.model.SerializableMap;
 
 import static person.jack.plant.activity.PlantsDetailActivity.TAG;
 
+/**
+ * 实时获取环境信息服务
+ */
 public class MyEnvStatusService extends Service {
     public MyEnvStatusService() {
     }

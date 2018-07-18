@@ -6,17 +6,18 @@
     <RelativeLayout
         android:layout_marginTop="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_width="80dp"
-        android:layout_height="80dp">
+        android:layout_width="130dp"
+        android:layout_height="120dp">
 
         <ImageView
             android:src="@drawable/default_image"
             android:id="@+id/item_pic"
-            android:layout_width="80dp"
+            android:layout_width="match_parent"
             android:layout_height="80dp"/>
         <TextView
             android:id="@+id/item_name"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:text="广玉兰"
             android:textSize="20sp"
             android:layout_width="wrap_content"
@@ -25,7 +26,7 @@
 
     <TextView
         android:gravity="center"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="10dp"
         android:layout_gravity="center_vertical"
         android:id="@+id/item_temp"
         android:textSize="20sp"

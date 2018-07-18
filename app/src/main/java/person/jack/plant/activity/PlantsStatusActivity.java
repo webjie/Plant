@@ -33,6 +33,9 @@ import person.jack.plant.fragment.ChartLigFragment;
 import person.jack.plant.fragment.ChartTempFragment;
 import person.jack.plant.model.SerializableMap;
 
+/**
+ * 图表界面
+ */
 public class PlantsStatusActivity extends BaseFragmentActivity {
     public final static String TAG="plant";
 

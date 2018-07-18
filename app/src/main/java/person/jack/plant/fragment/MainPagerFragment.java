@@ -14,7 +14,7 @@ import person.jack.plant.R;
 import person.jack.plant.ui.tabstrip.PagerSlidingTabStrip;
 
 /**
- * 3.顶部导航菜单，左右滑动切换界面
+ * 3.底部导航菜单，左右滑动切换界面
  */
 public class MainPagerFragment extends Fragment {
 
