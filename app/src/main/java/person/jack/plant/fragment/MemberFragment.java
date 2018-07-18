@@ -110,7 +110,16 @@ public class MemberFragment extends Fragment {
                 UIHelper.showVersion(getActivity());
             }
         });
-
+        scrollView.getPullRootView().findViewById(R.id.textValueSet).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!UIHelper.isLogin()){
+                    UIHelper.ToastMessage(getContext(), "请先登录！");
+                    return;
+                }
+                UIHelper.showValueSet(getActivity());
+            }
+        });
         scrollView.getPullRootView().findViewById(R.id.textLogout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

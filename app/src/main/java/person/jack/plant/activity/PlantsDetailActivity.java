@@ -43,6 +43,9 @@ import person.jack.plant.http.HttpClient;
 import person.jack.plant.model.SerializableMap;
 import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
 
+/**
+ * 详情页面
+ */
 public class PlantsDetailActivity extends SwipeBackActivity {
     public static final String TAG = "Kaa";
 

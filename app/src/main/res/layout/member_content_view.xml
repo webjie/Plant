@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/list_item_selector"
-        android:drawableLeft="@drawable/ic_setting_setting"
+        android:drawableLeft="@drawable/chip"
         android:drawablePadding="10dp"
         android:drawableRight="@drawable/ic_setting_arrow"
         android:gravity="center_vertical"

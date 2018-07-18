@@ -5,13 +5,17 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true"
+
     tools:context="person.jack.plant.activity.PlantsDetailActivity">
 
-    <include layout="@layout/layout_main_header" />
+    <include layout="@layout/layout_main_header"
+        android:id="@+id/title"
+        />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/title"
         android:background="@color/gray_light">
 
         <RelativeLayout
@@ -106,6 +110,42 @@
                             android:text="结果了" />
                     </RelativeLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_below="@id/plant_add_form"
+                    android:layout_marginTop="10dp"
+                    >
+
+                    <Button
+                        android:id="@+id/btn_plantUpdate"
+                        android:layout_width="fill_parent"
+                        android:layout_height="@dimen/csy_tip_h"
+                        android:layout_margin="@dimen/space_5"
+                        android:background="@drawable/csy_btn"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="更新植物"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/csy_text_ts"
+                        />
+                    <Button
+                        android:id="@+id/btn_plantDelete"
+                        android:layout_width="fill_parent"
+                        android:layout_weight="1"
+                        android:layout_height="@dimen/csy_tip_h"
+                        android:layout_margin="@dimen/space_5"
+                        android:background="@drawable/csy_btn"
+                        android:gravity="center"
+                        android:text="删除植物"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/csy_text_ts"
+                        />
+
+                </LinearLayout>
+
+
             </LinearLayout>
             <!--j结束-->
             <!-- 表单 -->

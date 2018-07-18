@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 
 import person.jack.plant.R;
 import person.jack.plant.fragment.BufferKnifeFragment;
+import person.jack.plant.fragment.DemoPtrFragment;
 import person.jack.plant.fragment.KnowLedgeFragment;
 import person.jack.plant.fragment.MainPagerFragment;
 import person.jack.plant.fragment.MemberFragment;
@@ -54,7 +55,7 @@ public class MainActivity extends BaseFragmentActivity {
     }
 
     private void initData(Bundle savedInstanceState) {
-        fragmentTags = new ArrayList<>(Arrays.asList("HomeFragment", "ImFragment",
+        fragmentTags = new ArrayList<>(Arrays.asList("DemoPtrFragment", "ImFragment",
                 "PlantAddFragment", "InterestFragment", "MemberFragment"));
         currIndex = 0;
         if(savedInstanceState != null) {
@@ -121,7 +122,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     private Fragment instantFragment(int currIndex) {
         switch (currIndex) {
-            case 0: return new MainPagerFragment();
+            case 0: return new DemoPtrFragment();
             case 1: return new BufferKnifeFragment();
             case 2: return new PlantsAddFragment();
             case 3: return new KnowLedgeFragment();

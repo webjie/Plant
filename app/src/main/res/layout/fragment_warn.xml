@@ -60,8 +60,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#FFB7DED5"/>
+        android:layout_height="0.5dp"
+
+        android:background="@drawable/list_view_divider" />
 
 
     <ListView

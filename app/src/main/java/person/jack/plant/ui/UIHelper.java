@@ -16,8 +16,10 @@ import person.jack.plant.activity.PlantsDetailActivity;
 import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.activity.PersonChangePwdActivity;
 import person.jack.plant.activity.PersonRegisterActivity;
+import person.jack.plant.activity.ValueSetActivity;
 import person.jack.plant.activity.VersionActivity;
 import person.jack.plant.activity.WebViewActivity;
+import person.jack.plant.db.entity.ValueSet;
 import person.jack.plant.utils.SharedPreferences;
 
 /**
@@ -64,6 +66,10 @@ public class UIHelper {
 
     public static void showHome(Activity context) {
         Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+    public static void showValueSet(Activity context) {
+        Intent intent = new Intent(context, ValueSetActivity.class);
         context.startActivity(intent);
     }
 
