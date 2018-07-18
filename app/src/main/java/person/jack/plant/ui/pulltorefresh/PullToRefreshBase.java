@@ -59,11 +59,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
     public static final int SMOOTH_SCROLL_LONG_DURATION_MS = 325;
     static final int DEMO_SCROLL_INTERVAL = 225;
 
-    static final String STATE_STATE = "ptr_state";
-    static final String STATE_MODE = "ptr_mode";
-    static final String STATE_CURRENT_MODE = "ptr_current_mode";
-    static final String STATE_SCROLLING_REFRESHING_ENABLED = "ptr_disable_scrolling";
-    static final String STATE_SHOW_REFRESHING_VIEW = "ptr_show_refreshing_view";
+   static final String STATE_STATE = "ptr_state";
+   static final String STATE_MODE = "ptr_mode";
+   static final String STATE_CURRENT_MODE = "ptr_current_mode";
+   static final String STATE_SCROLLING_REFRESHING_ENABLED = "ptr_disable_scrolling";
+   static final String STATE_SHOW_REFRESHING_VIEW = "ptr_show_refreshing_view";
     static final String STATE_SUPER = "ptr_super";
 
     // ===========================================================

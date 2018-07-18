@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import person.jack.plant.activity.EnvWarnActivity;
 import person.jack.plant.activity.FailureWarnActivity;
 import person.jack.plant.activity.HouseDetailActivity;
 import person.jack.plant.activity.LoginActivity;
@@ -117,7 +118,7 @@ public class UIHelper {
      * @param context
      */
     public static void showAlert(Activity context) {
-        Intent intent = new Intent(context, FailureWarnActivity.class);
+        Intent intent = new Intent(context, EnvWarnActivity.class);
         context.startActivity(intent);
     }
 

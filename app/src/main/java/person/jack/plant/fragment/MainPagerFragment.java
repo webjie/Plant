@@ -33,7 +33,7 @@ public class MainPagerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_pager, container, false);
         pager = (ViewPager) view.findViewById(R.id.pager);
         pager.setOffscreenPageLimit(1);
-        tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
+      tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         return view;
     }
 
@@ -81,7 +81,7 @@ public class MainPagerFragment extends Fragment {
                 return new WarnFragment();
             }
             if(position==3){
-                return  new WaterFragment();
+               // return  new WaterFragment();
             }
             return HomeFragment.newInstance(URLS[position % URLS.length]);
         }

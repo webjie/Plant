@@ -58,7 +58,8 @@ public class MemberFragment extends Fragment {
         logo = (ImageView) headView.findViewById(R.id.iv_user_head);
 
         View zoomView = LayoutInflater.from(context).inflate(R.layout.member_zoom_view, null, false);
-        View contentView = LayoutInflater.from(context).inflate(R.layout.member_content_view, null, false);
+        View contentView = LayoutInflater.from(context).inflate(R.layout.member_content_view,
+                null, false);
         scrollView.setHeaderView(headView);
         scrollView.setZoomView(zoomView);
         scrollView.setScrollContentView(contentView);

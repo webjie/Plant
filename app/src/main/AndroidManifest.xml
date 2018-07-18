@@ -71,6 +71,7 @@
             android:exported="true" />
 
         <activity android:name=".activity.WebViewActivity" />
+        <activity android:name=".activity.EnvWarnActivity"></activity>
     </application>
 
 </manifest>

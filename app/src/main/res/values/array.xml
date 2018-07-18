@@ -3,9 +3,9 @@
 
 	<string-array name="news_titles">
 		<item>植物列表</item>
-		<item>阈值设置</item>
+		<!--<item>阈值设置</item>
 		<item>报警记录</item>
-		<item>灌溉记录</item>
+		<item>灌溉记录</item>-->
 	</string-array>
 
 </resources>
