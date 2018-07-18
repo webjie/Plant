@@ -149,6 +149,7 @@ public class BufferKnifeFragment extends Fragment {
 
                 }
 
+                //设置控件监听
                 helper.setOnClickListener(R.id.item_temp, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -170,8 +171,9 @@ public class BufferKnifeFragment extends Fragment {
                 }).setOnClickListener(R.id.item_pic, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        UIHelper.showChartActivity(getActivity(), 0);
                         curPlants = list.get(helper.getPosition());
+                        DemoPtrFragment.curPlant=curPlants;
+                        UIHelper.showPlantsDetailActivity(getActivity());
                     }
                 });
 
@@ -351,6 +353,9 @@ public class BufferKnifeFragment extends Fragment {
 
     }
 
+    /**
+     * 广播接收
+     */
     class MyBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {

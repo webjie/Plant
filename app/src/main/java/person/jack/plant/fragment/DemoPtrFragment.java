@@ -57,7 +57,7 @@ import person.jack.plant.utils.SharedPreferences;
 import static person.jack.plant.ui.UIHelper.TAG;
 
 /**
- * 首页-获取远程服务器植物列表
+ * 首页
  */
 public class DemoPtrFragment extends Fragment {
     public static final String APP_PACKAGE_NAME = "cn.com.broadlink.econtrol.plus"; //包名
@@ -127,14 +127,7 @@ public class DemoPtrFragment extends Fragment {
         btnHomeSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentManager manager= getActivity().getSupportFragmentManager();
-//                FragmentTransaction transaction=manager.beginTransaction();
-//                Fragment fragment=manager.findFragmentByTag("ImFragment");
-//                transaction.show(fragment);
-                    MainActivity mainActivity=(MainActivity)getActivity();
-                    MainActivity.currIndex=1;
-                    mainActivity.showFragment();
-                    mainActivity.group.check(R.id.foot_bar_im);
+
             }
         });
 
@@ -189,25 +182,6 @@ public class DemoPtrFragment extends Fragment {
             protected void convert(final BaseAdapterHelper helper, final Plants shop) {
 
                 helper.setText(R.id.tv_name, shop.getName()); // 自动异步加载图片
-//
-//                if ("花生".equals(shop.getName().toString())){
-//                    helper.setImageResource(R.id.logo,R.drawable.img1);
-//                }
-//                if ("辣椒".equals(shop.getName().toString())){
-//                    helper.setImageResource(R.id.logo,R.drawable.img2);
-//                }
-//                if ("白掌".equals(shop.getName().toString())){
-//                    helper.setImageResource(R.id.logo,R.drawable.img3);
-//                }
-//                if ("碧玉".equals(shop.getName().toString())){
-//                    helper.setImageResource(R.id.logo,R.drawable.img4);
-//                }
-//                if ("双线竹语".equals(shop.getName().toString())){
-//                    helper.setImageResource(R.id.logo,R.drawable.img5);
-//                }
-//                if ("长寿花".equals(shop.getName().toString())){
-//                    helper.setImageResource(R.id.logo,R.drawable.img6);
-//                }
                 if(shop.getImage()!=null){
                     if(shop.getImage().equals("null")){
                         helper.setImageResource(R.id.logo,R.drawable.default_image);

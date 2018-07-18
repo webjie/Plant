@@ -9,7 +9,7 @@
 
     <!-- 页面名称 -->
     <string name="main_navigation_home">首页</string>
-    <string name="main_navigation_im">统计</string>
+    <string name="main_navigation_im">实时</string>
     <string name="main_navigation_add">新增</string>
     <string name="main_navigation_interest">百科</string>
     <string name="main_navigation_user">我的</string>
@@ -52,7 +52,7 @@
     <string name="title_activity_plants_status">PlantsStatusActivity</string>
 
     <!-- 首页按钮 -->
-    <string name="btn_search">状态查询</string>
+    <string name="btn_search">统计查询</string>
     <string name="btn_camera">在线监控</string>
     <string name="btn_control">种植控制</string>
     <string name="btn_alert">故障报警</string>
