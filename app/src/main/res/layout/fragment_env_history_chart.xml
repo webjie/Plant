@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context="person.jack.plant.fragment.EnvHistoryChartFragment">
+
+
+    <TextView
+        android:id="@+id/plant_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textSize="25sp"
+        android:text="当前植物记录" />
+
+
+       <TextView
+           android:text="温度"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content" />
+
+       <com.github.mikephil.charting.charts.LineChart
+           android:layout_weight="1"
+           android:id="@+id/tempChart"
+           android:layout_width="match_parent"
+           android:layout_height="150dp"></com.github.mikephil.charting.charts.LineChart>
+
+    <TextView
+        android:text="湿度"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_weight="1"
+        android:id="@+id/humiChart"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"></com.github.mikephil.charting.charts.LineChart>
+
+    <TextView
+        android:text="光照"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_weight="1"
+        android:id="@+id/lighChart"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"></com.github.mikephil.charting.charts.LineChart>
+</LinearLayout>

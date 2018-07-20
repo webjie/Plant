@@ -56,6 +56,14 @@ public class HttpClient {
     public static final String DEV_ADDRESS="http://www.0531yun.cn/wsjc/Device/getDeviceData.do?userID=180604htrj&userPassword=180604htrj";
 
     /**
+     * 查询历史数据接口
+     */
+    public static String beginTime;
+    public static String endTime;
+    public static final String DEV_HISTORY="http://www.0531yun.cn/wsjc/Device/getDevHisData.do?" +
+            "devKey=529697&beginTime="+beginTime+"&endTime="+endTime+"&userID=180604htrj&userPassword=180604htrj";
+
+    /**
      *
      */
 

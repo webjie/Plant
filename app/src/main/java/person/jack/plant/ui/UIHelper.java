@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import person.jack.plant.activity.EnvHistoryActivity;
 import person.jack.plant.activity.EnvWarnActivity;
 import person.jack.plant.activity.FailureWarnActivity;
 import person.jack.plant.activity.HouseDetailActivity;
@@ -117,6 +118,11 @@ public class UIHelper {
     public static void showMember(Activity context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
+    }
+
+    public static void showEnvHistoryActivity(Activity activity){
+        Intent intent=new Intent(activity, EnvHistoryActivity.class);
+        activity.startActivity(intent);
     }
 
     /**

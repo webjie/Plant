@@ -127,7 +127,7 @@ public class DemoPtrFragment extends Fragment {
         btnHomeSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                UIHelper.showEnvHistoryActivity(getActivity());
             }
         });
 

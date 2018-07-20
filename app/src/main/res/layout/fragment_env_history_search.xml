@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="person.jack.plant.fragment.EnvHistorySearchFragment">
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/csy_tip_h"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center"
+                android:id="@+id/env_history_begin_time"
+                android:text="请选择开始时间"
+                style="@style/csy_textbox"
+                android:layout_marginLeft="@dimen/space_8"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/csy_tip_h"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:textSize="10sp"
+                android:gravity="center"
+                android:text="请选择结束时间"
+                android:id="@+id/env_history_end_time"
+                style="@style/csy_textbox"
+                android:layout_marginLeft="@dimen/space_8"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/env_history_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+</LinearLayout>
