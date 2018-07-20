@@ -1,7 +1,9 @@
 package person.jack.plant.activity;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
@@ -10,12 +12,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +41,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import person.jack.plant.R;
+import person.jack.plant.common.AppContext;
+import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Plants;
+import person.jack.plant.fragment.BufferKnifeFragment;
 import person.jack.plant.fragment.DemoPtrFragment;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.model.SerializableMap;
@@ -46,14 +53,15 @@ import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
 /**
  * 详情页面
  */
-public class PlantsDetailActivity extends SwipeBackActivity {
+public class PlantsDetailActivity extends SwipeBackActivity implements View.OnClickListener{
     public static final String TAG = "Kaa";
-
+   PlantsDao plantsDao;
     @Bind(R.id.btnBack)
     Button btnBack;
     @Bind(R.id.textHeadTitle)
     TextView textHeadTitle;
-
+    Button btnDelete;
+    Button btnUpdate;
     private ImageView ivPlant;
     private TextView tvName;
     private TextView tvDate;
@@ -73,6 +81,7 @@ public class PlantsDetailActivity extends SwipeBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plants_detail);
         ButterKnife.bind(this);
+        plantsDao=new PlantsDao(AppContext.getInstance());
         initView();
 
     }
@@ -86,6 +95,10 @@ public class PlantsDetailActivity extends SwipeBackActivity {
                 finish();
             }
         });
+        btnDelete=(Button)findViewById(R.id.btn_plantDelete);
+        btnDelete.setOnClickListener(this);
+        btnUpdate=(Button)findViewById(R.id.btn_plantUpdate);
+        btnUpdate.setOnClickListener(this);
         ivPlant = (ImageView) findViewById(R.id.iv_plant);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvDate = (TextView) findViewById(R.id.tv_date);
@@ -131,9 +144,9 @@ public class PlantsDetailActivity extends SwipeBackActivity {
 
         tvName.setText(plant.getName());
         if (plant.getGrowthStage() != null) {
-            tvState.setText("当前生长状态：" + plant.getGrowthStage());
+            tvState.setText(  plant.getGrowthStage());
         } else {
-            tvState.setText("当前生长状态：生长中");
+            tvState.setText("生长中");
         }
 
         if (plant.getPlantingDate() != null) {
@@ -143,7 +156,44 @@ public class PlantsDetailActivity extends SwipeBackActivity {
 
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)getSupportFragmentManager().findFragmentByTag("ImFragment");
+        if(bufferKnifeFragment!=null){
+            bufferKnifeFragment.setLoadAll(false);
+            bufferKnifeFragment.loadData();
 
+        }
+        Log.d("onResume","执行1");
+
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_plantUpdate:
+                Intent intent=new Intent(PlantsDetailActivity.this,PlantUpdateActivity.class);
+                intent.putExtra("plantname",plant.getName()
+                );
+                startActivity(intent);
+                break;
+            case R.id.btn_plantDelete:
+                AlertDialog.Builder builder=new AlertDialog.Builder(PlantsDetailActivity.this);
+                builder.setMessage("确认删除吗，删除后将无法恢复。");
+                builder.setNegativeButton("取消",null);
+                builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+plantsDao.deletePlant(plant);
+                    finish();
+
+                    }
+                });
+                builder.show();
+
+                break;
+        }
+    }
 //    Timer timer;
 //    TimerTask timerTask;
 //    String url = "";

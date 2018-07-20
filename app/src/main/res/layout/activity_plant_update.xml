@@ -5,7 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:fitsSystemWindows="true"
-    tools:context="person.jack.plant.activity.MainActivity">
+    tools:context="person.jack.plant.activity.PlantUpdateActivity">
+    <include layout="@layout/layout_main_header"
+        android:id="@+id/title"
+        />
     <ImageView
         android:id="@+id/img_PlantImg"
         android:layout_width="160dp"
@@ -71,13 +74,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/csy_tip_h"
                 android:layout_gravity="center_vertical">
+                <TextView
+                    android:id="@+id/tv_plantLive"
+                    android:entries="@array/plant_live"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8"
+                    />
 
                 <Spinner
                     android:id="@+id/spn_plantLive"
                     android:entries="@array/plant_live"
                     style="@style/csy_textbox"
                     android:layout_marginLeft="@dimen/space_8"
-
+                    android:visibility="gone"
                     />
             </RelativeLayout>
         </LinearLayout>
@@ -113,19 +122,7 @@
         android:layout_marginTop="10dp"
         >
 
-        <Button
-            android:id="@+id/btn_plantSave"
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/csy_btn_h"
-            android:layout_below="@+id/plant_add_form"
-            android:layout_margin="@dimen/space_5"
-            android:background="@drawable/csy_btn"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="新增植物"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/csy_text_ts"
-            />
+
         <Button
             android:id="@+id/btn_plantUpdate"
             android:layout_width="fill_parent"
@@ -138,7 +135,7 @@
             android:text="更新植物"
             android:textColor="@android:color/white"
             android:textSize="@dimen/csy_text_ts"
-            android:visibility="gone"
+
             />
 
     </LinearLayout>

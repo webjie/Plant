@@ -1,4 +1,4 @@
-package person.jack.plant.fragment;
+package person.jack.plant.activity;
 
 
 import android.annotation.TargetApi;
@@ -13,7 +13,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,10 +21,8 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.text.format.DateFormat;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,15 +36,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.table.TableUtils;
-
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,75 +45,82 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.transform.URIResolver;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import person.jack.plant.R;
-import person.jack.plant.activity.MainActivity;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Plants;
-import person.jack.plant.http.HttpClient;
-import person.jack.plant.model.MyAppContants;
+import person.jack.plant.fragment.BufferKnifeFragment;
+import person.jack.plant.fragment.DemoPtrFragment;
+import person.jack.plant.fragment.MainPagerFragment;
 import person.jack.plant.utils.Utils;
 
-import static android.app.Activity.RESULT_OK;
+public class PlantUpdateActivity extends BaseFragmentActivity implements View.OnClickListener{
 
-/**
- * Created by yanxu on 2018/6/4.
- */
-
-public class PlantsAddFragment extends Fragment implements View.OnClickListener {
     private  static final String TAG="plant";
-
+    @Bind(R.id.btnBack)
+    Button btnBack;
+    @Bind(R.id.textHeadTitle)
+    TextView textHeadTitle;
     private EditText et_plantName;
     private Spinner spn_plantLive;
-    private TextView tv_plantDate;
-    private Button btn_plantSave,btn_plantUpdate;
+    private TextView tv_plantDate,tv_plantLive;
+    private Button btn_plantUpdate;
     private String growthState = "l";
     private PlantsDao plantsDao;
-   private ImageView img_PlantImg;
+    private ImageView img_PlantImg;
     private static final int TAKE_PHOTO = 1;
     private static final int CHOOSE_PHOTO=2;
     private String chooseImagePath="null";
     private Uri imageUri;
+    private Plants plant;
     private List<Plants> list=new ArrayList<>();
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_plantadd, container, false);
-        initView(view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_plant_update);
+        ButterKnife.bind(this);
         plantsDao = new PlantsDao(AppContext.getInstance());
-        list=plantsDao.findAll();
+        plant=plantsDao.findByName(getIntent().getStringExtra("plantname"));
+        initView();
+       /* list=plantsDao.findAll();
         if(list!=null){
             for (Plants p:list
                     ) {
                 Log.d(TAG,"图片路径"+p.getImage()+"  , 名称"+p.getName());
             }
 
-        }
-        return view;
+        }*/
+
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    private void initView(View view) {
-
-        et_plantName = (EditText) view.findViewById(R.id.et_plantName);
-        spn_plantLive = (Spinner) view.findViewById(R.id.spn_plantLive);
 
 
-        tv_plantDate = (TextView) view.findViewById(R.id.tv_plantDate);
+    private void initView() {
+        textHeadTitle.setText("植物更新");
+        btnBack.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        et_plantName = (EditText) findViewById(R.id.et_plantName);
+        et_plantName.setText(plant.getName());
+        spn_plantLive = (Spinner) findViewById(R.id.spn_plantLive);
+        tv_plantDate = (TextView)findViewById(R.id.tv_plantDate);
+        tv_plantLive = (TextView)findViewById(R.id.tv_plantLive);
+tv_plantLive.setText(plant.getGrowthStage());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         tv_plantDate.setText(format.format(new Date()));
-        btn_plantSave = (Button) view.findViewById(R.id.btn_plantSave);
-        btn_plantUpdate= (Button) view.findViewById(R.id.btn_plantUpdate);
+        btn_plantUpdate= (Button) findViewById(R.id.btn_plantUpdate);
         btn_plantUpdate.setOnClickListener(this);
         tv_plantDate.setOnClickListener(this);
-        btn_plantSave.setOnClickListener(this);
+        tv_plantLive.setOnClickListener(this);
         spn_plantLive.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -133,16 +130,29 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-        img_PlantImg = (ImageView) view.findViewById(R.id.img_PlantImg);
+        img_PlantImg = (ImageView) findViewById(R.id.img_PlantImg);
         img_PlantImg.setOnClickListener(this);
+        if (plant.getImage() != null) {
+            File file = new File(plant.getImage());
+            if (file.exists()) {
+                Bitmap bitmap = BitmapFactory.decodeFile(plant.getImage());
+                img_PlantImg.setImageBitmap(bitmap);
+               chooseImagePath=plant.getImage();
+            }
+
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tv_plantLive:
+                tv_plantLive.setVisibility(View.GONE);
+                spn_plantLive.setVisibility(View.VISIBLE);
+                break;
             case R.id.tv_plantDate:
                 final Calendar c = Calendar.getInstance();
-                DatePickerDialog dialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog dialog = new DatePickerDialog(PlantUpdateActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         c.set(year, monthOfYear , dayOfMonth);
@@ -152,15 +162,23 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
                 break;
-            case R.id.btn_plantSave:
-                    submit();
-                break;
+
             case R.id.img_PlantImg:
-                showDialog();;
+                try{
+                    showDialog();;
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 break;
             case R.id.btn_plantUpdate:
+                try{
+                    update();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
 
-                update();
+
                 break;
         }
     }
@@ -169,80 +187,31 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
      * 弹出对话框，选择植物图片
      */
     public void showDialog() {
-       AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
-       builder.setMessage("请设置植物图片~~");
-       builder.setPositiveButton("相册", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-               openAlbum();
+        AlertDialog.Builder builder=new AlertDialog.Builder(PlantUpdateActivity.this);
+        builder.setMessage("请设置植物图片~~");
+        builder.setPositiveButton("相册", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                openAlbum();
 
-           }
-       });
-       builder.setNegativeButton("拍照", new DialogInterface.OnClickListener() {
-           @Override
-           public void onClick(DialogInterface dialog, int which) {
-             takePhoto();
-           }
-       });
-       builder.show();
+            }
+        });
+        builder.setNegativeButton("拍照", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                takePhoto();
+            }
+        });
+        builder.show();
     }
-    /**
-     * 增加植物信息
-     */
-    private void submit() {
-        String plantName = et_plantName.getText().toString().trim();
-        if (plantName.equals("")) {
-            Toast.makeText(getContext(), "植物名称不能为空", Toast.LENGTH_SHORT).show();
-        }  else {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date date = null;
-            try {
-                date = format.parse(tv_plantDate.getText().toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            Plants plants=plantsDao.findByName(plantName);
-            Plants plants1=null;
-            if(plants==null){
-                plants1=new Plants(1,chooseImagePath,plantName,growthState,date);
-                plantsDao.add(plants1);
-                Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
-                et_plantName.setText("");
-                chooseImagePath="null";
-                img_PlantImg.setImageResource(R.drawable.default_plant);
-            }else{
-                Toast.makeText(getContext(), "添加失败，植物名称已存在", Toast.LENGTH_SHORT).show();
-            }
-            list=plantsDao.findAll();
-            if(list!=null){
-                for (Plants p:list) {
-                    Log.d(TAG,"数据库所有植物信息：图片路径"+p.getImage()+"   ,名称"+p.getName());
-                }
-            }
-            try{
-                MainActivity mainActivity=(MainActivity)getActivity();
 
-                BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("ImFragment");
-                if(bufferKnifeFragment!=null){
-                    bufferKnifeFragment.setLoadAll(false);
-                    bufferKnifeFragment.loadData();
-
-                }
-                Utils.getPlantTypeByImage(plants1.getImage());
-
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-    }
     /**
      * 更新植物信息
      */
     private void update(){
         String plantName = et_plantName.getText().toString().trim();
         if (plantName.equals("")) {
-            Toast.makeText(getContext(), "植物名称不能为空", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PlantUpdateActivity.this, "植物名称不能为空", Toast.LENGTH_SHORT).show();
         }  else {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
@@ -251,16 +220,31 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+
             Plants plants=plantsDao.findByName(plantName);
             if(plants==null){
-                Toast.makeText(getContext(), "更新植物信息失败，没有此植物名称信息", Toast.LENGTH_SHORT).show();
+                plant.setName(plantName);
+                plant.setPlantingDate(date);
+                plant.setImage(chooseImagePath);
+                plant.setGrowthStage(growthState);
+                plantsDao.updatePlant(plant);
+                Toast.makeText(PlantUpdateActivity.this, "更新植物信息成功", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(PlantUpdateActivity.this,MainActivity.class);
+                startActivity(intent);
             }else{
-                plants.setName(plantName);
-                plants.setPlantingDate(date);
-                plants.setImage(chooseImagePath);
-                plants.setGrowthStage(growthState);
-                plantsDao.updatePlant(plants);
-                Toast.makeText(getContext(), "更新植物信息成功", Toast.LENGTH_SHORT).show();
+                if(et_plantName.getText().toString().equals(plant.getName())){
+                    plant.setName(plantName);
+                    plant.setPlantingDate(date);
+                    plant.setImage(chooseImagePath);
+                    plant.setGrowthStage(growthState);
+                    plantsDao.updatePlant(plant);
+                    Toast.makeText(PlantUpdateActivity.this, "更新植物信息成功", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(PlantUpdateActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(PlantUpdateActivity.this, "更新植物信息失败，没有此植物名称信息", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             list=plantsDao.findAll();
@@ -269,24 +253,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                     Log.d(TAG,"图片路径"+p.getImage()+" ,   名称"+p.getName());
                 }
             }
-            try{
-                MainActivity mainActivity=(MainActivity)getActivity();
-                MainPagerFragment mainPagerFragment=(MainPagerFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("HomeFragment");
-                DemoPtrFragment demoPtrFragment=(DemoPtrFragment)mainPagerFragment.getChildFragmentManager().getFragments().get(1);
-                demoPtrFragment.setLoadAll(false);
-                demoPtrFragment.loadData();
 
-                BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)mainActivity.getSupportFragmentManager().findFragmentByTag("ImFragment");
-                if(bufferKnifeFragment!=null){
-                    bufferKnifeFragment.setLoadAll(false);
-                    bufferKnifeFragment.loadData();
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-            et_plantName.setText("");
-            chooseImagePath="null";
-            img_PlantImg.setImageResource(R.drawable.plantlogo);
         }
     }
     /**
@@ -305,7 +272,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openAlbum();
                 } else {
-                    Toast.makeText(getContext(), "你没有权限打开相机", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "你没有权限打开相机", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -338,7 +305,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }*/
-                   cropPhoto(imageUri);
+                    cropPhoto(imageUri);
                 }
                 break;
             case 0X003:
@@ -381,13 +348,13 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         Log.d("img-----", "执行4.4以上方法");
         String imagePath = null;
         Uri uri = data.getData();
-        if (DocumentsContract.isDocumentUri(getContext(), uri)) {
+        if (DocumentsContract.isDocumentUri(getApplicationContext(), uri)) {
             String docId = DocumentsContract.getDocumentId(uri);
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 //如果document的类型是uri则通过document id 处理
                 String id = docId.split(":")[1];//解析出数字格式id
                 String selection = MediaStore.Images.Media._ID + "=" + id;
-               imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
 
 
             } else if ("com.android.provider.downloads.documents".equals(uri.getAuthority())) {
@@ -407,7 +374,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
 
 
         }
-       displayImages(imagePath);
+        displayImages(imagePath);
     }
     /**
      * 生成图片
@@ -418,7 +385,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         Log.d("img-----", "执行4.4以下方法");
         Uri uri = data.getData();
         cropPhoto(uri);
-       //String imagePath = getImagePath(uri, null);
+        //String imagePath = getImagePath(uri, null);
         //displayImages(imagePath);
     }
     /**
@@ -431,7 +398,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
     private String getImagePath(Uri uri, String selection) {
         //根据uri和selection 获得真是路径
         String path = null;
-        Cursor cursor = getContext().getContentResolver().query(uri, null, selection, null, null);
+        Cursor cursor = getApplicationContext().getContentResolver().query(uri, null, selection, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -451,7 +418,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             chooseImagePath = imagePath;
             img_PlantImg.setImageBitmap(bitmap);
         } else {
-            Toast.makeText(getContext(), "寻找图片失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "寻找图片失败", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -460,7 +427,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
      * 拍照
      */
     public void takePhoto(){
-       SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
+        SimpleDateFormat format=new SimpleDateFormat("yyyyMMddHHmmss");
         //创建File对象，用于储存拍照后的图片
         File outputImage = new File(Environment.getExternalStorageDirectory()
                 + "/"+format.format(new Date())+".jpg");
@@ -473,7 +440,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             e.printStackTrace();
         }
         if(Build.VERSION.SDK_INT>=24){
-            imageUri= FileProvider.getUriForFile(getContext(),"person.jack.plant.fileprovider",outputImage);
+            imageUri= FileProvider.getUriForFile(getApplicationContext(),"person.jack.plant.fileprovider",outputImage);
         }else{
             imageUri= Uri.fromFile(outputImage);
         }

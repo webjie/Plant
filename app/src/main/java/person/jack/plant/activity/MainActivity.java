@@ -1,11 +1,13 @@
 
 package person.jack.plant.activity;
 
+import android.media.AsyncPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.RadioGroup;
 
@@ -129,6 +131,39 @@ public class MainActivity extends BaseFragmentActivity {
             case 4: return new MemberFragment();
             default: return null;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("onStart","执行1");
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)getSupportFragmentManager().findFragmentByTag("ImFragment");
+        if(bufferKnifeFragment!=null){
+            bufferKnifeFragment.setLoadAll(false);
+            bufferKnifeFragment.loadData();
+
+        }
+        Log.d("onResume","执行1");
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("onRestart","执行1");
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("onPause","执行1");
     }
 
     @Override

@@ -1,5 +1,6 @@
 package person.jack.plant.activity;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
@@ -8,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import person.jack.plant.R;
+import person.jack.plant.common.AppContext;
 import person.jack.plant.ui.loopviewpager.AutoLoopViewPager;
 import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
 import person.jack.plant.ui.viewpagerindicator.CirclePageIndicator;
@@ -26,10 +29,12 @@ import butterknife.ButterKnife;
  * git测试  李家旺
  *
  */
-public class HouseDetailActivity extends SwipeBackActivity {
+public class HouseDetailActivity extends SwipeBackActivity implements View.OnClickListener{
 
     @Bind(R.id.btnBack)
     Button btnBack;
+    Button btnDelete;
+    Button btnUpdate;
     @Bind(R.id.textHeadTitle)
     TextView textHeadTitle;
     @Bind(R.id.pager)
@@ -62,7 +67,10 @@ public class HouseDetailActivity extends SwipeBackActivity {
                 finish();
             }
         });
-
+        btnDelete=(Button)findViewById(R.id.btn_plantDelete);
+        btnDelete.setOnClickListener(this);
+        btnUpdate=(Button)findViewById(R.id.btn_plantUpdate);
+                btnUpdate.setOnClickListener(this);
         imageViewIds = new int[] { R.drawable.house_background, R.drawable.house_background_1,
                 R.drawable.house_background_2};
 
@@ -74,6 +82,7 @@ public class HouseDetailActivity extends SwipeBackActivity {
 
     private void initEvent() {
         Button btnShare = (Button) findViewById(R.id.btnShare);
+
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +90,18 @@ public class HouseDetailActivity extends SwipeBackActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_plantUpdate:
+                Toast.makeText(AppContext.getInstance(),"update",Toast.LENGTH_SHORT).show();;
+                break;
+            case R.id.btn_plantDelete:
+                Toast.makeText(AppContext.getInstance(),"delete",Toast.LENGTH_SHORT).show();;
+                break;
+        }
     }
 
 

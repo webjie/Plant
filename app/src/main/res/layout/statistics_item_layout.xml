@@ -10,7 +10,7 @@
         android:layout_height="120dp">
 
         <ImageView
-            android:src="@drawable/default_image"
+            android:src="@drawable/default_plant"
             android:id="@+id/item_pic"
             android:layout_width="match_parent"
             android:layout_height="80dp"/>

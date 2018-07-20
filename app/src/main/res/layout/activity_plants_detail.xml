@@ -32,7 +32,7 @@
                 android:background="@drawable/csy_form"
                 android:padding="5dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/default_image" />
+                android:src="@drawable/default_plant" />
 
             <!-- 表单 -->
             <LinearLayout
@@ -61,6 +61,7 @@
                             style="@style/csy_textbox"
                             android:layout_marginLeft="@dimen/space_8"
                             android:text="车矢菊"
+                            android:clickable="false"
 
                             />
                     </RelativeLayout>
@@ -84,8 +85,15 @@
                             android:id="@+id/tv_date"
                             style="@style/csy_textbox"
                             android:layout_marginLeft="@dimen/space_8"
-
                             android:text="2018-03-02" />
+                        <Spinner
+                            android:id="@+id/spn_plantLive"
+                            android:entries="@array/plant_live"
+                            style="@style/csy_textbox"
+                            android:layout_marginLeft="@dimen/space_8"
+                            android:visibility="gone"
+
+                            />
                     </RelativeLayout>
                 </LinearLayout>
 
