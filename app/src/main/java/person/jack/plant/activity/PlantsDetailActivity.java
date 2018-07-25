@@ -53,9 +53,9 @@ import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
 /**
  * 详情页面
  */
-public class PlantsDetailActivity extends SwipeBackActivity implements View.OnClickListener{
+public class PlantsDetailActivity extends SwipeBackActivity implements View.OnClickListener {
     public static final String TAG = "Kaa";
-   PlantsDao plantsDao;
+    PlantsDao plantsDao;
     @Bind(R.id.btnBack)
     Button btnBack;
     @Bind(R.id.textHeadTitle)
@@ -64,7 +64,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
     Button btnUpdate;
     private ImageView ivPlant;
     private TextView tvName;
-    private TextView tvDate,tvType;
+    private TextView tvDate, tvType;
     private TextView tvState;
     private Plants plant;
 
@@ -75,13 +75,12 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
     BroadCastReceiverInPDA broadCastReceiverInPDA;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plants_detail);
         ButterKnife.bind(this);
-        plantsDao=new PlantsDao(AppContext.getInstance());
+        plantsDao = new PlantsDao(AppContext.getInstance());
         initView();
 
     }
@@ -95,9 +94,9 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
                 finish();
             }
         });
-        btnDelete=(Button)findViewById(R.id.btn_plantDelete);
+        btnDelete = (Button) findViewById(R.id.btn_plantDelete);
         btnDelete.setOnClickListener(this);
-        btnUpdate=(Button)findViewById(R.id.btn_plantUpdate);
+        btnUpdate = (Button) findViewById(R.id.btn_plantUpdate);
         btnUpdate.setOnClickListener(this);
         ivPlant = (ImageView) findViewById(R.id.iv_plant);
         tvName = (TextView) findViewById(R.id.tv_name);
@@ -112,9 +111,9 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
         plant = DemoPtrFragment.curPlant;
 
         //注册广播
-        broadCastReceiverInPDA=new BroadCastReceiverInPDA();
-        IntentFilter intent=new IntentFilter("plants.chart.update");
-        registerReceiver(broadCastReceiverInPDA,intent);
+        broadCastReceiverInPDA = new BroadCastReceiverInPDA();
+        IntentFilter intent = new IntentFilter("plants.chart.update");
+        registerReceiver(broadCastReceiverInPDA, intent);
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -125,7 +124,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
         });
         String encode = null;
         try {
-            encode = URLEncoder.encode(plant.getName(), "utf-8");
+            encode = URLEncoder.encode(plant.getType(), "utf-8");
             Log.d(TAG, "initView: " + encode);
 
         } catch (Exception e) {
@@ -146,7 +145,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
         tvName.setText(plant.getName());
         tvType.setText(plant.getType());
         if (plant.getGrowthStage() != null) {
-            tvState.setText(  plant.getGrowthStage());
+            tvState.setText(plant.getGrowthStage());
         } else {
             tvState.setText("生长中");
         }
@@ -158,37 +157,39 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
 
 
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)getSupportFragmentManager().findFragmentByTag("ImFragment");
-        if(bufferKnifeFragment!=null){
+        BufferKnifeFragment bufferKnifeFragment = (BufferKnifeFragment) getSupportFragmentManager().findFragmentByTag("ImFragment");
+        if (bufferKnifeFragment != null) {
             bufferKnifeFragment.setLoadAll(false);
             bufferKnifeFragment.loadData();
 
         }
-        Log.d("onResume","执行1");
+        Log.d("onResume", "执行1");
 
     }
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_plantUpdate:
-                Intent intent=new Intent(PlantsDetailActivity.this,PlantUpdateActivity.class);
-                intent.putExtra("plantname",plant.getName()
+                Intent intent = new Intent(PlantsDetailActivity.this, PlantUpdateActivity.class);
+                intent.putExtra("plantname", plant.getName()
                 );
-                intent.putExtra("result",1);
+//                intent.putExtra("result",1);
                 startActivity(intent);
                 break;
             case R.id.btn_plantDelete:
-                AlertDialog.Builder builder=new AlertDialog.Builder(PlantsDetailActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(PlantsDetailActivity.this);
                 builder.setMessage("确认删除吗，删除后将无法恢复。");
-                builder.setNegativeButton("取消",null);
+                builder.setNegativeButton("取消", null);
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-plantsDao.deletePlant(plant);
-                    finish();
+                        plantsDao.deletePlant(plant);
+                        finish();
 
                     }
                 });

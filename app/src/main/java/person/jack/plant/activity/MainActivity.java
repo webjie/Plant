@@ -61,7 +61,7 @@ public class MainActivity extends BaseFragmentActivity {
         fragmentTags = new ArrayList<>(Arrays.asList("DemoPtrFragment", "ImFragment",
                 "PlantAddFragment", "InterestFragment", "MemberFragment"));
         currIndex = 0;
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             currIndex = savedInstanceState.getInt(CURR_INDEX);
             hideSavedFragment();
         }
@@ -69,7 +69,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     private void hideSavedFragment() {
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTags.get(currIndex));
-        if(fragment != null) {
+        if (fragment != null) {
             fragmentManager.beginTransaction().hide(fragment).commit();
         }
     }
@@ -83,12 +83,23 @@ public class MainActivity extends BaseFragmentActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
-                    case R.id.foot_bar_home: currIndex = 0; break;
-                    case R.id.foot_bar_im: currIndex = 1; break;
-                    case R.id.foot_bar_add: currIndex = 2; break;
-                    case R.id.foot_bar_interest: currIndex = 3; break;
-                    case R.id.main_footbar_user: currIndex = 4; break;
-                    default: break;
+                    case R.id.foot_bar_home:
+                        currIndex = 0;
+                        break;
+                    case R.id.foot_bar_im:
+                        currIndex = 1;
+                        break;
+                    case R.id.foot_bar_add:
+                        currIndex = 2;
+                        break;
+                    case R.id.foot_bar_interest:
+                        currIndex = 3;
+                        break;
+                    case R.id.main_footbar_user:
+                        currIndex = 4;
+                        break;
+                    default:
+                        break;
                 }
                 showFragment();
             }
@@ -105,12 +116,12 @@ public class MainActivity extends BaseFragmentActivity {
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentByTag(fragmentTags.get(currIndex));
-        if(fragment == null) {
+        if (fragment == null) {
             fragment = instantFragment(currIndex);
         }
         for (int i = 0; i < fragmentTags.size(); i++) {
             Fragment f = fragmentManager.findFragmentByTag(fragmentTags.get(i));
-            if(f != null && f.isAdded()) {
+            if (f != null && f.isAdded()) {
                 fragmentTransaction.hide(f);
             }
         }
@@ -125,61 +136,65 @@ public class MainActivity extends BaseFragmentActivity {
 
     private Fragment instantFragment(int currIndex) {
         switch (currIndex) {
-            case 0: return new DemoPtrFragment();
-            case 1: return new BufferKnifeFragment();
-            case 2: return new PlantsAddFragment();
-            case 3: return new KnowLedgeFragment();
-            case 4: return new MemberFragment();
-            default: return null;
+            case 0:
+                return new DemoPtrFragment();
+            case 1:
+                return new BufferKnifeFragment();
+            case 2:
+                return new PlantsAddFragment();
+            case 3:
+                return new KnowLedgeFragment();
+            case 4:
+                return new MemberFragment();
+            default:
+                return null;
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("MainActivity","onStart");
+        Log.d("MainActivity", "onStart");
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        BufferKnifeFragment bufferKnifeFragment1=(BufferKnifeFragment)getSupportFragmentManager().findFragmentByTag("ImFragment");
-        if(bufferKnifeFragment1!=null){
+        BufferKnifeFragment bufferKnifeFragment1 = (BufferKnifeFragment) getSupportFragmentManager().findFragmentByTag("ImFragment");
+        if (bufferKnifeFragment1 != null) {
             bufferKnifeFragment1.setLoadAll(false);
             bufferKnifeFragment1.loadData();
 
         }
-        int result=getIntent().getIntExtra("result",0);
-        Log.d("result",result+"");
-            if(result==1){
-                currIndex=1;
-                group.check(R.id.foot_bar_im);
-            }if(result==2){
-            currIndex=2;
+        int result = getIntent().getIntExtra("result", 0);
+        Log.d("result", result + "");
+        if (result == 1) {
+            currIndex = 1;
+            group.check(R.id.foot_bar_im);
+        }
+        if (result == 2) {
+            currIndex = 2;
             group.check(R.id.foot_bar_add);
         }
 
-            showFragment();
+        showFragment();
 
 
-
-
-
-        Log.d("MainActivity","onResume");
+        Log.d("MainActivity", "onResume");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("MainActivity","onRestart");
+        Log.d("MainActivity", "onRestart");
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("MainActivity","onPause");
+        Log.d("MainActivity", "onPause");
     }
 
     @Override

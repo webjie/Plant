@@ -61,7 +61,6 @@ public class MyEnvStatusService extends Service {
                     Intent intent=new Intent("plants.chart.update");
                     intent.putExtras(bundle);
                     sendBroadcast(intent);
-                    Log.d(TAG, "handleMessage: 发送广播");
                     break;
             }
             return false;
@@ -87,7 +86,6 @@ public class MyEnvStatusService extends Service {
                     public void onResponse(Call call, Response response) throws IOException {
                         Map<String, int[]> map = null;
                         String jsonString =response.body().string();
-                        Log.d(TAG, "onResponse: "+jsonString);
                         Message message = new Message();
                         try {
                             map = JsonAnalysis.getEnv(jsonString,getBaseContext());

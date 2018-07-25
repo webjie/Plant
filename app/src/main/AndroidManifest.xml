@@ -78,7 +78,6 @@
         <activity android:name=".activity.ValueSetActivity" />
         <activity android:name=".activity.PlantUpdateActivity"
             android:launchMode="singleTop"
-
             />
         <activity android:name=".activity.EnvHistoryActivity" />
         <activity android:name=".activity.PlantInfoActivity">

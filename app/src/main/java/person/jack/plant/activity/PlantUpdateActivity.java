@@ -2,6 +2,7 @@ package person.jack.plant.activity;
 
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,9 +58,9 @@ import person.jack.plant.fragment.DemoPtrFragment;
 import person.jack.plant.fragment.MainPagerFragment;
 import person.jack.plant.utils.Utils;
 
-public class PlantUpdateActivity extends BaseFragmentActivity implements View.OnClickListener{
+public class PlantUpdateActivity extends Activity implements View.OnClickListener{
 
-    private  static final String TAG="plant";
+    private  static final String TAG="plantsUpdate";
     @Bind(R.id.btnBack)
     Button btnBack;
     @Bind(R.id.textHeadTitle)
@@ -90,25 +92,19 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
             Log.d(TAG, "onCreate: 查找植物");
             plant=plantsDao.findByName(plantName);
         }
-
         initView();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+    }
 
-        try{
-            int result=getIntent().getIntExtra("result",0);
-            Log.d("UpdateActivity",result+"");
-            if(result==3){
-                String type=getIntent().getStringExtra("type");
-                Log.d("UpdateActivity",type+"类型");
-                tv_plantType.setText(type);
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onresume: ");
+
     }
 
     private void initView() {
@@ -157,6 +153,9 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
         }
     }
 
+
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -167,7 +166,7 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
             case R.id.tv_plantType:
                 Intent intent=new Intent(PlantUpdateActivity.this,PlantInfoActivity.class);
                 intent.putExtra("result",2);
-                startActivity(intent);
+                startActivityForResult(intent,12);
                 break;
             case R.id.tv_plantDate:
                 final Calendar c = Calendar.getInstance();
@@ -323,12 +322,12 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
             //拍照
             case TAKE_PHOTO:
                 if(resultCode==RESULT_OK){
-                   /* try {
-                       Bitmap   bitmap = BitmapFactory.decodeStream(getContext().getContentResolver().openInputStream(imageUri));
+                   try {
+                       Bitmap   bitmap = BitmapFactory.decodeStream(this.getContentResolver().openInputStream(imageUri));
                         img_PlantImg.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                    }*/
+                    }
                     cropPhoto(imageUri);
                 }
                 break;
@@ -337,6 +336,22 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
                     Bundle extras = data.getExtras();
                     Bitmap head = extras.getParcelable("data");
                     img_PlantImg.setImageBitmap(head);
+                }
+                break;
+
+            case 12:
+                if(resultCode==RESULT_OK){
+                    try{
+                        int result=data.getIntExtra("result",0);
+                        Log.d("UpdateActivity",result+"UpdateActivity");
+                        if(result==3){
+                            String type=data.getStringExtra("type");
+                            Log.d("UpdateActivity",type+"类型");
+                            tv_plantType.setText(type);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
                 break;
             default:
