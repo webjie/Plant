@@ -128,6 +128,7 @@ public class PlantInfoActivity extends BaseFragmentActivity implements View.OnCl
                         finish();
 
                     }if(result==2){
+                        Log.d("plantInfo", "onItemClick: 更新植物");
                         Intent intent=new Intent(PlantInfoActivity.this, PlantUpdateActivity.class);
                         intent.putExtra("result",3);
                         intent.putExtra("type",plantList.get(position));

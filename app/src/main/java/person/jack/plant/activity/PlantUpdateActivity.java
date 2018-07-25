@@ -85,22 +85,29 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
         setContentView(R.layout.activity_plant_update);
         ButterKnife.bind(this);
         plantsDao = new PlantsDao(AppContext.getInstance());
-        plant=plantsDao.findByName(getIntent().getStringExtra("plantname"));
+        String plantName=getIntent().getStringExtra("plantname");
+        if(plantName!=null){
+            Log.d(TAG, "onCreate: 查找植物");
+            plant=plantsDao.findByName(plantName);
+        }
+
         initView();
-
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        int result=getIntent().getIntExtra("result",0);
-        Log.d("UpdateActivity",result+"");
-        if(result==1){
-            String type=getIntent().getStringExtra("type");
-            Log.d("UpdateActivity",type+"类型");
-            tv_plantType.setText(type);
+
+        try{
+            int result=getIntent().getIntExtra("result",0);
+            Log.d("UpdateActivity",result+"");
+            if(result==3){
+                String type=getIntent().getStringExtra("type");
+                Log.d("UpdateActivity",type+"类型");
+                tv_plantType.setText(type);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
