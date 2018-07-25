@@ -64,7 +64,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
     Button btnUpdate;
     private ImageView ivPlant;
     private TextView tvName;
-    private TextView tvDate;
+    private TextView tvDate,tvType;
     private TextView tvState;
     private Plants plant;
 
@@ -102,6 +102,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
         ivPlant = (ImageView) findViewById(R.id.iv_plant);
         tvName = (TextView) findViewById(R.id.tv_name);
         tvDate = (TextView) findViewById(R.id.tv_date);
+        tvType = (TextView) findViewById(R.id.tv_type);
         tvState = (TextView) findViewById(R.id.tv_state);
         tvDetailTemp = (TextView) findViewById(R.id.tv_detail_temp);
         tvDetailHum = (TextView) findViewById(R.id.tv_detail_hum);
@@ -143,6 +144,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
         }
 
         tvName.setText(plant.getName());
+        tvType.setText(plant.getType());
         if (plant.getGrowthStage() != null) {
             tvState.setText(  plant.getGrowthStage());
         } else {
@@ -175,6 +177,7 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
                 Intent intent=new Intent(PlantsDetailActivity.this,PlantUpdateActivity.class);
                 intent.putExtra("plantname",plant.getName()
                 );
+                intent.putExtra("result",1);
                 startActivity(intent);
                 break;
             case R.id.btn_plantDelete:

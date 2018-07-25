@@ -34,6 +34,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +43,7 @@
         </activity>
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.LoginActivity"
@@ -55,7 +56,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.PlantsDetailActivity"
-            android:label="@string/title_activity_plants_detail" />
+            android:label="@string/title_activity_plants_detail"
+
+            />
         <activity
             android:name=".activity.PlantsStatusActivity"
             android:label="@string/title_activity_plants_status" />
@@ -72,9 +75,15 @@
 
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.EnvWarnActivity" />
-        <activity android:name=".activity.ValueSetActivity"></activity>
-        <activity android:name=".activity.PlantUpdateActivity"></activity>
-        <activity android:name=".activity.EnvHistoryActivity"></activity>
+        <activity android:name=".activity.ValueSetActivity" />
+        <activity android:name=".activity.PlantUpdateActivity"
+            android:launchMode="singleTop"
+
+            />
+        <activity android:name=".activity.EnvHistoryActivity" />
+        <activity android:name=".activity.PlantInfoActivity">
+
+        </activity>
     </application>
 
 </manifest>

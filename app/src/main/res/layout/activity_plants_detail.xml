@@ -66,7 +66,25 @@
                             />
                     </RelativeLayout>
                 </LinearLayout>
+                <LinearLayout
+                    style="@style/csy_row"
+                    android:layout_height="@dimen/space_50">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_50"
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/tv_type"
+                            style="@style/csy_textbox"
+                            android:layout_marginLeft="@dimen/space_8"
+                            android:text="车矢菊"
+                            android:clickable="false"
+
+                            />
+                    </RelativeLayout>
+                </LinearLayout>
                 <LinearLayout
                     style="@style/csy_row1"
                     android:layout_height="@dimen/csy_btn_h">

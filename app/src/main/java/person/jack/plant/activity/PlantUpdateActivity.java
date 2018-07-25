@@ -65,7 +65,7 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
     TextView textHeadTitle;
     private EditText et_plantName;
     private Spinner spn_plantLive;
-    private TextView tv_plantDate,tv_plantLive;
+    private TextView tv_plantDate,tv_plantLive,tv_plantType;
     private Button btn_plantUpdate;
     private String growthState = "l";
     private PlantsDao plantsDao;
@@ -87,18 +87,22 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
         plantsDao = new PlantsDao(AppContext.getInstance());
         plant=plantsDao.findByName(getIntent().getStringExtra("plantname"));
         initView();
-       /* list=plantsDao.findAll();
-        if(list!=null){
-            for (Plants p:list
-                    ) {
-                Log.d(TAG,"图片路径"+p.getImage()+"  , 名称"+p.getName());
-            }
 
-        }*/
+
 
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        int result=getIntent().getIntExtra("result",0);
+        Log.d("UpdateActivity",result+"");
+        if(result==1){
+            String type=getIntent().getStringExtra("type");
+            Log.d("UpdateActivity",type+"类型");
+            tv_plantType.setText(type);
+        }
+    }
 
     private void initView() {
         textHeadTitle.setText("植物更新");
@@ -114,7 +118,10 @@ public class PlantUpdateActivity extends BaseFragmentActivity implements View.On
         spn_plantLive = (Spinner) findViewById(R.id.spn_plantLive);
         tv_plantDate = (TextView)findViewById(R.id.tv_plantDate);
         tv_plantLive = (TextView)findViewById(R.id.tv_plantLive);
-tv_plantLive.setText(plant.getGrowthStage());
+        tv_plantType= (TextView)findViewById(R.id.tv_plantType);
+        tv_plantType.setOnClickListener(this);
+        tv_plantType.setText(plant.getType());
+        tv_plantLive.setText(plant.getGrowthStage());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         tv_plantDate.setText(format.format(new Date()));
         btn_plantUpdate= (Button) findViewById(R.id.btn_plantUpdate);
@@ -149,6 +156,11 @@ tv_plantLive.setText(plant.getGrowthStage());
             case R.id.tv_plantLive:
                 tv_plantLive.setVisibility(View.GONE);
                 spn_plantLive.setVisibility(View.VISIBLE);
+                break;
+            case R.id.tv_plantType:
+                Intent intent=new Intent(PlantUpdateActivity.this,PlantInfoActivity.class);
+                intent.putExtra("result",2);
+                startActivity(intent);
                 break;
             case R.id.tv_plantDate:
                 final Calendar c = Calendar.getInstance();
@@ -210,7 +222,8 @@ tv_plantLive.setText(plant.getGrowthStage());
      */
     private void update(){
         String plantName = et_plantName.getText().toString().trim();
-        if (plantName.equals("")) {
+        String type=tv_plantType.getText().toString().trim();
+        if (plantName.equals("")||type.equals("")) {
             Toast.makeText(PlantUpdateActivity.this, "植物名称不能为空", Toast.LENGTH_SHORT).show();
         }  else {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -227,6 +240,8 @@ tv_plantLive.setText(plant.getGrowthStage());
                 plant.setPlantingDate(date);
                 plant.setImage(chooseImagePath);
                 plant.setGrowthStage(growthState);
+                plant.setType(type);
+
                 plantsDao.updatePlant(plant);
                 Toast.makeText(PlantUpdateActivity.this, "更新植物信息成功", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(PlantUpdateActivity.this,MainActivity.class);
@@ -237,9 +252,11 @@ tv_plantLive.setText(plant.getGrowthStage());
                     plant.setPlantingDate(date);
                     plant.setImage(chooseImagePath);
                     plant.setGrowthStage(growthState);
+                    plant.setType(type);
                     plantsDao.updatePlant(plant);
                     Toast.makeText(PlantUpdateActivity.this, "更新植物信息成功", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(PlantUpdateActivity.this,MainActivity.class);
+                intent.putExtra("result",1);
                     startActivity(intent);
                 }else{
                     Toast.makeText(PlantUpdateActivity.this, "更新植物信息失败，没有此植物名称信息", Toast.LENGTH_SHORT).show();

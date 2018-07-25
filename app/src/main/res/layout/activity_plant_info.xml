@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    tools:context="person.jack.plant.activity.PlantInfoActivity">
+
+    <include layout="@layout/layout_main_header"
+        android:id="@+id/title"
+        />
+   <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_PlantImg"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_marginTop="@dimen/csy_pd"
+        android:background="@drawable/csy_form"
+        android:orientation="vertical"
+        android:padding="@dimen/space_5">
+
+    <LinearLayout
+        style="@style/csy_row"
+        android:layout_height="40dp">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_30"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/et_plantName"
+                style="@style/csy_textbox"
+                android:layout_marginLeft="@dimen/space_5"
+                android:layout_height="30dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:hint="请输入植物种类"/>
+
+        </RelativeLayout>
+        <Button
+            style="@style/csy_row_label"
+            android:layout_width="100dp"
+            android:id="@+id/btn_plantSearch"
+            android:text="搜索"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_save_back"
+
+
+            />
+    </LinearLayout>
+
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lv_planList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>

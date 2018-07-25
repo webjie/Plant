@@ -13,7 +13,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,29 +24,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.text.format.DateFormat;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.j256.ormlite.table.TableUtils;
+import com.alibaba.fastjson.JSON;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URI;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,15 +54,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.transform.URIResolver;
-
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 import person.jack.plant.R;
 import person.jack.plant.activity.MainActivity;
+import person.jack.plant.activity.PlantInfoActivity;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.PlantsDao;
 import person.jack.plant.db.entity.Plants;
 import person.jack.plant.http.HttpClient;
-import person.jack.plant.model.MyAppContants;
 import person.jack.plant.utils.Utils;
 
 import static android.app.Activity.RESULT_OK;
@@ -77,7 +77,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
 
     private EditText et_plantName;
     private Spinner spn_plantLive;
-    private TextView tv_plantDate;
+    private TextView tv_plantDate,tv_plantType;
     private Button btn_plantSave,btn_plantUpdate;
     private String growthState = "l";
     private PlantsDao plantsDao;
@@ -106,6 +106,37 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        Log.d("fragment","onPause");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("fragment","onStart");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d("fragment","onStop");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("fragment","onResume");
+        int result=getActivity().getIntent().getIntExtra("result",0);
+        Log.d("result",result+"");
+        if(result==2){
+            String type=getActivity().getIntent().getStringExtra("type");
+            Log.d("type",type+"");
+            tv_plantType.setText(type);
+        }
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -116,6 +147,9 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
         spn_plantLive = (Spinner) view.findViewById(R.id.spn_plantLive);
 
 
+                tv_plantType = (TextView) view.findViewById(R.id.tv_plantType);
+
+        tv_plantType.setOnClickListener(this);
         tv_plantDate = (TextView) view.findViewById(R.id.tv_plantDate);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         tv_plantDate.setText(format.format(new Date()));
@@ -158,12 +192,20 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             case R.id.img_PlantImg:
                 showDialog();;
                 break;
-            case R.id.btn_plantUpdate:
+            case R.id.tv_plantType:
+                try{
+                    Intent intent=new Intent(getContext(), PlantInfoActivity.class);
+                    intent.putExtra("result",1);
+                    startActivity(intent);
 
-                update();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 break;
         }
     }
+
 
     /**
      * 弹出对话框，选择植物图片
@@ -191,8 +233,9 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
      */
     private void submit() {
         String plantName = et_plantName.getText().toString().trim();
-        if (plantName.equals("")) {
-            Toast.makeText(getContext(), "植物名称不能为空", Toast.LENGTH_SHORT).show();
+        String plantType=tv_plantType.getText().toString().trim();
+        if (plantName.equals("")||plantType.equals("")) {
+            Toast.makeText(getContext(), "任何项都不能为空", Toast.LENGTH_SHORT).show();
         }  else {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
@@ -204,12 +247,16 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             Plants plants=plantsDao.findByName(plantName);
             Plants plants1=null;
             if(plants==null){
-                plants1=new Plants(1,chooseImagePath,plantName,growthState,date);
+                plants1=new Plants(1,chooseImagePath,plantName,plantType,growthState,date);
                 plantsDao.add(plants1);
                 Toast.makeText(getContext(), "添加植物信息成功", Toast.LENGTH_SHORT).show();
                 et_plantName.setText("");
                 chooseImagePath="null";
+
                 img_PlantImg.setImageResource(R.drawable.default_plant);
+                tv_plantType.setText("");
+                tv_plantType.setHint("请选择类型");
+
             }else{
                 Toast.makeText(getContext(), "添加失败，植物名称已存在", Toast.LENGTH_SHORT).show();
             }

@@ -12,7 +12,7 @@
     <string-array name="plant_live" >
         <item>发芽期</item>
         <item>幼苗期</item>
-        <item>展业期</item>
+        <item>展叶期</item>
         <item>生长期</item>
         <item>开花期</item>
         <item>结果期</item>

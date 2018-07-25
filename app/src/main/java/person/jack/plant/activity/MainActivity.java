@@ -48,6 +48,7 @@ public class MainActivity extends BaseFragmentActivity {
         fragmentManager = getSupportFragmentManager();
         initData(savedInstanceState);
         initView();
+
     }
 
     @Override
@@ -136,34 +137,49 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d("onStart","执行1");
+        Log.d("MainActivity","onStart");
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        BufferKnifeFragment bufferKnifeFragment=(BufferKnifeFragment)getSupportFragmentManager().findFragmentByTag("ImFragment");
-        if(bufferKnifeFragment!=null){
-            bufferKnifeFragment.setLoadAll(false);
-            bufferKnifeFragment.loadData();
+        BufferKnifeFragment bufferKnifeFragment1=(BufferKnifeFragment)getSupportFragmentManager().findFragmentByTag("ImFragment");
+        if(bufferKnifeFragment1!=null){
+            bufferKnifeFragment1.setLoadAll(false);
+            bufferKnifeFragment1.loadData();
 
         }
-        Log.d("onResume","执行1");
+        int result=getIntent().getIntExtra("result",0);
+        Log.d("result",result+"");
+            if(result==1){
+                currIndex=1;
+                group.check(R.id.foot_bar_im);
+            }if(result==2){
+            currIndex=2;
+            group.check(R.id.foot_bar_add);
+        }
 
+            showFragment();
+
+
+
+
+
+        Log.d("MainActivity","onResume");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("onRestart","执行1");
+        Log.d("MainActivity","onRestart");
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("onPause","执行1");
+        Log.d("MainActivity","onPause");
     }
 
     @Override

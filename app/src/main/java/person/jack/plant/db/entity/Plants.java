@@ -30,6 +30,11 @@ public class Plants {
     @DatabaseField (columnName = "name")
     private String name;
     /**
+     * 植物种类
+     */
+    @DatabaseField (columnName = "type")
+    private String type;
+    /**
      * 种植日期
      */
     @DatabaseField (columnName = "planting_date")
@@ -59,18 +64,21 @@ public class Plants {
     public Plants() {
     }
 
-    public Plants(Integer id, String image, String name, String growthStage, Date plantingDate) {
+    public Plants(Integer id, String image, String name,String type,  String growthStage, Date plantingDate) {
         this.id = id;
+        this.type=type;
         this.imagepath = image;
         this.name = name;
         this.plantingDate = plantingDate;
         this.growthStage = growthStage;
     }
 
-    public Plants(Integer id, String image, String name, Date plantingDate, String growthStage, Integer hum, Integer light, Integer temp) {
+
+    public Plants(Integer id, String image, String name,Date plantingDate, String growthStage, Integer hum, Integer light, Integer temp) {
         this.id = id;
         this.imagepath = image;
         this.name = name;
+        this.type=type;
         this.plantingDate = plantingDate;
         this.growthStage = growthStage;
         this.hum = hum;
@@ -140,5 +148,13 @@ public class Plants {
 
     public void setGrowthStage(String growthStage) {
         this.growthStage = growthStage;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

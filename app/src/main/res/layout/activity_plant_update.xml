@@ -35,6 +35,32 @@
         android:orientation="vertical"
         android:padding="@dimen/space_5">
 
+        <LinearLayout
+            style="@style/csy_row"
+            android:layout_height="@dimen/space_50">
+
+            <TextView
+                style="@style/csy_row_label"
+                android:layout_width="100dp"
+                android:text="种    类" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_50"
+                android:layout_gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_plantType"
+                    style="@style/csy_textbox"
+                    android:layout_marginLeft="@dimen/space_8"
+                    android:maxLines="1"
+                    android:singleLine="true"
+
+
+                    android:hint="请选择种类22"/>
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             style="@style/csy_row"
