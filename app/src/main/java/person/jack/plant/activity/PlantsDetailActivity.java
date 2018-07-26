@@ -125,7 +125,6 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
         String encode = null;
         try {
             encode = URLEncoder.encode(plant.getType(), "utf-8");
-            Log.d(TAG, "initView: " + encode);
 
         } catch (Exception e) {
             e.printStackTrace();
