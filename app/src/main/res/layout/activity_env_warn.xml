@@ -8,6 +8,8 @@
     tools:context="person.jack.plant.activity.EnvWarnActivity">
 
     <include layout="@layout/layout_main_header" />
+
+
     <LinearLayout
         android:layout_gravity="center"
         android:gravity="center"
@@ -17,7 +19,7 @@
 
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
@@ -25,33 +27,32 @@
 
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="植物名称" />
+            android:text="名称" />
 
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="类型" />
 
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="数值" />
-
+            android:text="报警值" />
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="0.6"
             android:gravity="center"
             android:text="时间" />
 
@@ -71,5 +72,14 @@
 
 
         android:layout_weight="1"></ListView>
+    <TextView
+        android:id="@+id/waring_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/black"
+        android:text="正常数值范围：暂未设置"
 
+        />
 </LinearLayout>

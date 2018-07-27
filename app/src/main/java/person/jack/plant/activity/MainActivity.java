@@ -173,14 +173,20 @@ public class MainActivity extends BaseFragmentActivity {
             currIndex = 1;
             group.check(R.id.foot_bar_im);
             showFragment();
+
         }
         if (result == 2) {
-            currIndex = 2;
+             currIndex = 2;
             group.check(R.id.foot_bar_add);
             showFragment();
+
         }
+        if (result == 4) {
+            currIndex = 4;
+            group.check(R.id.main_footbar_user);
+           // showFragment();
 
-
+        }
 
 
         Log.d("MainActivity", "onResume");

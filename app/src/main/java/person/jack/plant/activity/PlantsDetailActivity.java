@@ -174,11 +174,14 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_plantUpdate:
-                Intent intent = new Intent(PlantsDetailActivity.this, PlantUpdateActivity.class);
-                intent.putExtra("plantname", plant.getName()
-                );
-//                intent.putExtra("result",1);
-                startActivity(intent);
+                try{
+                    final Intent intent = new Intent(PlantsDetailActivity.this, PlantUpdateActivity.class);
+                    intent.putExtra("plantname", plant.getName());
+                    startActivity(intent);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
                 break;
             case R.id.btn_plantDelete:
                 AlertDialog.Builder builder = new AlertDialog.Builder(PlantsDetailActivity.this);
@@ -188,6 +191,9 @@ public class PlantsDetailActivity extends SwipeBackActivity implements View.OnCl
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         plantsDao.deletePlant(plant);
+                        Intent intent1=new Intent(PlantsDetailActivity.this,MainActivity.class);
+                        intent1.putExtra("result",1);
+                        startActivity(intent1);
                         finish();
 
                     }

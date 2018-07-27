@@ -100,19 +100,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/csy_tip_h"
                 android:layout_gravity="center_vertical">
-                <TextView
-                    android:id="@+id/tv_plantLive"
-                    android:entries="@array/plant_live"
-                    style="@style/csy_textbox"
-                    android:layout_marginLeft="@dimen/space_8"
-                    />
+
 
                 <Spinner
                     android:id="@+id/spn_plantLive"
                     android:entries="@array/plant_live"
                     style="@style/csy_textbox"
                     android:layout_marginLeft="@dimen/space_8"
-                    android:visibility="gone"
+
                     />
             </RelativeLayout>
         </LinearLayout>

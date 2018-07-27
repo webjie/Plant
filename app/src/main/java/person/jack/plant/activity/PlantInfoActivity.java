@@ -119,21 +119,18 @@ public class PlantInfoActivity extends BaseFragmentActivity implements View.OnCl
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try{
-                    int result=getIntent().getIntExtra("result",0);
-                    if (result == 1) {
+                    int toInfo=getIntent().getIntExtra("toInfo",0);
+                    if (toInfo == 1) {
                         Intent intent=new Intent(PlantInfoActivity.this, MainActivity.class);
                         intent.putExtra("result",2);
                         intent.putExtra("type",plantList.get(position));
                         startActivity(intent);
                         finish();
 
-                    }if(result==2){
+                    }if(toInfo==2){
                         try{
                             Log.d("plantInfo", "onItemClick: 更新植物");
-//                            Intent intent=new Intent(PlantInfoActivity.this, PlantUpdateActivity.class);
-//                            intent.putExtra("result",3);
-//                            intent.putExtra("type",plantList.get(position));
-//                            startActivity(intent);
+
                             Intent intent=getIntent();
                             intent.putExtra("result",3);
                             intent.putExtra("type",plantList.get(position));

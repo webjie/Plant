@@ -78,7 +78,7 @@ public class MemberFragment extends Fragment {
                 if (isLogin) {
                     Toast.makeText(getActivity(), "请退出当前用户", Toast.LENGTH_SHORT).show();
                 } else {
-                    UIHelper.showLogin(getActivity());
+                    //UIHelper.showLogin(getActivity());
                 }
 
             }

@@ -195,7 +195,7 @@ public class PlantsAddFragment extends Fragment implements View.OnClickListener 
             case R.id.tv_plantType:
                 try{
                     Intent intent=new Intent(getContext(), PlantInfoActivity.class);
-                    intent.putExtra("result",1);
+                    intent.putExtra("toInfo",1);
                     startActivity(intent);
 
                 }catch (Exception e){

@@ -67,13 +67,14 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
     TextView textHeadTitle;
     private EditText et_plantName;
     private Spinner spn_plantLive;
-    private TextView tv_plantDate,tv_plantLive,tv_plantType;
+    private TextView tv_plantDate,tv_plantType;
     private Button btn_plantUpdate;
     private String growthState = "l";
     private PlantsDao plantsDao;
     private ImageView img_PlantImg;
     private static final int TAKE_PHOTO = 1;
     private static final int CHOOSE_PHOTO=2;
+
     private String chooseImagePath="null";
     private Uri imageUri;
     private Plants plant;
@@ -98,6 +99,7 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
     @Override
     protected void onStart() {
         super.onStart();
+
     }
 
     @Override
@@ -120,21 +122,20 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
         et_plantName.setText(plant.getName());
         spn_plantLive = (Spinner) findViewById(R.id.spn_plantLive);
         tv_plantDate = (TextView)findViewById(R.id.tv_plantDate);
-        tv_plantLive = (TextView)findViewById(R.id.tv_plantLive);
         tv_plantType= (TextView)findViewById(R.id.tv_plantType);
         tv_plantType.setOnClickListener(this);
         tv_plantType.setText(plant.getType());
-        tv_plantLive.setText(plant.getGrowthStage());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         tv_plantDate.setText(format.format(new Date()));
         btn_plantUpdate= (Button) findViewById(R.id.btn_plantUpdate);
         btn_plantUpdate.setOnClickListener(this);
         tv_plantDate.setOnClickListener(this);
-        tv_plantLive.setOnClickListener(this);
+
         spn_plantLive.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 growthState = spn_plantLive.getSelectedItem().toString();
+
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -156,16 +157,14 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
 
 
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_plantLive:
-                tv_plantLive.setVisibility(View.GONE);
-                spn_plantLive.setVisibility(View.VISIBLE);
-                break;
+
             case R.id.tv_plantType:
                 Intent intent=new Intent(PlantUpdateActivity.this,PlantInfoActivity.class);
-                intent.putExtra("result",2);
+                   intent.putExtra("toInfo",2);
                 startActivityForResult(intent,12);
                 break;
             case R.id.tv_plantDate:
@@ -227,6 +226,7 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
      * 更新植物信息
      */
     private void update(){
+        Log.d("updateActivity","spinner值："+growthState);
         String plantName = et_plantName.getText().toString().trim();
         String type=tv_plantType.getText().toString().trim();
         if (plantName.equals("")||type.equals("")) {
@@ -331,14 +331,6 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
                     cropPhoto(imageUri);
                 }
                 break;
-            case 0X003:
-                if (data != null) {
-                    Bundle extras = data.getExtras();
-                    Bitmap head = extras.getParcelable("data");
-                    img_PlantImg.setImageBitmap(head);
-                }
-                break;
-
             case 12:
                 if(resultCode==RESULT_OK){
                     try{
@@ -354,6 +346,15 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
                     }
                 }
                 break;
+            case 0X003:
+                if (data != null) {
+                    Bundle extras = data.getExtras();
+                    Bitmap head = extras.getParcelable("data");
+                    img_PlantImg.setImageBitmap(head);
+                }
+                break;
+
+
             default:
                 break;
         }
