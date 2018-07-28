@@ -78,7 +78,7 @@ public class MemberFragment extends Fragment {
                 if (isLogin) {
                     Toast.makeText(getActivity(), "请退出当前用户", Toast.LENGTH_SHORT).show();
                 } else {
-                    //UIHelper.showLogin(getActivity());
+                  UIHelper.showLogin(getActivity());
                 }
 
             }
@@ -120,7 +120,8 @@ public class MemberFragment extends Fragment {
                 UIHelper.showValueSet(getActivity());
             }
         });
-        scrollView.getPullRootView().findViewById(R.id.textLogout).setOnClickListener(new View.OnClickListener() {
+        scrollView.getPullRootView().findViewById(R.id.textLogout).
+                setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!UIHelper.isLogin()){

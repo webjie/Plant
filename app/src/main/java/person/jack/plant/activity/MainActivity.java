@@ -110,7 +110,8 @@ public class MainActivity extends BaseFragmentActivity {
     public void showFragment() {
         if (currIndex == 4) {
             if (!UIHelper.isLogin()) {
-                UIHelper.showLogin(MainActivity.this);
+                //不让登录界面自动弹出
+               // UIHelper.showLogin(MainActivity.this);
             }
         }
 
@@ -184,8 +185,6 @@ public class MainActivity extends BaseFragmentActivity {
         if (result == 4) {
             currIndex = 4;
             group.check(R.id.main_footbar_user);
-           // showFragment();
-
         }
 
 
