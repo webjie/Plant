@@ -17,7 +17,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +55,10 @@ public class EnvHistorySearchFragment extends Fragment {
     private TextView envHistoryEndTime;
     private ListView envHistoryListView;
 
-    private String devTempAndHumi="529697";
+    private Spinner envHistorySpinner;
+    private Button envHistorySearch;
+    private LinearLayout envHide;
+
     private String devLigg="529698";
     private String beginTime;
     private String endTime;
@@ -112,6 +117,13 @@ public class EnvHistorySearchFragment extends Fragment {
                     }
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
                 dialog.show();
+            }
+        });
+
+        envHistorySearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -206,6 +218,7 @@ public class EnvHistorySearchFragment extends Fragment {
                        activity.envHistoryChartFragment.setList();
 
                        android.support.v4.app.FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+                       //添加栈
                        transaction.addToBackStack(null);
                        transaction.hide(activity.envHistorySearchFragment);
                        transaction.show(activity.envHistoryChartFragment);
@@ -219,6 +232,17 @@ public class EnvHistorySearchFragment extends Fragment {
             return false;
         }
     });
+
+    private void setBeginTimeAndEndTime(){
+        int spinnerLocaltion=envHistorySpinner.getSelectedItemPosition();
+        switch (spinnerLocaltion){
+            case 1:
+                beginTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()-3600000) + "";
+                endTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()) + "";
+
+
+        }
+    }
 
     private void getTempAndHumiHistory(){
         RequestBody requestBody=RequestBody.create(HttpClient.JSONString,"");

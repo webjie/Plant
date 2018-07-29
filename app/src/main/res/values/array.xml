@@ -8,4 +8,12 @@
 		<item>灌溉记录</item>-->
 	</string-array>
 
+	<string-array name="env_history_spinner">
+		<item>最近1小时</item>
+		<item>今日</item>
+		<item>昨天</item>
+		<item>最近1周</item>
+		<item>自定义</item>
+	</string-array>
+
 </resources>
