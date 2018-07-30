@@ -34,14 +34,15 @@ import okhttp3.Response;
 import person.jack.plant.R;
 import person.jack.plant.fragment.PlantsAddFragment;
 import person.jack.plant.http.HttpClient;
+import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
+import person.jack.plant.utils.PlantInfoDialog;
 
-public class PlantInfoActivity extends BaseFragmentActivity implements View.OnClickListener {
+public class PlantInfoActivity extends SwipeBackActivity implements View.OnClickListener {
 
-    List<String> plantList = new ArrayList<String>();
-    @Bind(R.id.btnBack)
-    Button btnBack;
-    @Bind(R.id.textHeadTitle)
-    TextView textHeadTitle;
+    private Button btnBack;
+    private TextView textHeadTitle;
+    private List<String> plantList = new ArrayList<String>();
+
     private ListView lv_planList;
 
     private EditText et_plantName;
@@ -50,8 +51,13 @@ public class PlantInfoActivity extends BaseFragmentActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_plant_info);
-        ButterKnife.bind(this);
+        textHeadTitle=(TextView)findViewById(R.id.textHeadTitle);
+        textHeadTitle.setText("植物列表1");
+        btnBack=(Button)findViewById(R.id.btnBack);
+        btnBack.setVisibility(View.VISIBLE);
+       btnBack.setOnClickListener(this);
         initView();
         httpPlantInfo();
     }
@@ -106,14 +112,6 @@ public class PlantInfoActivity extends BaseFragmentActivity implements View.OnCl
     private void initView() {
 
 
-        textHeadTitle.setText("植物列表");
-        btnBack.setVisibility(View.VISIBLE);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
         lv_planList = (ListView) findViewById(R.id.lv_planList);
         lv_planList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -189,8 +187,9 @@ public class PlantInfoActivity extends BaseFragmentActivity implements View.OnCl
                     plantList.clear();
                     httpPlantSearch(plantName);
                 }
-
-
+                break;
+            case  R.id.btnBack:
+                finish();
                 break;
         }
     }

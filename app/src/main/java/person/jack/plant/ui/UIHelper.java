@@ -13,6 +13,7 @@ import person.jack.plant.activity.HouseDetailActivity;
 import person.jack.plant.activity.LoginActivity;
 import person.jack.plant.activity.MainActivity;
 import person.jack.plant.activity.PersonInfoActivity;
+import person.jack.plant.activity.PlantInfoActivity;
 import person.jack.plant.activity.PlantsDetailActivity;
 import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.activity.PersonChangePwdActivity;
@@ -121,7 +122,7 @@ public class UIHelper {
     }
 
     public static void showEnvHistoryActivity(Activity activity){
-        Intent intent=new Intent(activity, EnvHistoryActivity.class);
+        Intent intent=new Intent(activity,EnvHistoryActivity.class);
         activity.startActivity(intent);
     }
 

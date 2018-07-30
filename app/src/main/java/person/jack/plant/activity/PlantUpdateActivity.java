@@ -115,6 +115,7 @@ public class PlantUpdateActivity extends Activity implements View.OnClickListene
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 finish();
             }
         });
