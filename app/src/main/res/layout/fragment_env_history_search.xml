@@ -1,11 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="person.jack.plant.fragment.EnvHistorySearchFragment">
 
     <LinearLayout
+        android:id="@+id/env_history_layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -22,18 +22,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:entries="@array/env_history_spinner"/>
-
-        <Button
-            android:id="@+id/env_history_search"
-            android:text="查询"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:background="@drawable/csy_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp" />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_below="@id/env_history_layout1"
         android:id="@+id/env_hide"
         android:visibility="gone"
         android:layout_marginTop="5dp"
@@ -76,8 +68,16 @@
     </LinearLayout>
 
     <ListView
+        android:layout_below="@id/env_hide"
         android:id="@+id/env_history_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 
-</LinearLayout>
+    <TextView
+        android:background="@color/csy_hint"
+        android:layout_alignParentBottom="true"
+        android:text="tip:请先选择时间，再选择要查询的植物"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

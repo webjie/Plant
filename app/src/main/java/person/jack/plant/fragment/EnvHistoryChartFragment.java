@@ -33,6 +33,7 @@ public class EnvHistoryChartFragment extends Fragment {
     private LineChart tempChart;
     private LineChart humiChart;
     private LineChart lighChart;
+    private boolean isFirst=false;
 
     private List<Entry> tempList=new ArrayList<>();
     private List<Entry> humiList=new ArrayList<>();
@@ -44,6 +45,28 @@ public class EnvHistoryChartFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        try{
+            if(this.isHidden()&&isFirst){
+                activity.tempList.clear();
+                activity.lighList.clear();
+                activity.humiList.clear();
+                activity.timeList.clear();
+                Log.d(TAG, "hidden: ");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        isFirst=true;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

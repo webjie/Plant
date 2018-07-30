@@ -59,10 +59,10 @@ public class EnvHistoryActivity extends SwipeBackActivity {
     private TextView textHeadTitle;
 
     public Plants curPlants;
-    public List<Integer> tempList=new ArrayList<>();
-    public List<Integer> humiList=new ArrayList<>();
-    public List<Integer> lighList=new ArrayList<>();
-    public List<String>  timeList=new ArrayList<>();
+    public List<Integer> tempList;
+    public List<Integer> humiList;
+    public List<Integer> lighList;
+    public List<String>  timeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,24 @@ public class EnvHistoryActivity extends SwipeBackActivity {
         textHeadTitle = (TextView) findViewById(R.id.textHeadTitle);
         btnBack.setVisibility(View.VISIBLE);
         textHeadTitle.setText("历史统计");
+        tempList=new ArrayList<>();
+        humiList=new ArrayList<>();
+        lighList=new ArrayList<>();
+      timeList=new ArrayList<>();
 
+      btnBack.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              onBackPressed();
+          }
+      });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         envHistoryChartFragment=new EnvHistoryChartFragment();
         envHistorySearchFragment=new EnvHistorySearchFragment();
 
@@ -83,6 +100,7 @@ public class EnvHistoryActivity extends SwipeBackActivity {
 
         transaction.commit();
     }
+
 
 
 }

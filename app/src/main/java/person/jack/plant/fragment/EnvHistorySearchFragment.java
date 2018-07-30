@@ -1,8 +1,11 @@
 package person.jack.plant.fragment;
 
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -56,7 +59,6 @@ public class EnvHistorySearchFragment extends Fragment {
     private ListView envHistoryListView;
 
     private Spinner envHistorySpinner;
-    private Button envHistorySearch;
     private LinearLayout envHide;
 
     private String devLigg="529698";
@@ -74,7 +76,6 @@ public class EnvHistorySearchFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -84,54 +85,23 @@ public class EnvHistorySearchFragment extends Fragment {
         envHistoryBeginTime = (TextView) view.findViewById(R.id.env_history_begin_time);
         envHistoryEndTime = (TextView) view.findViewById(R.id.env_history_end_time);
         envHistoryListView = (ListView) view.findViewById(R.id.env_history_list_view);
+        envHistorySpinner = (Spinner) view.findViewById(R.id.env_history_spinner);
+        envHide = (LinearLayout) view.findViewById(R.id.env_hide);
         final Calendar c = Calendar.getInstance();
 
         activity=(EnvHistoryActivity)getActivity();
 
-        //选择时间
-        envHistoryBeginTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        c.set(year, monthOfYear , dayOfMonth);
-                        envHistoryBeginTime.setText(DateFormat.format("yyyy-MM-dd", c) + "");
-                        beginTime=DateFormat.format("yyyyMMddHHmm", c) + "";
-                        Log.d("envHistory", DateFormat.format("yyyy年MM月dd日", c) + "");
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-                dialog.show();
-            }
-        });
-        envHistoryEndTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        c.set(year, monthOfYear , dayOfMonth);
-                        envHistoryEndTime.setText(DateFormat.format("yyyy-MM-dd", c) + "");
-                        endTime=DateFormat.format("yyyyMMddHHmm", c) + "";
-                        Log.d("envHistory", DateFormat.format("yyyy年MM月dd日", c) + "");
-                    }
-                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-                dialog.show();
-            }
-        });
-
-        envHistorySearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
         plantsList = new ArrayList<>();
         plantsDao = new PlantsDao(getActivity());
 
-        adapter = new QuickAdapter<Plants>(getActivity(), R.layout.statistics_item_layout) {
+        ViewGroup emptyView=(ViewGroup) View.inflate(getActivity(), R.layout.empty_layout, null);
+        emptyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        emptyView.setVisibility(View.GONE);
+        ((ViewGroup)envHistoryListView.getParent()).addView(emptyView);
 
+        envHistoryListView.setEmptyView(emptyView);
+
+        adapter = new QuickAdapter<Plants>(getActivity(), R.layout.statistics_item_layout) {
             @Override
             protected void convert(final BaseAdapterHelper helper, Plants shop) {
                 Log.d(TAG, "convert: " + shop.getName());
@@ -162,8 +132,6 @@ public class EnvHistorySearchFragment extends Fragment {
 //                });
             }
         };
-        envHistoryListView.setAdapter(adapter);
-        plantsList = plantsDao.findAll();
 
         envHistoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -176,9 +144,62 @@ public class EnvHistorySearchFragment extends Fragment {
                 }
             }
         });
-        adapter.addAll(plantsList);
-        adapter.notifyDataSetChanged();
 
+        envHistorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i==4){
+                    Toast.makeText(getActivity(),"请选择自定义时间",Toast.LENGTH_SHORT).show();
+                    envHide.setVisibility(View.VISIBLE);
+                }else{
+                    Toast.makeText(getActivity(),"请选择植物",Toast.LENGTH_SHORT).show();
+                    envHide.setVisibility(View.GONE);
+                }
+                setBeginTimeAndEndTime();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        //选择时间
+        envHistoryBeginTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year, monthOfYear , dayOfMonth);
+                        envHistoryBeginTime.setText(DateFormat.format("yyyy-MM-dd", c) + "");
+                        beginTime=DateFormat.format("yyyyMMddHHmm", c) + "";
+                        Log.d("envHistory", DateFormat.format("yyyy年MM月dd日", c) + "");
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+            }
+        });
+
+        envHistoryEndTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        c.set(year, monthOfYear , dayOfMonth);
+                        envHistoryEndTime.setText(DateFormat.format("yyyy-MM-dd", c) + "");
+                        endTime=DateFormat.format("yyyyMMddHHmm", c) + "";
+                        Log.d("envHistory", DateFormat.format("yyyy年MM月dd日", c) + "");
+                    }
+                }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                dialog.show();
+            }
+        });
+
+        plantsList = plantsDao.findAll();
+        adapter.addAll(plantsList);
+        envHistoryListView.setAdapter(adapter);
         return view;
     }
 
@@ -214,19 +235,29 @@ public class EnvHistorySearchFragment extends Fragment {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-                   try{
-                       activity.envHistoryChartFragment.setList();
+                    if (activity.lighList.size()==0&&activity.tempList.size()==0){
+                        AlertDialog.Builder alertDialog=new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("提示");
+                        alertDialog.setMessage("暂无历史记录");
+                        alertDialog.setPositiveButton("关闭",null );
+                        alertDialog.show();
 
-                       android.support.v4.app.FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
-                       //添加栈
-                       transaction.addToBackStack(null);
-                       transaction.hide(activity.envHistorySearchFragment);
-                       transaction.show(activity.envHistoryChartFragment);
+                    }else{
+                        try{
+                            activity.envHistoryChartFragment.setList();
+
+                            android.support.v4.app.FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
+                            //添加栈
+                            transaction.addToBackStack(null);
+                            transaction.hide(activity.envHistorySearchFragment);
+                            transaction.show(activity.envHistoryChartFragment);
 //                       transaction.replace(R.id.env_container,activity.envHistoryChartFragment);
-                       transaction.commit();
-                   }catch (Exception e){
-                        e.printStackTrace();
-                   }
+                            transaction.commit();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
                     break;
             }
             return false;
@@ -236,12 +267,37 @@ public class EnvHistorySearchFragment extends Fragment {
     private void setBeginTimeAndEndTime(){
         int spinnerLocaltion=envHistorySpinner.getSelectedItemPosition();
         switch (spinnerLocaltion){
-            case 1:
+            //最近一小时
+            case 0:
+
                 beginTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()-3600000) + "";
                 endTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()) + "";
-
+                break;
+            //今天
+            case 1:
+                String tempTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()) + "";
+                beginTime=tempTime.substring(0,8)+"0000";
+                endTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()) + "";
+                break;
+            //昨天
+            case 2:
+                String tempTime1=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()-24*60*60*1000) + "";
+                beginTime=tempTime1.substring(0,8)+"0000";
+                endTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()) + "";
+                break;
+            //一周
+            case 3:
+                String tempTime2=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()-7*24*60*60*1000) + "";
+                beginTime=tempTime2.substring(0,8)+"0000";
+                endTime=DateFormat.format("yyyyMMddHHmm", System.currentTimeMillis()) + "";
+                break;
+            //自定义
+            case 4:
+                envHide.setVisibility(View.VISIBLE);
+                break;
 
         }
+        Log.d(TAG, "setBeginTimeAndEndTime: "+beginTime+"\\"+endTime);
     }
 
     private void getTempAndHumiHistory(){
@@ -308,4 +364,8 @@ public class EnvHistorySearchFragment extends Fragment {
         });
     }
 
+    private void clearTime(){
+        beginTime=null;
+        endTime=null;
+    }
 }
