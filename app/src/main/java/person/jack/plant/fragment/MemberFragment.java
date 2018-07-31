@@ -50,12 +50,17 @@ public class MemberFragment extends Fragment {
         scrollView = (PullToZoomScrollViewEx) root.findViewById(R.id.scrollView);
         View headView = LayoutInflater.from(context).inflate(R.layout.member_head_view, null, false);
         layoutPerson =  (LinearLayout) headView.findViewById(R.id.layout_person);
+
         if (UIHelper.isLogin()){
             layoutPerson.setVisibility(View.GONE);
+
         }
         name = (TextView) headView.findViewById(R.id.tv_user_name);
         name.setText(sharedPreferences.getString("userName", "请登录"));
         logo = (ImageView) headView.findViewById(R.id.iv_user_head);
+        logo.setImageResource(R.drawable.ic_img_user_default);
+
+
 
         View zoomView = LayoutInflater.from(context).inflate(R.layout.member_zoom_view, null, false);
         View contentView = LayoutInflater.from(context).inflate(R.layout.member_content_view,
@@ -139,8 +144,9 @@ public class MemberFragment extends Fragment {
                     dlg.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sweetAlertDialog) {
-                            name.setText("未登录");
+                            name.setText("");
                             logo.setImageResource(R.drawable.head);
+                            layoutPerson.setVisibility(View.VISIBLE);
                             sharedPreferences.putBoolean("isLogin", false);
                             sharedPreferences.putString("userName", null);
                             sweetAlertDialog.dismiss();

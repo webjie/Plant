@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_img_user_default" />
+        android:src="@drawable/head" />
 
     <TextView
         android:id="@+id/tv_user_name"
