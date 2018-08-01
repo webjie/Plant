@@ -54,7 +54,7 @@ public class PlantInfoActivity extends SwipeBackActivity implements View.OnClick
 
         setContentView(R.layout.activity_plant_info);
         textHeadTitle=(TextView)findViewById(R.id.textHeadTitle);
-        textHeadTitle.setText("植物列表1");
+        textHeadTitle.setText("植物列表");
         btnBack=(Button)findViewById(R.id.btnBack);
         btnBack.setVisibility(View.VISIBLE);
        btnBack.setOnClickListener(this);
