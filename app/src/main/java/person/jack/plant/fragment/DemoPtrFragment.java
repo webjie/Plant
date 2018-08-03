@@ -460,7 +460,7 @@ public class DemoPtrFragment extends Fragment implements View.OnClickListener{
             case R.id.lin_type:
                 Bundle bundle2 = new Bundle();
                 bundle2.putString("title","植物种类");
-                bundle2.putString("url",getString(R.string.urlType));
+                bundle2.putString("url","http://plant.sturgeon.mopaasapp.com/secondaryWeb/encyclopedias.jsp");
                 UIHelper.showWeb(getActivity(), bundle2);
 
                 break;
