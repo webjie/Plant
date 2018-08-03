@@ -91,6 +91,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:id="@+id/lin_type"
                 >
                 <ImageView
                     android:layout_width="140dp"
@@ -112,6 +113,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:id="@+id/lin_text"
                 >
                 <ImageView
                     android:layout_width="140dp"
@@ -144,6 +146,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:id="@+id/lin_dapei"
                 >
 
                     <ImageView
@@ -168,6 +171,7 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center"
+                android:id="@+id/lin_share"
                 >
                 <ImageView
                     android:layout_width="140dp"

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
@@ -59,7 +60,7 @@ import static person.jack.plant.ui.UIHelper.TAG;
 /**
  * 首页
  */
-public class DemoPtrFragment extends Fragment {
+public class DemoPtrFragment extends Fragment implements View.OnClickListener{
     public static final String APP_PACKAGE_NAME = "cn.com.broadlink.econtrol.plus"; //包名
     public static final String APP_NAME = "ihc.apk";         //apk安装包名
 
@@ -68,7 +69,7 @@ public class DemoPtrFragment extends Fragment {
     private int pno = 1;
     private boolean isLoadAll;
     private WaterRecordDao waterRecordDao;
-
+  private LinearLayout lin_text,lin_type,lin_dapei,lin_share;
     @Bind(R.id.rotate_header_list_view_frame)
     PtrClassicFrameLayout mPtrFrame;
 
@@ -107,6 +108,15 @@ public class DemoPtrFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_demo_ptr, container, false);
         ButterKnife.bind(this, view);
+        lin_dapei=(LinearLayout)view.findViewById(R.id.lin_dapei);
+        lin_type=(LinearLayout)view.findViewById(R.id.lin_type);
+        lin_text=(LinearLayout)view.findViewById(R.id.lin_text);
+        lin_share=(LinearLayout)view.findViewById(R.id.lin_share);
+        lin_dapei.setOnClickListener(this);
+        lin_type.setOnClickListener(this);
+        lin_text.setOnClickListener(this);
+        lin_share.setOnClickListener(this);
+
         return view;
     }
 
@@ -177,6 +187,7 @@ public class DemoPtrFragment extends Fragment {
 
     }
     void initView() {
+
         adapter = new QuickAdapter<Plants>(context, R.layout.recommend_shop_list_item) {
             @Override
             protected void convert(final BaseAdapterHelper helper, final Plants shop) {
@@ -434,6 +445,38 @@ public class DemoPtrFragment extends Fragment {
             context.startActivity(goToMarket);
         } catch (ActivityNotFoundException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.lin_text:
+                Bundle bundle = new Bundle();
+                bundle.putString("title","好文优选");
+                bundle.putString("url","https://www.wenjiwu.com/tag/nofwni.html");
+                UIHelper.showWeb(getActivity(), bundle);
+                break;
+            case R.id.lin_type:
+                Bundle bundle2 = new Bundle();
+                bundle2.putString("title","植物种类");
+                bundle2.putString("url",getString(R.string.urlType));
+                UIHelper.showWeb(getActivity(), bundle2);
+
+                break;
+            case R.id.lin_dapei:
+                Bundle bundle3 = new Bundle();
+                bundle3.putString("title","植物搭配");
+                bundle3.putString("url",getString(R.string.urlType));
+                UIHelper.showWeb(getActivity(), bundle3);
+                break;
+            case R.id.lin_share:
+                Bundle bundle4 = new Bundle();
+                bundle4.putString("title","美图分享");
+                bundle4.putString("url","http://www.27270.com/zhiwu/");
+                UIHelper.showWeb(getActivity(), bundle4);
+                break;
+
         }
     }
 }
