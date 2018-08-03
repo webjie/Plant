@@ -1,8 +1,15 @@
 package person.jack.plant.activity;
 
 import android.content.Intent;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.HttpAuthHandler;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -48,9 +55,12 @@ public class WebViewActivity extends BaseFragmentActivity {
                 finish();
             }
         });
-
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient());
+        WebSettings webSettings = webView.getSettings();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //总是允许混合调用，即 HTTPS 页面调用 HTTP 接口(API>=21, Android 5.0以上版本查看https)
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webSettings.setJavaScriptEnabled(true);
         webView.loadUrl(url);
     }
 }
