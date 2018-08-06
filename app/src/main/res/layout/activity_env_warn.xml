@@ -8,7 +8,38 @@
     tools:context="person.jack.plant.activity.EnvWarnActivity">
 
     <include layout="@layout/layout_main_header" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/img_PlantImg"
+        android:layout_marginLeft="@dimen/space_5"
+        android:layout_marginRight="@dimen/space_5"
+        android:layout_marginTop="@dimen/csy_pd"
+        android:background="@drawable/csy_form"
+        android:orientation="vertical">
 
+        <LinearLayout
+            style="@style/csy_row"
+            android:layout_height="wrap_content">
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical">
+                <Spinner
+                    android:id="@+id/spin_name"
+                    style="@style/csy_textbox"
+                    android:layout_height="30dp"
+                    android:entries="@array/plant_names"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_gravity="center"

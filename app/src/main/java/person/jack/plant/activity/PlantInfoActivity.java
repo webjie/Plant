@@ -1,8 +1,13 @@
 package person.jack.plant.activity;
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -32,6 +37,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import person.jack.plant.R;
+import person.jack.plant.common.AppContext;
 import person.jack.plant.fragment.PlantsAddFragment;
 import person.jack.plant.http.HttpClient;
 import person.jack.plant.ui.swipebacklayout.SwipeBackActivity;
@@ -187,13 +193,34 @@ public class PlantInfoActivity extends SwipeBackActivity implements View.OnClick
                     plantList.clear();
                     httpPlantSearch(plantName);
                 }
+
                 break;
             case  R.id.btnBack:
-                finish();
+               // finish();
+                showNati();
                 break;
         }
     }
+    /**
+     * 弹出对话框
+     */
+    public void showNati(){
 
+
+      Intent intent=new Intent(AppContext.getInstance(),EnvWarnActivity.class);
+        PendingIntent pendingIntent=PendingIntent.getActivity(this,0,intent,0);
+        NotificationManager manager=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification=new NotificationCompat.Builder(this) .setContentTitle("值警告")
+                .setContentText("超出设定阈值，当前值,阈值范围").setSmallIcon(R.drawable.message)
+                .setWhen(System.currentTimeMillis())
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .build();
+        manager.notify(1,notification);
+
+
+
+    }
     public void httpPlantSearch(String name) {
         HttpClient.getRequest("https://api.apishop.net/common/plantFamily/queryPlantListByKeyword" +
                 "?apiKey=laUuwV4e99fe7400a5ea670e5c6cb78b74c84eeccbe3af4&keyword=" + name, new Callback() {

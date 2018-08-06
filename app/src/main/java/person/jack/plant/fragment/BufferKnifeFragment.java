@@ -1,16 +1,21 @@
 package person.jack.plant.fragment;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +36,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 import person.jack.plant.R;
+import person.jack.plant.activity.EnvWarnActivity;
 import person.jack.plant.activity.PlantsStatusActivity;
 import person.jack.plant.common.AppContext;
 import person.jack.plant.db.dao.EnvDao;
@@ -69,6 +75,7 @@ import java.util.TimerTask;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Request;
+import person.jack.plant.utils.VibratorUtil;
 
 import static person.jack.plant.activity.PlantsDetailActivity.TAG;
 
@@ -296,13 +303,15 @@ public class BufferKnifeFragment extends Fragment {
     }
 
 
-    public void initWarnRecord(String name, int tem, int hum, int light) {
-        ValueSet valueTem = valueSetDao.findValueName("温度");
-        ValueSet valueHum = valueSetDao.findValueName("湿度");
-        ValueSet valueLight = valueSetDao.findValueName("光照");
+    public void initWarnRecord(String name,  final int tem, final int hum,final int light) {
+        final  ValueSet valueTem = valueSetDao.findValueName("温度");
+        final ValueSet valueHum = valueSetDao.findValueName("湿度");
+        final ValueSet valueLight = valueSetDao.findValueName("光照");
 
         if (valueTem != null) {
             if (tem > valueTem.getMax() || tem < valueTem.getMin()) {
+                showNati(1,"温度",tem,valueTem.getMin(),valueTem.getMax());
+                VibratorUtil.Vibrate(getContext(), 1000);   //震动100ms
                 WarnRecord warnRecord = warnRecordDao.findByNameAndType(name, "温度");
                 if (warnRecord != null) {
                     warnRecord.setName(name);
@@ -317,6 +326,8 @@ public class BufferKnifeFragment extends Fragment {
             }
             if (valueHum != null) {
                 if (hum > valueHum.getMax() || hum < valueHum.getMin()) {
+                    showNati(2,"湿度",hum,valueHum.getMin(),valueHum.getMax());
+                    VibratorUtil.Vibrate(getContext(), 1000);   //震动100ms
                     WarnRecord warnRecord = warnRecordDao.findByNameAndType(name, "湿度");
                     if (warnRecord != null) {
                         warnRecord.setName(name);
@@ -334,7 +345,11 @@ public class BufferKnifeFragment extends Fragment {
             }
 
             if (valueLight != null) {
+
                 if (light > valueLight.getMax() || light < valueLight.getMin()) {
+                    VibratorUtil.Vibrate(getContext(), 1000);   //震动100ms
+
+                    showNati(3,"光照",light, valueLight.getMin(),valueLight.getMax());
                     WarnRecord warnRecord = warnRecordDao.findByNameAndType(name, "光照");
                     if (warnRecord != null) {
                         warnRecord.setName(name);
@@ -353,6 +368,27 @@ public class BufferKnifeFragment extends Fragment {
 
 
         }
+
+
+    }
+
+    /**
+     * 弹出对话框
+     */
+    public void showNati(int id,String name,int value,int max,int min){
+
+
+            Intent intent=new Intent(AppContext.getInstance(),EnvWarnActivity.class);
+            PendingIntent pendingIntent=PendingIntent.getActivity(getContext(),0,intent,0);
+            NotificationManager manager=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+            Notification notification=new NotificationCompat.Builder(getContext()) .setContentTitle(name+"值警告")
+                    .setContentText(name+"超出设定阈值，当前值"+value+",阈值范围"+min+"---"+max).setSmallIcon(R.drawable.message)
+                    .setWhen(System.currentTimeMillis())
+                    .setContentIntent(pendingIntent)
+                    .setAutoCancel(true)
+                    .build();
+            manager.notify(id,notification);
+
 
 
     }

@@ -195,7 +195,7 @@ public class DemoPtrFragment extends Fragment implements View.OnClickListener{
                 helper.setText(R.id.tv_name, shop.getName()); // 自动异步加载图片
                 if(shop.getImage()!=null){
                     if(shop.getImage().equals("null")){
-                        helper.setImageResource(R.id.logo,R.drawable.default_image);
+                        helper.setImageResource(R.id.logo,R.drawable.default_plant);
                     }else{
                         File file=new File(shop.getImage());
                         if(file.exists()){

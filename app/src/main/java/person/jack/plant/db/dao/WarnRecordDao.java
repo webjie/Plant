@@ -113,6 +113,16 @@ public class WarnRecordDao {
         }
 
     }
+    public WarnRecord findByWarn(String name,String type){
+        WarnRecord warnRecord=null;
+        List<WarnRecord>list=null;
+        try {
+            list= warnDao.queryBuilder().where().eq("name",name).and().eq("type",type).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return warnRecord;
+    }
 
 
 }

@@ -49,7 +49,7 @@ public class PhotoViewWrapper extends RelativeLayout {
 
 	public void setUrl(String imageUrl) {
 		Picasso.with(mContext).load(imageUrl)
-				.placeholder(R.drawable.default_image)
+				.placeholder(R.drawable.default_plant)
 				.into(photoView, new Callback() {
 					@Override
 					public void onSuccess() {
@@ -59,7 +59,7 @@ public class PhotoViewWrapper extends RelativeLayout {
 
 					@Override
 					public void onError() {
-						photoView.setBackgroundResource(R.drawable.default_image);
+						photoView.setBackgroundResource(R.drawable.default_plant);
 					}
 				});
 	}

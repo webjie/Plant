@@ -15,7 +15,7 @@
                     android:layout_width="110dp"
                     android:layout_height="80dp"
                     android:id="@+id/imageView"
-                    android:src="@drawable/default_image"
+                    android:src="@drawable/default_plant"
                     android:layout_centerVertical="true"/>
             <TextView
                     android:layout_width="wrap_content"

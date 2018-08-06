@@ -222,8 +222,8 @@ public class BaseAdapterHelper {
     public BaseAdapterHelper setImageUrl(int viewId, String imageUrl) {
         ImageView view = retrieveView(viewId);
         Picasso.with(context).load(getURLWithSize(imageUrl))
-                .placeholder(R.drawable.default_image)
-                .error(R.drawable.default_image)
+                .placeholder(R.drawable.default_plant)
+                .error(R.drawable.default_plant)
                 .tag(context)
                 .into(view);
         return this;
