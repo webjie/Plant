@@ -311,7 +311,6 @@ public class BufferKnifeFragment extends Fragment {
         if (valueTem != null) {
             if (tem > valueTem.getMax() || tem < valueTem.getMin()) {
                 showNati(1,"温度",tem,valueTem.getMin(),valueTem.getMax());
-                VibratorUtil.Vibrate(getContext(), 1000);   //震动100ms
                 WarnRecord warnRecord = warnRecordDao.findByNameAndType(name, "温度");
                 if (warnRecord != null) {
                     warnRecord.setName(name);
@@ -327,7 +326,6 @@ public class BufferKnifeFragment extends Fragment {
             if (valueHum != null) {
                 if (hum > valueHum.getMax() || hum < valueHum.getMin()) {
                     showNati(2,"湿度",hum,valueHum.getMin(),valueHum.getMax());
-                    VibratorUtil.Vibrate(getContext(), 1000);   //震动100ms
                     WarnRecord warnRecord = warnRecordDao.findByNameAndType(name, "湿度");
                     if (warnRecord != null) {
                         warnRecord.setName(name);
@@ -339,16 +337,11 @@ public class BufferKnifeFragment extends Fragment {
                         WarnRecord warnRecord1 = new WarnRecord(1, name, "湿度", hum, new Date());
                         warnRecordDao.add(warnRecord1);
                     }
-
-
                 }
             }
 
             if (valueLight != null) {
-
                 if (light > valueLight.getMax() || light < valueLight.getMin()) {
-                    VibratorUtil.Vibrate(getContext(), 1000);   //震动100ms
-
                     showNati(3,"光照",light, valueLight.getMin(),valueLight.getMax());
                     WarnRecord warnRecord = warnRecordDao.findByNameAndType(name, "光照");
                     if (warnRecord != null) {
@@ -361,23 +354,15 @@ public class BufferKnifeFragment extends Fragment {
                         WarnRecord warnRecord1 = new WarnRecord(1, name, "光照", light, new Date());
                         warnRecordDao.add(warnRecord1);
                     }
-
-
                 }
             }
-
-
         }
-
-
     }
 
     /**
      * 弹出对话框
      */
     public void showNati(int id,String name,int value,int max,int min){
-
-
             Intent intent=new Intent(AppContext.getInstance(),EnvWarnActivity.class);
             PendingIntent pendingIntent=PendingIntent.getActivity(getContext(),0,intent,0);
             NotificationManager manager=(NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
@@ -388,11 +373,7 @@ public class BufferKnifeFragment extends Fragment {
                     .setAutoCancel(true)
                     .build();
             manager.notify(id,notification);
-
-
-
     }
-
     /**
      * 广播接收
      */
@@ -404,15 +385,12 @@ public class BufferKnifeFragment extends Fragment {
             SerializableMap serializableMap = (SerializableMap) bundle.get("map");
             Map<String, int[]> map = serializableMap.getMap();
             int[] value = map.get("values");
-            ;
             //多个传感器在此添加判断
             for (int i = 0; i < map.size(); i++) {
-//                        value
             }
             List<Plants> temList = new ArrayList<>();
             for (int i = 0; i < list.size(); i++) {
                 Plants plants = adapter.getItem(i);
-
                 plants.setTemp(value[0]);
                 plants.setHum(value[1] );
                 plants.setLight(value[2] );
@@ -422,13 +400,11 @@ public class BufferKnifeFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 temList.add(plants);
             }
             adapter.clear();
             adapter.addAll(temList);
             adapter.notifyDataSetChanged();
-
             Log.d(TAG, "onReceive: 更新图表");
         }
     }
