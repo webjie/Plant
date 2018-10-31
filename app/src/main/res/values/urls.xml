@@ -6,7 +6,7 @@
 
     <string name="urlApp" >http://apk.broadlink.com.cn/</string>
     <string name="urlChat" >http://yhzs.3w.dkys.org/Plant2018/secondaryWeb/news.jsp</string>
-    <string name="urlKnowledge" >http://www.hua36.com</string>
+    <string name="urlKnowledge">http://www.hua36.com</string>
     <string name="urlType" >http://yhzs.3w.dkys.org/Plant2018/secondaryWeb/encyclopedias.jsp</string>
     <string name="urlCamera" >https://open.ys7.com/view/h5/281a6f787ab64417bedf513e12227d63</string>
 
