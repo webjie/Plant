@@ -5,9 +5,9 @@
     <string name="password">180604htrj</string>
 
     <string name="urlApp" >http://apk.broadlink.com.cn/</string>
-    <string name="urlChat" >http://plant.sturgeon.mopaasapp.com/secondaryWeb/news.jsp</string>
+    <string name="urlChat" >http://yhzs.3w.dkys.org/Plant2018/secondaryWeb/news.jsp</string>
     <string name="urlKnowledge" >http://www.hua36.com</string>
-    <string name="urlType" >http://plant.sturgeon.mopaasapp.com/secondaryWeb/encyclopedias.jsp</string>
+    <string name="urlType" >http://yhzs.3w.dkys.org/Plant2018/secondaryWeb/encyclopedias.jsp</string>
     <string name="urlCamera" >https://open.ys7.com/view/h5/281a6f787ab64417bedf513e12227d63</string>
 
     <string name="msgApp">请先下载并安装智慧星APP</string>
